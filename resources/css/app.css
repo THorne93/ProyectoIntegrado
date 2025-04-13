@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbarbg {
+    background-color: #E0E0E0;
+    background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
+
+}
+.navbarBorder {
+    border-bottom-width: 1px;
+    border-color: #390040;
+}
+.sidenavBorder {
+    border-right-width: 1px;
+    border-color: #390040;
+}
+.appbg {
+    background-color: #C5F1FF;
+    background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
+}
+.buttonBorder {
+    border-width: 1px;
+    border-color: #390040;
+}
+
+
+
+.scrollBarThin {
+    scrollbar-width: thin;
+}
