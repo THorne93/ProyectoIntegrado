@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('exercise_id')->nullable();
             $table->foreign('exercise_id')->references('id')->on('exercises')->cascadeOnDelete();
             $table->text('prompt');
-            $table->string('before_prompt')->default(null);
-            $table->string('after_prompt')->default(null);
+            $table->string('before_prompt')->default(null)->nullable();
+            $table->string('after_prompt')->default(null)->nullable();
             $table->boolean('is_multiple_choice')->default(false);
             $table->timestamps();
         });

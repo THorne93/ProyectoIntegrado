@@ -76,9 +76,9 @@ class ExerciseController extends Controller
                     $choice->values = implode('/', $value['choices']);
                     $choice->save();
                 }
-                $question->save();  
+                $question->save();
                 $exercise->save();
-                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');  
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 2:
                 break;
             case 3:
@@ -88,13 +88,45 @@ class ExerciseController extends Controller
         }
     }
 
-    public function create($part) {
+    public function create($part)
+    {
         $views = [
             1 => 'exercises.create.partone',
             2 => 'exercises.create.parttwo',
             3 => 'exercises.create.partthree',
             4 => 'exercises.create.partfour',
         ];
-        return view ($views[$part]);
+        return view($views[$part]);
+    }
+
+    public function submit($part, Request $request)
+    {
+
+        switch ($part) {
+            case 1:
+                $exercise = new Exercise();
+                $exercise->part = 1;
+                $exercise->title = $request->input('title');
+                $exercise->save();
+                $question = new Question();
+                $question->exercise_id = $exercise->id;
+                $question->is_multiple_choice = 1;
+                $question->prompt = $request->input('content');
+                $question->save();
+                foreach ($request->input('question') as $value) {
+                    $choice = new Choice();
+                    $choice->question_id = $question->id;
+                    $choice->is_correct = $value['choices'][$value['choice']];
+                    $choice->values = implode('/', $value['choices']);
+                    $choice->save();
+                }
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
     }
 }

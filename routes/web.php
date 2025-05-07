@@ -42,6 +42,7 @@ Route::get('students', Students::class)->name('students')->middleware(middleware
 
 Route::get('admin/exercises', Exercises::class)->name('admin.exercises')->middleware(['auth']);
 Route::get('admin/exercises/part{part}/create', [ExerciseController::class, 'create'])->name('admin.exercises.create')->middleware(['auth']);
+Route::post('admin/exercises/part{part}/create', [ExerciseController::class, 'submit'])->name('admin.exercises.create')->middleware(['auth']);
 Route::get('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'editExercise'])->name('admin.exercises.edit')->middleware(['auth']);
 Route::post('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'updateExercise'])->name('admin.exercises.edit')->middleware(['auth']);
 
