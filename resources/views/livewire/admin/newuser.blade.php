@@ -8,6 +8,15 @@
     <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50" x-transition>
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
             <h2 class="text-lg font-semibold mb-4">New Student</h2>
+            <button type="button" wire:click="close"
+                class="absolute top-2 right-2 p-2 rounded-full bg-transparent hover:bg-red-500 transition duration-200"
+                aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700 hover:text-white"
+                    viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
             @if ($success)
                 <div x-data="{ show: true }" x-init="setTimeout(() => {
                     show = false;
@@ -50,6 +59,26 @@
                     @error('email')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
+                </div>
+                <x-select label="Select School" wire:model.live="selectedSchool" option-label="address"
+                    option-value="id" :options="collect([['id' => '', 'address' => 'None']])
+                        ->merge(
+                            $schools->map(
+                                fn($s) => [
+                                    'id' => $s->id,
+                                    'address' => $s->name . ' - ' . $s->address,
+                                ],
+                            ),
+                        )
+                        ->toArray()"
+                    class="text-black rounded-md shadow-sm border-gray-300 focus:border-primary-500 focus:ring focus:ring-primary-200 dark:bg-white dark:text-black"
+                    option-class="hover:bg-primary-100 hover:text-black"
+                    option-selected-class="bg-primary-200 text-black font-semibold"
+                    option-empty-class="text-gray-400 italic px-2 py-1" />
+                <div class="mt-4">
+                    <input type="checkbox" {{ !is_numeric($selectedSchool) ? 'disabled' : '' }}
+                        wire:model="is_teacher" /><x-input-label class="inline mr-10" :value="__('Is teacher')" />
+
                 </div>
                 <div wire:loading>
                     <div style="display: inline-flex; align-items: center; gap: 5px;">

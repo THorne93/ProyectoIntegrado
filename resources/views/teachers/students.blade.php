@@ -24,23 +24,28 @@
                         </div>
                         <div class="flex-1">
                             <h5 title="{{ $student->name . ' ' . $student->surname }}"
-                                class="text-base lg:text-xl  tracking-tight truncate text-gray-900 dark:text-white">
+                                class="text-base sm:text-lg  tracking-tight  text-gray-900 dark:text-white">
                                 {{ $student->name . ' ' . $student->surname }}
                             </h5>
-                            <h5 class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
-                                Last active: {{ \Carbon\Carbon::parse($student->date)->diffForHumans() }}
+                            <h5 class="text-base sm:text-lg tracking-tight  text-gray-900 dark:text-white">
+                                Last active: @if (\Carbon\Carbon::parse($student->date)->isFuture())
+                                    Less than an hour ago
+                                @else
+                                    {{ \Carbon\Carbon::parse($student->date)->diffForHumans() }}
+                                @endif
                             </h5>
                             <h5 title="{{ $student->email }}"
-                                class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
+                                class="  {{ Str::length($student->email) > 32
+                                    ? 'text-[10px] lg:text-xs'
+                                    : (Str::length($student->email) > 28
+                                        ? 'text-sm lg:text-base'
+                                        : 'text-base lg:text-xl') }} tracking-tight  text-gray-900 dark:text-white">
                                 {{ $student->email }}
                             </h5>
                         </div>
                     </div>
-
-
                 </a>
             @endforeach
-
         </div>
     </div>
 </x-app-layout>

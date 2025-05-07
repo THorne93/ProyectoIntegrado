@@ -1,7 +1,9 @@
 <?php
-namespace App\Livewire\Teachers;
+
+namespace App\Livewire\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\School;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Auth\Events\Registered;
@@ -9,13 +11,17 @@ use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\LoginLinkEmail;
 use Mail;
-class Newstudents extends ModalComponent
+
+class Newuser extends ModalComponent
 {
 
     public $isOpen = false;
     public $name;
     public $surname;
     public $email;
+    public $schools;
+    public $selectedSchool = '';
+    public $is_teacher = false;
 
     public $success = false;
 
@@ -34,9 +40,19 @@ class Newstudents extends ModalComponent
     public function close()
     {
         $this->isOpen = false;
+        $this->name = '';
+        $this->surname = '';
+        $this->email = '';
+        $this->selectedSchool = '';
         $this->dispatch('unlock-scroll');
     }
 
+    public function updatedSelectedSchool($value)
+    {
+        if (!is_numeric($value)) {
+            $this->is_teacher = false;
+        }
+    }
     public function submit()
     {
         $validated = $this->validate([
@@ -57,13 +73,15 @@ class Newstudents extends ModalComponent
         $this->name = '';
         $this->surname = '';
         $this->email = '';
+        $this->selectedSchool = '';
+
 
     }
 
     protected $listeners = ['openModal' => 'open'];
     public function render()
     {
-        
-        return view('livewire.teachers.newstudents');
+        $this->schools = School::all();
+        return view('livewire.admin.newuser');
     }
 }

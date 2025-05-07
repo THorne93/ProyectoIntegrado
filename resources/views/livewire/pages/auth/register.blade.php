@@ -11,12 +11,19 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component {
     public string $name = '';
+    public string $surname = '';
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
     public bool $school = false;
     public bool $newSchool = false;
     public $schools;
+    public string $school_name = '';
+    public string $address = '';
+    public string $school_email = '';
+    public string $school_password = '';
+    public string $confirm_school_password = '';
+    public $school_select;
 
     public function mount()
     {
@@ -38,15 +45,59 @@ new #[Layout('layouts.guest')] class extends Component {
      */
     public function register(): void
     {
+        // Base validation for all users
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // Extra validation if user is a teacher
+        if ($this->school) {
+            if ($this->newSchool) {
+                // New school registration
+                $this->validate([
+                    'school_name' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string'],
+                    'school_email' => ['required', 'email'],
+                    'school_password' => ['required', 'string', 'confirmed'],
+                ]);
+
+                // Create the new school
+                $school = School::create([
+                    'name' => $this->school_name,
+                    'address' => $this->address,
+                    'email' => $this->school_email,
+                    'password' => Hash::make($this->school_password),
+                ]);
+            } else {
+                // Existing school
+                $this->validate([
+                    'school_select' => ['required', 'exists:schools,id'],
+                    'school_password' => ['required', 'string'],
+                ]);
+
+                $school = School::find($this->school_select);
+
+                if (!Hash::check($this->school_password, $school->password)) {
+                    $this->addError('school_password', 'Invalid school code.');
+                    return;
+                }
+            }
+
+            // Attach the school ID to the user
+            $validated['school_id'] = $school->id;
+            $validated['role'] = 'Teacher';
+        } else {
+            $validated['role'] = 'Student'; // or whatever role you're using for non-teachers
+        }
+
         $validated['password'] = Hash::make($validated['password']);
 
-        event(new Registered(($user = User::create($validated))));
+        $user = User::create($validated);
+
+        event(new Registered($user));
 
         Auth::login($user);
 
@@ -55,21 +106,21 @@ new #[Layout('layouts.guest')] class extends Component {
 }; ?>
 
 <div>
-    <form wire:submit="register">
+    <form wire:submit.prevent="register">
         <!-- Name -->
         <div>
-            <x-input-label for="f_name" :value="__('First name')" />
-            <x-text-input wire:model="f_name" id="f_name" class="block mt-1 w-full" type="text" name="f_name" required
-                autofocus autocomplete="f_name" />
-            <x-input-error :messages="$errors->get('f_name')" class="mt-2" />
+            <x-input-label for="name" :value="__('First name')" />
+            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required
+                autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
         <!-- Name -->
         <div class="mt-4">
             <div>
-                <x-input-label for="l_name" :value="__('Last name(s)')" />
-                <x-text-input wire:model="l_name" id="l_name" class="block mt-1 w-full" type="text" name="l_name"
-                    required autofocus autocomplete="l_name" />
-                <x-input-error :messages="$errors->get('l_name')" class="mt-2" />
+                <x-input-label for="surname" :value="__('Last name(s)')" />
+                <x-text-input wire:model="surname" id="surname" class="block mt-1 w-full" type="text" name="surname"
+                    required autofocus autocomplete="surname" />
+                <x-input-error :messages="$errors->get('surname')" class="mt-2" />
             </div>
         </div>
         <!-- Email Address -->

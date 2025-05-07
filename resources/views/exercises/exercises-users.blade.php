@@ -1,11 +1,14 @@
-<x-dynamic-component>
+<x-app-layout>
+
     <div class=" h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
+        <livewire:exercise.launcher />
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
 
             @foreach ($exercises as $index => $exercise)
-                <a href="{{ $exercise->id }}"
-                    class=" p-6 col col-4 min-w-full min-h-36 bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 
-                       dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <button x-data @click="$dispatch('openLauncher', { id: {{ $exercise->id }} })"
+                    wire:key="exercise-{{ $exercise->id }}"
+                    class="p-6 col col-4 min-w-full min-h-36 bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 
+                    dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <div class="flex min-w-full gap-4 mb-4 border-b border-gray-300 -mx-6 px-6 pb-4">
                         <h5 class="text-base lg:text-xl font-bold tracking-tight pb-1 text-gray-400 dark:text-white">
@@ -21,7 +24,13 @@
                         @if ($exercise->timestamp)
                             <div class="w-full border-r border-gray-200">
                                 <p>Last done</p>
-                                <p> {{ \Carbon\Carbon::parse($exercise->timestamp)->diffForHumans() }}</p>
+                                <p>
+                                    @if (\Carbon\Carbon::parse($exercise->timestamp)->isFuture())
+                                        Less than an hour ago
+                                    @else
+                                        {{ \Carbon\Carbon::parse($exercise->timestamp)->diffForHumans() }}
+                                    @endif
+                                </p>
                             </div>
                             <div class="w-full">
                                 <p>Last score</p>
@@ -36,9 +45,9 @@
                             <div class="w-full">You haven't done this exercise yet. Try it now!</div>
                         @endif
                     </div>
-                </a>
+                </button>
             @endforeach
 
         </div>
     </div>
-</x-dynamic-component>
+</x-app-layout>

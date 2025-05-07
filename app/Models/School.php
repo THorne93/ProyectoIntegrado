@@ -10,6 +10,14 @@ class School extends Model
     /** @use HasFactory<\Database\Factories\SchoolFactory> */
     use HasFactory;
 
+
+    protected $fillable = [
+        'name',
+        'address',
+        'email',
+        'phone',
+        'password'
+    ];
     public function students()
     {
         return $this->hasMany(User::class);

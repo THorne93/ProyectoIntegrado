@@ -1,10 +1,8 @@
-<aside id="logo-sidebar"
-    class="w-64 h-screen dark:bg-gray-800 dark:border-gray-700"
-    aria-label="Sidebar">
+<aside id="logo-sidebar" class="w-64 h-screen dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
     <div class="pt-6 px-3 pb-4 h-full overflow-y-auto navbarbg dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{ route('dashboard') }}" 
+                <a href="{{ route('dashboard') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -18,8 +16,8 @@
             </li>
             @if (Auth::user()->role === 'Admin')
                 <li>
-                    <a href="{{ route('exercises') }}" 
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('exercises')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('admin.exercises') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.exercises*')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                             fill="currentColor">
@@ -31,8 +29,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('schools')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('admin.schools') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                             fill="currentColor">
@@ -43,8 +41,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('users')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('admin.users') }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.users')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                             fill="currentColor">
@@ -57,7 +55,7 @@
             @endif
             @if (Auth::user()->role === 'Teacher')
                 <li>
-                    <a href="#"
+                    <a href="{{ route('students') }}"
                         class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('students')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
@@ -70,48 +68,68 @@
                 </li>
             @endif
             @if (Auth::user()->role === 'Teacher' || Auth::user()->role === 'Student')
+                @php
+                    $isActive1 =
+                        request()->segment(1) === 'exercises' &&
+                        in_array(request()->route()->getName(), ['exercises.part', 'exercises.play']) &&
+                        request()->segment(2) == '1';
+                @endphp
                 <li>
                     <a href="{{ route('exercises.part', ['part' => 1]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('exercises.part')&& request()->segment(2) == '1') bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive1 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                            fill="currentColor">
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
-                                d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.8 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8 96 416l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0 96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352z"
-                                </svg>
-                                <span class="flex-1 ms-3 whitespace-nowrap">Part 1</span>
+                                d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.8 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8 96 416l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0 96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352z" />
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Part 1</span>
                     </a>
                 </li>
+                @php
+                    $isActive2 =
+                        request()->segment(1) === 'exercises' &&
+                        in_array(request()->route()->getName(), ['exercises.part', 'exercises.play']) &&
+                        request()->segment(2) == '2';
+                @endphp
                 <li>
-                    <a href="{{ route('exercises.part',['part'=>2]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('exercises.part')&& request()->segment(2) == '2') bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('exercises.part', ['part' => 2]) }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive2 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                            fill="currentColor">
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
                                 d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416 288 416c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 480c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Part 2</span>
                     </a>
                 </li>
+                @php
+                    $isActive3 =
+                        request()->segment(1) === 'exercises' &&
+                        in_array(request()->route()->getName(), ['exercises.part', 'exercises.play']) &&
+                        request()->segment(2) == '3';
+                @endphp
                 <li>
-                    <a href="{{ route('exercises.part',['part'=>3]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('exercises.part')&& request()->segment(2) == '3') bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('exercises.part', ['part' => 3]) }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive3 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                            fill="currentColor">
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
                                 d="M0 64C0 46.3 14.3 32 32 32l240 0c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L162.3 208l21.7 0c75.1 0 136 60.9 136 136s-60.9 136-136 136l-78.6 0C63 480 24.2 456 5.3 418.1l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5l78.6 0c39.8 0 72-32.2 72-72s-32.2-72-72-72L80 272c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L189.7 96 32 96C14.3 96 0 81.7 0 64z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Part 3</span>
                     </a>
                 </li>
+                @php
+                    $isActive4 =
+                        request()->segment(1) === 'exercises' &&
+                        in_array(request()->route()->getName(), ['exercises.part', 'exercises.play']) &&
+                        request()->segment(2) == '4';
+                @endphp
                 <li>
-                    <a href="{{ route('exercises.part',['part'=>4]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('exercises.part')&& request()->segment(2) == '4') bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{ route('exercises.part', ['part' => 4]) }}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive4 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                            fill="currentColor">
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
                                 d="M189 77.6c7.5-16 .7-35.1-15.3-42.6s-35.1-.7-42.6 15.3L3 322.4c-4.7 9.9-3.9 21.5 1.9 30.8S21 368 32 368l224 0 0 80c0 17.7 14.3 32 32 32s32-14.3 32-32l0-80 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-144c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L82.4 304 189 77.6z" />
                         </svg>
@@ -131,19 +149,20 @@
                     </a>
                 </li>
             @endif
-            <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('mystatistics')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                        fill="currentColor">
-                        <path fill="currentColor"
-                            d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                    </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
-                </a>
-            </li>
-            
+            @unless (Auth::user()->role === 'Admin')
+                <li>
+                    <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('mystatistics')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512" fill="currentColor">
+                            <path fill="currentColor"
+                                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                    </a>
+                </li>
+            @endunless
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
 

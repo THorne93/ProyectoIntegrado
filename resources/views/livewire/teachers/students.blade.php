@@ -39,20 +39,34 @@
                     </div>
                     <div class="flex-1">
                         <h5 title="{{ $student->name . ' ' . $student->surname }}"
-                            class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
+                            class="tracking-tight truncate text-gray-900 dark:text-white {{ Str::length($student->name . ' ' . $student->surname) > 28 ? 'text-sm lg:text-base' : 'text-base lg:text-xl' }}">
                             {{ $student->name . ' ' . $student->surname }}
                         </h5>
-                        <h5 class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
+
+                        <h5
+                            class="tracking-tight truncate text-gray-900 dark:text-white {{ Str::length($student->date) > 28 ? 'text-sm lg:text-base' : 'text-base lg:text-xl' }}">
                             @if ($student->account_verified == 1)
-                                Last active: {{ \Carbon\Carbon::parse($student->date)->diffForHumans() }}
+                                @if (\Carbon\Carbon::parse($student->date)->isFuture())
+                                    Less than an hour ago
+                                @else
+                                    {{ \Carbon\Carbon::parse($student->date)->diffForHumans() }}
+                                @endif
                             @else
                                 <p class="text-red-600">USER NOT VERIFIED</p>
                             @endif
                         </h5>
+
                         <h5 title="{{ $student->email }}"
-                            class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
+                            class="tracking-tight truncate text-gray-900 dark:text-white
+                                {{ Str::length($student->email) > 32
+                                    ? 'text-[10px] lg:text-xs'
+                                    : (Str::length($student->email) > 28
+                                        ? 'text-sm lg:text-base'
+                                        : 'text-base lg:text-xl') }}">
                             {{ $student->email }}
                         </h5>
+
+
                     </div>
                 </div>
             </button>

@@ -14,6 +14,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            textColor: {
+                'override-black': '#000',
+              }
         },
     },
 

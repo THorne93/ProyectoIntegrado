@@ -97,9 +97,24 @@
                             autocomplete="new-password" />
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
+                    <x-select label="Select School" wire:model.live="selectedSchool" option-label="address" option-value="id"
+                        :options="collect([['id' => '', 'address' => 'None']])
+                            ->merge(
+                                $schools->map(
+                                    fn($s) => [
+                                        'id' => $s->id,
+                                        'address' => $s->name . ' - ' . $s->address,
+                                    ],
+                                ),
+                            )
+                            ->toArray()"
+                        class="text-black rounded-md shadow-sm border-gray-300 focus:border-primary-500 focus:ring focus:ring-primary-200 dark:bg-white dark:text-black"
+                        option-class="hover:bg-primary-100 hover:text-black"
+                        option-selected-class="bg-primary-200 text-black font-semibold"
+                        option-empty-class="text-gray-400 italic px-2 py-1" />
                     <div class="mt-4">
-                        <input type="checkbox" wire:model="is_teacher" /><x-input-label class="inline mr-10"
-                            :value="__('Is teacher')" />
+                        <input type="checkbox" {{ !is_numeric($selectedSchool) ? 'disabled' : '' }}
+                            wire:model="is_teacher" /><x-input-label class="inline mr-10" :value="__('Is teacher')" />
 
                     </div>
                 </form>

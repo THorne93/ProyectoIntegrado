@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire\Teachers;
+namespace App\Livewire\Admin;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\School;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 use DB;
-
-class Studentstats extends ModalComponent
+class Userstats extends ModalComponent
 {
 
     public $isOpen = false;
@@ -27,7 +27,8 @@ class Studentstats extends ModalComponent
     public $latestScores;
     public $isEdit = false;
     public $success = false;
-
+    public $schools;
+    public $selectedSchool = '';
     public function open()
     {
         $this->isOpen = true;
@@ -51,11 +52,18 @@ class Studentstats extends ModalComponent
     }
     public function close()
     {
+        $this->selectedSchool = '';
         $this->isOpen = false;
+        $this->isEdit = false;
         $this->dispatch('unlock-scroll');
     }
 
-
+    public function updatedSelectedSchool($value)
+    {
+        if (!is_numeric($value)) {
+            $this->is_teacher = false;
+        }
+    }
     public function editStudent()
     {
         $this->validate([
@@ -69,18 +77,19 @@ class Studentstats extends ModalComponent
         $student->name = $this->f_name;
         $student->surname = $this->l_name;
         $student->role = $this->is_teacher ? 'Teacher' : 'Student';
-
+        $student->school_id = $this->selectedSchool ?: null;
         if (!empty($this->password)) {
             $student->password = Hash::make($this->password);
         }
         $student->save();
         $this->loadStudent($this->student->id);
-        $this->dispatch('editStudent');
         $this->dispatch('success');
+        $this->dispatch('updateUser');
+
 
     }
 
-    protected $listeners = ['openStats' => 'loadStudent'];
+    protected $listeners = ['openUserStats' => 'loadStudent'];
 
     public function loadStudent($id)
     {
@@ -104,17 +113,18 @@ class Studentstats extends ModalComponent
                     ->whereRaw('user_records.timestamp = (SELECT MAX(timestamp) FROM user_records WHERE user_records.user_id = users.id)');
             })
             ->where('users.id', $id)
-            ->select('users.*', 'user_records.timestamp as date')
-            ->first();
+            ->select('users.*', 'user_records.timestamp as date', 'users.school_id')->first();
 
+        $this->selectedSchool = $this->student->school_id ?? '';
         $this->f_name = $this->student->name;
         $this->l_name = $this->student->surname;
         $this->is_teacher = $this->student->role === 'Teacher';
         $this->isOpen = true;
     }
+
     public function render()
     {
-
-        return view('livewire.teachers.studentstats');
+        $this->schools = School::all();
+        return view('livewire.admin.userstats');
     }
 }

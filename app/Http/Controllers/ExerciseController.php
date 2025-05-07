@@ -28,4 +28,34 @@ class ExerciseController extends Controller
 
         return view('exercises.exercises-users')->with('exercises', $exercises);
     }
+
+    public function getExercise($part,$id) {
+        $exercise = Exercise::find($id);
+        $questions = $exercise->questions;
+        
+        return view('exercises.play')->with('exercise',$exercise)->with('questions',$questions);
+    }
+
+    public function editExercise($part, $id)
+    {
+        $exercise = Exercise::findOrFail($id);
+    
+        // Map part number to corresponding view file
+        $views = [
+            1 => 'exercises.edit.partone',
+            2 => 'exercises.edit.parttwo',
+            3 => 'exercises.edit.partthree',
+            4 => 'exercises.edit.partfour',
+        ];
+    
+        // If the part is not valid, abort with 404
+        if (!array_key_exists($part, $views)) {
+            abort(404);
+        }
+    
+        return view($views[$part], [
+            'exercise' => $exercise,
+            'questions' => $exercise->questions,
+        ]);
+    }
 }

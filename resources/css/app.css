@@ -7,24 +7,58 @@
     background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
 
 }
+
+.label {
+    height: auto !important;
+}
+
 .navbarBorder {
     border-bottom-width: 1px;
     border-color: #390040;
 }
+
 .sidenavBorder {
     border-right-width: 1px;
     border-color: #390040;
 }
+
 .appbg {
     background-color: #C5F1FF;
     background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
 }
+
 .buttonBorder {
     border-width: 1px;
     border-color: #390040;
 }
 
+.wireui-select .wireui-label {
+    height: auto !important;
+    min-height: unset !important;
+}
 
+
+[x-data="wireui_select"] li:hover {
+    background-color: #e0f2fe !important;
+    color: #1e293b !important;
+}
+
+[x-data="wireui_select"] li[aria-selected="true"] {
+    background-color: #bfdbfe !important;
+    font-weight: 600;
+}
+
+[x-data="wireui_select"] li:hover {
+    @apply text-override-black !important;
+}
+
+[x-data="wireui_select"] li:hover {
+    color: #000000 !important;
+}
+
+li.hover\:text-white:hover {
+    color: #000 !important;
+}
 
 .scrollBarThin {
     scrollbar-width: thin;

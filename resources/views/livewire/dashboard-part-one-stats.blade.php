@@ -1,3 +1,5 @@
+@if(sizeof($stats) > 0)
+
 <div wire:ignore>
     <canvas id="partOneChart"></canvas>
 </div>
@@ -7,6 +9,7 @@
     console.log("Livewire script is running...");
 
     let scoresData = @json($stats);
+    scoresData = scoresData.reverse();
 
     console.log("Scores Data:", scoresData);
 
@@ -92,7 +95,8 @@
                     y: {
                         title: { display: true, text: "Score" },
                         beginAtZero: true,
-                        max: 8
+                        suggestedMax: 8,
+                        min: 0
                     }
                 }
             }
@@ -102,3 +106,8 @@
     }
 </script>
 @endscript
+@else
+    <div class="h-[160px] flex items-center justify-center">
+        <h3 class="text-gray-600 text-lg">You haven't done any exercises yet!</h3>
+    </div>
+@endif
