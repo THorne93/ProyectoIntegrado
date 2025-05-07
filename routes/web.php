@@ -41,10 +41,14 @@ Route::post('exercises/finish', [ExerciseController::class, 'submit'])->name('fi
 Route::get('students', Students::class)->name('students')->middleware(middleware: ['auth']);
 
 Route::get('admin/exercises', Exercises::class)->name('admin.exercises')->middleware(['auth']);
-Route::get('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'editExercise'])
-    ->name('admin.exercises.edit')
-    ->middleware(['auth']);
-    Route::post('/extract-text', [ImageTextController::class, 'extractTextFromImage']);
-    Route::get('admin/schools', Schools::class)->name('admin.schools')->middleware(['auth']);
+Route::get('admin/exercises/part{part}/create', [ExerciseController::class, 'create'])->name('admin.exercises.create')->middleware(['auth']);
+Route::get('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'editExercise'])->name('admin.exercises.edit')->middleware(['auth']);
+Route::post('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'updateExercise'])->name('admin.exercises.edit')->middleware(['auth']);
+
+
+Route::get('admin/schools', Schools::class)->name('admin.schools')->middleware(['auth']);
 Route::get('admin/users', Users::class)->name('admin.users')->middleware(['auth']);
+
+
+Route::post('/extract-text', [ImageTextController::class, 'extractTextFromImage']);
 require __DIR__ . '/auth.php';

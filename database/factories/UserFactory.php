@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'name' => fake('es_ES')->firstName(),
             'surname' => fake('es_ES')->lastName(),
             'email' => fake('es_ES')->unique()->safeEmail(),
-            'school' => $possible_schools[fake()->numberBetween(0,5)],
+            'school_id' => $possible_schools[fake()->numberBetween(0,5)],
             'role' => 'Student',
             'email_verified_at' => now(),
             'account_verified' => true,
