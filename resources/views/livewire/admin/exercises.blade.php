@@ -30,7 +30,7 @@
                             @foreach (${'part' . $i} as $exercise)
                                 <tr
                                     class="bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-4 py-2 text-black">{{ $exercise->title }}</td>
+                                    <td class="px-12 py-2 text-black">{{ $exercise->title }}</td>
                                     <td class="px-4 py-2">
                                         <div class="flex w-full gap-2">
                                             <a href="{{ route('admin.exercises.edit', ['part' => $exercise->part, 'id' => $exercise->id]) }}"

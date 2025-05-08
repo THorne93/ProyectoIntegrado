@@ -35,6 +35,7 @@
                         @enderror
                     </div>
                 </div>
+                <div class="mx-2">
                 @foreach ($questions[0]->choices as $index => $choice)
         <div class="flex items-center mb-4 w-full">
             <span class="text-lg font-semibold mr-2">{{ $index }}</span>
@@ -65,6 +66,7 @@
             </ul>
         </div>
     @endforeach
+    </div>
                 <div class="flex justify-center w-full mt-4">
                     <button type="submit"
                         class="px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Submit</button>

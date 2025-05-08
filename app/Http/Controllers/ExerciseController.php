@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Answer;
 use DB;
 use App\Models\Exercise;
 use App\Models\Question;
@@ -80,7 +81,17 @@ class ExerciseController extends Controller
                 $exercise->save();
                 return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 2:
-                break;
+                $question = Question::where('exercise_id', $id)->first();
+                $exercise->title = $request->input('title');
+                $question->prompt = $request->input('content');
+                foreach ($request->input('answers') as $value) {
+                    $answer = Answer::findOrFail($value['id']);
+                    $answer->value = $value['value'];
+                    $answer->save();
+                }
+                $question->save();
+                $exercise->save();
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 3:
                 break;
             case 4:
@@ -122,7 +133,22 @@ class ExerciseController extends Controller
                 }
                 return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 2:
-                break;
+                $exercise = new Exercise();
+                $exercise->part = 2;
+                $exercise->title = $request->input('title');
+                $exercise->save();
+                $question = new Question();
+                $question->exercise_id = $exercise->id;
+                $question->prompt = $request->input('content');
+                $question->save();
+                foreach ($request->input('answers') as $value) {
+                    $answer = new Answer();
+                    $answer->question_id = $question->id;
+                    $answer->value = $value['value'];
+                    $answer->save();
+                }
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+
             case 3:
                 break;
             case 4:
