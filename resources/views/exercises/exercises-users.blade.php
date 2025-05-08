@@ -1,7 +1,6 @@
 <x-app-layout>
 
     <div class=" h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-        <livewire:exercise.launcher />
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
 
             @foreach ($exercises as $index => $exercise)
@@ -50,4 +49,6 @@
 
         </div>
     </div>
+    <livewire:exercise.launcher />
+
 </x-app-layout>

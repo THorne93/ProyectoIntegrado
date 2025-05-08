@@ -7,7 +7,7 @@
     background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
 
 }
-
+[x-cloak] { display: none !important; }
 .auto-resize-input {
     width: auto;
     max-width: 100%;

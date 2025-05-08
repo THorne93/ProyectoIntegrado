@@ -1,4 +1,4 @@
-<div x-data="{ open: @entangle('isOpen').live }">
+<div x-cloak x-data="{ open: @entangle('isOpen').live }">
     <!-- Overlay (Prevents clicking on background) -->
     <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 z-40" x-transition.opacity @click="open = false">
     </div>
