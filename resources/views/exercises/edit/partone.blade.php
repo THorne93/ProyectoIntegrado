@@ -38,7 +38,7 @@
                 <div class="mx-2">
                 @foreach ($questions[0]->choices as $index => $choice)
         <div class="flex items-center mb-4 w-full">
-            <span class="text-lg font-semibold mr-2">{{ $index }}</span>
+            <span class="text-lg font-semibold w-4 mr-2">{{ $index }}</span>
             
             <ul class="flex flex-row justify-between gap-4 mx-2 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 

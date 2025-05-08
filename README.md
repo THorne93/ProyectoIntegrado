@@ -66,5 +66,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # ProyectoIntegrado
 
-
 To use the image to text function you need to have pytesseract installed alongside Tesseract OCR engine. The engine can be installed via https://github.com/tesseract-ocr/tesseract and pytesseract using the command 'pip install -r requirements.txt'   

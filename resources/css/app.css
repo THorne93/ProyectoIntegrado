@@ -8,6 +8,12 @@
 
 }
 
+.auto-resize-input {
+    width: auto;
+    max-width: 100%;
+    box-sizing: content-box;
+}
+
 .label {
     height: auto !important;
 }

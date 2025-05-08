@@ -62,7 +62,16 @@ class ExerciseController extends Controller
             'questions' => $exercise->questions,
         ]);
     }
-
+    public function create($part)
+    {
+        $views = [
+            1 => 'exercises.create.partone',
+            2 => 'exercises.create.parttwo',
+            3 => 'exercises.create.partthree',
+            4 => 'exercises.create.partfour',
+        ];
+        return view($views[$part]);
+    }
     public function updateExercise($part, $id, Request $request)
     {
         $exercise = Exercise::findOrFail($id);
@@ -93,21 +102,35 @@ class ExerciseController extends Controller
                 $exercise->save();
                 return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 3:
-                break;
-            case 4:
-                break;
-        }
-    }
+                $question = Question::where('exercise_id', $id)->first();
+                $exercise->title = $request->input('title');
+                $question->prompt = $request->input('content');
+                foreach ($request->input('answers') as $value) {
+                    $answer = Answer::findOrFail($value['id']);
+                    $answer->value = $value['value'];
+                    $answer->hint = $value['hint'];
+                    $answer->save();
+                }
+                $question->save();
+                $exercise->save();
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
 
-    public function create($part)
-    {
-        $views = [
-            1 => 'exercises.create.partone',
-            2 => 'exercises.create.parttwo',
-            3 => 'exercises.create.partthree',
-            4 => 'exercises.create.partfour',
-        ];
-        return view($views[$part]);
+            case 4:
+                $exercise->title = $request->input('title');
+                foreach ($request->input('answers') as $value) {
+                    $question = Question::findOrFail($value['id']);
+                    $question->prompt = $value['prompt'];
+                    $question->before_prompt = $value['before'];
+                    $question->after_prompt = $value['after'];
+                    $answer = Answer::where('question_id', $question->id)->first();
+                    $answer->hint = $value['hint'];
+                    $answer->value = implode('|', [$value['a1'], $value['a2']]);
+                    $answer->save();
+                    $question->save();
+                }
+                $exercise->save();
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+        }
     }
 
     public function submit($part, Request $request)
@@ -150,9 +173,41 @@ class ExerciseController extends Controller
                 return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
 
             case 3:
-                break;
+                $exercise = new Exercise();
+                $exercise->part = 3;
+                $exercise->title = $request->input('title');
+                $exercise->save();
+                $question = new Question();
+                $question->exercise_id = $exercise->id;
+                $question->prompt = $request->input('content');
+                $question->save();
+                foreach ($request->input('answers') as $value) {
+                    $answer = new Answer();
+                    $answer->question_id = $question->id;
+                    $answer->value = $value['value'];
+                    $answer->hint = $value['hint'];
+                    $answer->save();
+                }
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
             case 4:
-                break;
+                $exercise = new Exercise();
+                $exercise->part = 4;
+                $exercise->title = $request->input('title');
+                $exercise->save();
+                foreach ($request->input('answers') as $value) {
+                    $question = new Question();
+                    $question->exercise_id = $exercise->id;
+                    $question->prompt = $value['prompt'];
+                    $question->before_prompt = $value['before'];
+                    $question->after_prompt = $value['after'];
+                    $question->save();
+                    $answer = new Answer();
+                    $answer->question_id = $question->id;
+                    $answer->hint = $value['hint'];
+                    $answer->value = implode('|', [$value['a1'], $value['a2']]);
+                    $answer->save();
+                }
+                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
         }
     }
 }

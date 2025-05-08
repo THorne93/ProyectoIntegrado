@@ -6,6 +6,8 @@ use DateTime;
 use App\Models\Exercise;
 use App\Models\User;
 use App\Models\School;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\UserRecordsFactory;
 use DB;
@@ -25,6 +27,19 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             AnswerSeeder::class,
             ChoiceSeeder::class
+        ]);
+        DB::table('users')->insert([
+            [
+                'password' =>Hash::make('1234'),
+                'name' => 'Ad',
+                'surname' => 'min',
+                'email' => 'admin@admin.com',
+                'school_id' =>null,
+                'role' => 'Admin',
+                'email_verified_at' => now(),
+                'account_verified' => true,
+                'remember_token' => Str::random(10),
+            ]
         ]);
 
         $users = User::all()->count();
