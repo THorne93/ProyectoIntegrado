@@ -1,5 +1,6 @@
 {
     "name": "wireui/wireui",
+    "version": "1.0.0",
     "type": "library",
     "description": "TallStack components",
     "license": "MIT",

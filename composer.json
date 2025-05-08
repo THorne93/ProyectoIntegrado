@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.7.0",
-        "wire-elements/modal": "^2.0"
+        "wire-elements/modal": "^2.0",
+        "wireui/wireui": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -32,7 +33,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "wireui/wireui":"fixed_vendor/wireui/wireui/src/"
+            "WireUi\\": "fixed_vendor/wireui/wireui/src/"
         }
     },
     "autoload-dev": {
@@ -61,6 +62,15 @@
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
         ]
     },
+    "repositories": [
+        {
+            "type": "path",
+            "version": "1.0.0",
+            "minimum-stability": "stable",
+            "prefer-stable": true,
+            "url": "fixed_vendor/wireui/wireui"
+        }
+    ],
     "extra": {
         "laravel": {
             "dont-discover": []
