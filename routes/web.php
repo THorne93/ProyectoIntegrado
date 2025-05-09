@@ -4,6 +4,7 @@ use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ImageTextController;
 use App\Http\Controllers\SchoolController;
 use App\Livewire\Admin\Exercises;
+use App\Livewire\Statistics;
 use App\Livewire\Admin\Schools;
 use App\Livewire\Admin\Users;
 use App\Livewire\Teachers\Students;
@@ -50,6 +51,7 @@ Route::post('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 
 Route::get('admin/schools', Schools::class)->name('admin.schools')->middleware(['auth']);
 Route::get('admin/users', Users::class)->name('admin.users')->middleware(['auth']);
 
+Route::get('statistics/{id}',Statistics::class)->name('statistics')->middleware(['auth']);
 
 Route::post('/extract-text', [ImageTextController::class, 'extractTextFromImage']);
 require __DIR__ . '/auth.php';

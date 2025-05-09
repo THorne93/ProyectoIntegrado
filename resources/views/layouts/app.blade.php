@@ -18,12 +18,13 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.css">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.js"
+        defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <script src="https://kit.fontawesome.com/04e8bd4d22.js" crossorigin="anonymous"></script>
-    @livewireStyles
     @wireUiScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased appbg overflow-hidden">
@@ -46,11 +47,11 @@
             {{ $slot }}
         </main>
     </div>
-    
+
     @stack('scripts')
-    @livewireScripts
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
+    @livewireScripts
 </body>
 
 </html>

@@ -9,6 +9,7 @@
     console.log("Livewire script is running...");
 
     let scoresData = @json($stats);
+    console.log(scoresData)
     scoresData = scoresData.reverse();
 
     console.log("Scores Data:", scoresData);
