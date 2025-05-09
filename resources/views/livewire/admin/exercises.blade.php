@@ -20,7 +20,7 @@
                 <div class="max-h-48 w-full overflow-y-auto scrollBarThin">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead
-                            class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 sticky top-0 border-b border-gray-300 dark:border-gray-600">
+                            class="text-xs text-gray-700 uppercase bg-gray-2news00 dark:bg-gray-700 dark:text-gray-400 sticky top-0 border-b border-gray-300 dark:border-gray-600">
                             <tr>
                                 <th class="px-4 text-center py-2">Title</th>
                                 <th class="px-4 w-2/6 text-center py-2">Actions</th>

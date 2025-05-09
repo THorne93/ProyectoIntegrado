@@ -109,7 +109,7 @@
 
                     <div class="mt-4">
                         <x-select label="Select Students" wire:model.live.debounce.500ms="selectedStudents" multiselect
-                            option-label="name" option-value="id" :options="$students
+                            :searchable="true" option-label="name" option-value="id" :options="$students
                                 ->map(
                                     fn($s) => [
                                         'id' => $s->id,

@@ -37,7 +37,7 @@ test('it should have array properties', function () {
         'hide-empty-message' => false,
         'option-description' => null,
         'without-items-count' => true,
-        'min-items-for-search' => 11,
+        'min-items-for-search' => 0,
     ]);
 });
 
@@ -72,7 +72,7 @@ test('it should have properties in component', function () {
     expect($this->component->alwaysFetch)->toBeFalse();
     expect($this->component->flipOptions)->toBeFalse();
     expect($this->component->optionKeyValue)->toBeFalse();
-    expect($this->component->minItemsForSearch)->toBe(11);
+    expect($this->component->minItemsForSearch)->toBe(0);
     expect($this->component->hideEmptyMessage)->toBeFalse();
     expect($this->component->withoutItemsCount)->toBeTrue();
 });

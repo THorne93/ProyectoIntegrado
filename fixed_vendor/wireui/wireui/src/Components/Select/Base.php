@@ -32,7 +32,7 @@ class Base extends WireUiComponent
         'hide-empty-message' => false,
         'option-description' => null,
         'without-items-count' => true,
-        'min-items-for-search' => 11,
+        'min-items-for-search' => 0,
     ];
 
     protected function except(): array

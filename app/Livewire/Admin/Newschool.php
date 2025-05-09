@@ -22,6 +22,14 @@ class Newschool extends Component
     {
         $this->success = true;
     }
+
+    public function updatedSelectedStudents($value)
+    {
+        // If the currently selected teacher is no longer in the list of selected students, reset it
+        if (!in_array($this->selectedTeacher, $this->selectedStudents)) {
+            $this->selectedTeacher = null;
+        }
+    }
     public function open()
     {
         $this->isOpen = true;
