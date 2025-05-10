@@ -17,6 +17,7 @@ class Base extends WireUiComponent
         'label' => null,
         'options' => null,
         'template' => null,
+        'small' => false,
         'clearable' => true,
         'async-data' => null,
         'right-icon' => 'chevron-up-down',

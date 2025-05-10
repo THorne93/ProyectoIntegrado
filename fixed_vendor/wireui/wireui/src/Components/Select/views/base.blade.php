@@ -7,6 +7,7 @@
         'optionLabel' => $optionLabel,
         'optionDescription' => $optionDescription,
         'hasSlot' => $slot->isNotEmpty(),
+        'small' => $small,
         'multiselect' => $multiselect,
         'searchable' => $searchable,
         'clearable' => $clearable,
@@ -36,7 +37,7 @@
     @endif
 
     {{-- Wrapper for layout fixing --}}
-    <div class="flex flex-col items-stretch w-full gap-1">
+    <div class="{{ !$multiselect ? 'max-h-12' : '' }} flex flex-col items-stretch w-full gap-1">
         <div role="button" class="cursor-pointer flex flex-wrap items-start w-full border-0 outline-0" tabindex="-1">
             <span class="text-sm text-gray-400 select-none" x-show="isEmpty()" x-text="getPlaceholder"></span>
 
@@ -62,8 +63,7 @@
                                     class="w-full inline-flex justify-between items-center py-0.5 pl-2 pr-1 rounded-full text-xs font-medium truncate
                                 bg-primary-100 text-primary-700 dark:bg-primary-700 dark:text-white shadow">
 
-                                    <span style="max-width: 6rem" class="select-none "
-                                        x-text="option.label"></span>
+                                    <span style="max-width: 6rem" class="select-none " x-text="option.label"></span>
 
                                     <button
                                         class="ml-2 text-xs flex items-center justify-center text-primary-500 hover:text-primary-700"
@@ -105,8 +105,8 @@
                     type="search" />
             </div>
 
-            <div class="overflow-y-auto select-none max-h-60 snap-y snap-proximity overscroll-auto soft-scrollbar"
-                tabindex="-1" name="wireui.select.options.{{ $name }}">
+            <div class="overflow-y-auto select-none max-h-60 snap-y  overscroll-auto soft-scrollbar" tabindex="-1"
+                name="wireui.select.options.{{ $name }}">
                 <ul x-ref="listing" wire:ignore>
                     <template x-for="(option, index) in displayOptions" :key="`${index}.${option.value}`">
                         <li tabindex="-1" :index="index"
