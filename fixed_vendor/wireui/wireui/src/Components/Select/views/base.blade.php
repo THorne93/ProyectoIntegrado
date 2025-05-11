@@ -37,7 +37,7 @@
     @endif
 
     {{-- Wrapper for layout fixing --}}
-    <div class="{{ !$multiselect ? 'max-h-12' : '' }} flex flex-col items-stretch w-full gap-1">
+    <div class="{{ $small ? 'max-h-32' : '' }} flex flex-col items-stretch w-full gap-1">
         <div role="button" class="cursor-pointer flex flex-wrap items-start w-full border-0 outline-0" tabindex="-1">
             <span class="text-sm text-gray-400 select-none" x-show="isEmpty()" x-text="getPlaceholder"></span>
 
@@ -60,13 +60,13 @@
                             :key="`selected.${index}.${option.value}.${option.label}`">
                             <div class="w-full">
                                 <span
-                                    class="w-full inline-flex justify-between items-center py-0.5 pl-2 pr-1 rounded-full text-xs font-medium truncate
+                                    class="w-full inline-flex justify-between items-center py-0.5 px-2 rounded-full text-xs font-medium truncate
                                 bg-primary-100 text-primary-700 dark:bg-primary-700 dark:text-white shadow">
 
                                     <span style="max-width: 6rem" class="select-none " x-text="option.label"></span>
 
                                     <button
-                                        class="ml-2 text-xs flex items-center justify-center text-primary-500 hover:text-primary-700"
+                                        class="mx-2 text-xs flex items-center justify-center text-primary-500 hover:text-primary-700"
                                         x-on:click.stop="unSelect(option)" tabindex="-1" type="button"
                                         x-show="config.clearable && !(config.readonly || config.disabled)">
                                         <x-dynamic-component :component="WireUi::component('icon')" class="w-3 h-3" name="x-mark" />

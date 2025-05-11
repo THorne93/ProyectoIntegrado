@@ -56,7 +56,7 @@
 
     <div class="mx-auto w-4/5 my-4 p-6 bg-white">
 
-        <div wire:ignore>
+        <div wire:ignore id="chart-container">
             <canvas id="myChart"></canvas>
         </div>
 
@@ -71,6 +71,11 @@
 
                     const data = @json($stats); // Assuming $data is passed from the controller
                     let myChart;
+
+                    const observer = new ResizeObserver(() => {
+                        myChart.resize();
+                    });
+                    observer.observe(document.getElementById('chart-container'));
 
                     if (!data || data.length === 0) {
                         console.log("No data available for the chart.");
@@ -173,8 +178,8 @@
                             pointStyle: 'line',
                             fill: false
                         };
-                        myChart.options.scales.y.max = recommendedMax;
-                        myChart.options.scales.y.suggestedMax = recommendedMax + 1;
+                        console.log(filteredData.map(d => d.part));
+                        myChart.options.scales.y.max = filteredData.some(item => item.part == 4) ? 12 : 8;
                         myChart.update();
                         console.log(filteredData);
                     }
@@ -185,6 +190,7 @@
                             labels: [],
                             datasets: [{
                                     label: 'Score',
+                                    type: 'line',
                                     data: [],
                                     borderColor: 'rgba(0, 209, 2, 1)',
                                     backgroundColor: 'rgba(0, 209, 2, 0.2)',
@@ -243,7 +249,7 @@
                                         text: 'Score'
                                     },
                                     beginAtZero: true,
-                                    max: 8
+
                                 }
                             }
                         }
@@ -286,62 +292,157 @@
             Detailed Stats
         </h5>
     </div>
-    <div class="flex items-start my-4 gap-4 mx-auto w-4/5 bg-white border border-gray-300 rounded-lg shadow-sm">
-        <div x-data="{ selectedParts: [] }" class=" p-4 w-2/5">
+    <div class="bg-white border w-4/5 border-gray-300 rounded-lg shadow-sm mx-auto">
+        <div class="flex  gap-4 items-start my-4 min-h-48">
 
-            <ul class="items-center w-full text-sm font-medium text-gray-900 rounded-lg sm:flex gap-1">
-                @foreach ([1, 2, 3, 4] as $part)
-                    <li class="sm:w-1/4 w-full">
+            {{-- PARTS + SUMMARY/BUTTON BLOCK --}}
+            <div class="w-2/5 p-4">
+                {{-- 1. Part Selector --}}
+                <label class="block mb-2 ps-3 text-sm font-semibold text-gray-700">Select Parts</label>
+                <ul class="items-center w-full text-sm font-medium text-gray-900 rounded-lg sm:flex gap-1">
+                    @foreach ([1, 2, 3, 4] as $part)
+                        <li class="sm:w-1/4 w-full">
+                            <div class="flex items-center ps-3">
+                                <input type="checkbox" id="part-checkbox-{{ $part }}"
+                                    value="{{ $part }}" wire:model.live="selectedParts"
+                                    class="w-5 h-5 text-blue-600">
+                                <label for="part-checkbox-{{ $part }}"
+                                    class="py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap">
+                                    Part {{ $part }}
+                                </label>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+
+                {{-- Summary + PDF button (below parts) --}}
+                <div class="mt-4 text-sm text-gray-700">
+                    <p class="mb-2">
+                        You have selected parts: {{ implode(', ', $selectedParts ?? []) ?: 'none' }},
+                        stats mode: {{ $detailedStatsSelect ?? 'none' }},
+                        selected exercises:
+                        @if (!empty($detailedSelectedExercises))
+                            {{ implode(', ', $detailedSelectedExercises) }}
+                        @else
+                            none
+                        @endif,
+                        with a limit of {{ $detailedStatsLimit }}
+                    </p>
+                </div>
+            </div>
+
+            {{-- The rest of the options --}}
+            <div class="w-1/5 my-4">
+                {{-- 2. Stats Mode Selector --}}
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Select Exercises</label>
+                <ul class="items-center text-sm font-medium text-gray-900 rounded-lg sm:flex">
+                    <li class="w-full">
                         <div class="flex items-center ps-3">
-                            <input type="checkbox" id="part-checkbox-{{ $part }}" value="{{ $part }}"
-                                wire:model.live="selectedParts" class="w-5 h-5 text-blue-600">
-                            <label for="part-checkbox-{{ $part }}"
-                                class="py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap">
-                                Part {{ $part }}
-                            </label>
+                            <input id="radio-all" wire:model.live='detailedStatsSelect' type="radio" value="all"
+                                name="list-radio"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                            <label for="radio-all"
+                                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">All</label>
                         </div>
                     </li>
-                @endforeach
-            </ul>
-        </div>
+                    <li class="w-full">
+                        <div class="flex items-center ps-3">
+                            <input id="radio-custom" wire:model.live='detailedStatsSelect' type="radio" value="custom"
+                                name="list-radio"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                            <label for="radio-custom"
+                                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Custom</label>
+                        </div>
+                    </li>
+                </ul>
+                <div class="mt-4 text-sm text-gray-700">
+                    <button wire:click='printPDF' @if (empty($detailedStats)) disabled @endif
+                        class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
+                        @else
+                            bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer @endif">
+                        Print PDF </button>
+                </div>
+            </div>
 
-        <ul class="items-center w-1/5 text-sm font-medium my-4 text-gray-900 rounded-lg sm:flex ">
-            <li class="w-full ">
-                <div class="flex items-center ps-3">
-                    <input id="horizontal-list-radio-license" wire:model.live='detailedStatsSelect' type="radio"
-                        value="all" name="list-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="horizontal-list-radio-license"
-                        class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">All
-                    </label>
-                </div>
-            </li>
-            <li class="w-full ">
-                <div class="flex items-center ps-3">
-                    <input id="horizontal-list-radio-id" wire:model.live='detailedStatsSelect' type="radio"
-                        value="custom" name="list-radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="horizontal-list-radio-id"
-                        class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Custom</label>
-                </div>
-            </li>
-        </ul>
-        @if ($detailedStatsSelect === 'custom' && $detailedListExercises && $detailedListExercises->isNotEmpty())
-            <div class="w-1/5 my-4">
-                <x-select multiselect :searchable="true" :small="true" option-label="name" option-value="id" :options="$detailedListExercises
-                    ->map(
-                        fn($s) => [
-                            'id' => $s->id,
-                            'name' => $s->title,
-                        ],
-                    )
-                    ->toArray()"
+            <div class="w-1/5 mt-4">
+                {{-- 3. Exercise Selector --}}
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Custom Exercises</label>
+                <x-select multiselect :searchable="true" :small="true" :disabled="!($detailedStatsSelect === 'custom' && $detailedListExercises && $detailedListExercises->isNotEmpty())" option-label="name"
+                    option-value="id" wire:model.live="detailedSelectedExercises" :options="$detailedListExercises
+                        ?->map(fn($s) => ['id' => $s->id, 'name' => $s->title])
+                        ->toArray() ?? []"
                     class="text-black rounded-md shadow-sm border-gray-300 focus:border-primary-500 focus:ring focus:ring-primary-200 dark:bg-white dark:text-black"
                     option-class="hover:bg-primary-100 hover:text-black"
                     option-selected-class="bg-primary-200 text-black font-semibold"
                     option-empty-class="text-gray-400 italic px-2 py-1" />
             </div>
-        @endif
 
+            <div class="mt-4 w-1/12">
+                {{-- 4. Result Limit Selector --}}
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Nº Results</label>
+                <select wire:model.live="detailedStatsLimit"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">30</option>
+                    <option selected value="0">All</option>
+                </select>
+            </div>
+
+            <div class="mt-4 pe-4">
+                {{-- 5. Go Button --}}
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Action</label>
+                @php
+                    $isDisabled =
+                        empty($selectedParts) ||
+                        ($detailedStatsSelect === null ||
+                            ($detailedStatsSelect === 'custom' && empty($detailedSelectedExercises)));
+                @endphp
+                <button wire:click="getDetailedStats"
+                    class="flex-grow px-4 py-2 border rounded transition-colors
+            {{ $isDisabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300' : 'bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer' }}"
+                    @if ($isDisabled) disabled @endif>
+                    Go
+                </button>
+            </div>
+
+        </div>
     </div>
+
+
+    @if ($detailedStats)
+        <div class="grid grid-cols-1 md:grid-cols-2  gap-4 py-4 w-4/5 mx-auto">
+            @foreach ($detailedStats as $key => $stat)
+                <div>
+
+                    <h2 class="text-xl px-6 py-2 bg-gray-50 font-bold dark:text-white">{{ $key }} - Part
+                        {{ $stat[0]->part }}
+                    </h2>
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 rounded-lg dark:text-gray-400 mb-6">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-gray-700 text-xs text-gray-700 dark:text-gray-400 uppercase">
+                                <th scope="col" class="px-6 py-3">Date</th>
+                                <th scope="col" class="px-6 py-3">Time taken</th>
+                                <th scope="col" class="px-6 py-3">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($stat as $record)
+                                <tr
+                                    class="odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                                    <td class="px-6 py-2">
+                                        {{ \Carbon\Carbon::parse($record->record_date)->format('M d, Y h:i A') }}</td>
+                                    <td class="px-6 py-2">
+                                        {{ str_pad(floor($record->time / 60), 2, '0', STR_PAD_LEFT) }}:{{ str_pad($record->time % 60, 2, '0', STR_PAD_LEFT) }}
+                                    </td>
+                                    <td class="px-6 py-2">{{ $record->score }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endforeach
+
+        </div>
+    @endif
 </div>

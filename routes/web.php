@@ -51,6 +51,7 @@ Route::post('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 
 Route::get('admin/schools', Schools::class)->name('admin.schools')->middleware(['auth']);
 Route::get('admin/users', Users::class)->name('admin.users')->middleware(['auth']);
 
+Route::get('statistics/pdf',[Statistics::class,'printPDF'])->name('statistics.pdf')->middleware(['auth']);
 Route::get('statistics/{id}',Statistics::class)->name('statistics')->middleware(['auth']);
 
 Route::post('/extract-text', [ImageTextController::class, 'extractTextFromImage']);
