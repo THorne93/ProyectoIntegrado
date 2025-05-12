@@ -74,9 +74,12 @@
                         in_array(request()->route()->getName(), ['exercises.part', 'exercises.play']) &&
                         request()->segment(2) == '1';
                 @endphp
+                @php
+                    $setExercise = \App\Models\Exercise::find(Auth::user()->set_exercise)?->part;
+                @endphp
                 <li>
                     <a href="{{ route('exercises.part', ['part' => 1]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive1 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive1 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $setExercise == '1' ? 'animate-customPulseNav' : ''}}">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
@@ -93,7 +96,7 @@
                 @endphp
                 <li>
                     <a href="{{ route('exercises.part', ['part' => 2]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive2 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive2 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $setExercise == '2' ? 'animate-customPulseNav' : ''}}">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
@@ -110,7 +113,7 @@
                 @endphp
                 <li>
                     <a href="{{ route('exercises.part', ['part' => 3]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive3 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive3 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $setExercise == '3' ? 'animate-customPulseNav' : ''}}">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
@@ -127,7 +130,7 @@
                 @endphp
                 <li>
                     <a href="{{ route('exercises.part', ['part' => 4]) }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive4 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive4 ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $setExercise == '4' ? 'animate-customPulseNav' : ''}}">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"

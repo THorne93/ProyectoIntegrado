@@ -73,9 +73,13 @@
                             class="w-1/2 text-gray-900 text-center bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             Test
                         </a>
-                        <button
+                        <button wire:click="triggerConfirm"
                             class=" w-1/2 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                            Set
+                            @if ($exerciseId == Auth::user()->set_exercise)
+                                Unset
+                            @else
+                                Set
+                            @endif
                         </button>
                     </div>
                 @endif
@@ -84,10 +88,10 @@
                         <table class="w-full table-auto border-collapse border-black">
                             <thead>
                                 <tr class="bg-gray-200 text-center">
-                                    <th class="px-4 p-2 w-2/6">Student</th>
-                                    <th class="px-4 p-2 w-1/6">Score</th>
-                                    <th class="px-4 p-2 w-1/6">Time (m:s)</th>
-                                    <th class="px-4 p-2 w-3/6">Date</th>
+                                    <th class=" p-2 me-2  w-2/6">Student</th>
+                                    <th class=" p-2 me-2  w-1/6">Score</th>
+                                    <th class=" p-2 me-2  w-1/6">Time (m:s)</th>
+                                    <th class="p-2  me-2 w-3/6">Date</th>
                                 </tr>
                             </thead>
                         </table>
@@ -98,10 +102,10 @@
                                     @foreach ($results as $result)
                                         <tr
                                             class=" odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                                            <td class="text-center w-2/6 px-4 p-2">{{ $result->name }} {{ $result->surname }}</td>
-                                            <td class="text-center w-1/6 px-4 p-2">{{ $result->score }}</td>
-                                            <td class="text-center w-1/6 px-4 p-2">{{ str_pad(floor($result->time_spent / 60), 2, '0', STR_PAD_LEFT) }}:{{ str_pad($result->time_spent % 60, 2, '0', STR_PAD_LEFT) }}</td>
-                                            <td class="text-center w-2/6 px-4 p-2">
+                                            <td class="text-center w-2/6  p-2">{{ $result->name }} {{ $result->surname }}</td>
+                                            <td class="text-center w-1/6  p-2">{{ $result->score }}</td>
+                                            <td class="text-center w-1/6  p-2">{{ str_pad(floor($result->time_spent / 60), 2, '0', STR_PAD_LEFT) }}:{{ str_pad($result->time_spent % 60, 2, '0', STR_PAD_LEFT) }}</td>
+                                            <td class="text-center w-2/6  p-2">
                                                 {{ \Carbon\Carbon::parse($result->timestamp)->format('d-m-Y') }}
                                             </td>
                                         </tr>
@@ -112,11 +116,39 @@
                     </div>
                 @else
                     <div class="">
-                        <p class="text-center">You have no results yet!</p>
+                        <p class="text-center">No one has done this exercise yet!</p>
                     </div>
+                @endif
+                @if ($toDoStudents)
+                                        <h5 
+                            class="ml-2 text-xl text-center font-bold tracking-tight truncate text-gray-900 dark:text-white">
+                            Not done by:
+                            <div class="flex flex-wrap text-center gap-2 p-2 my-2">
+                                @foreach ($toDoStudents as $student)
+                            <span class="bg-amber-400 rounded-full text-sm mx-1 p-2">{{ $student->name.' '.$student->surname }}</span>
+                            @endforeach
+</div>
+                        </h5>
                 @endif
             @endif
 
         </div>
     </div>
+        <div x-cloak x-data="{ confirm: @entangle('confirmLaunch').live }" x-show="confirm"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" x-transition>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Confirm Exercise</h2>
+                <p class="text-gray-700 dark:text-gray-300">Are you sure you want set this exercise?</p>
+                <div class="flex justify-end gap-4">
+                    <button wire:click='triggerConfirm'
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button wire:click='setExercise'
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
+                        Yes, Submit
+                    </button>
+                </div>
+            </div>
+        </div>
 </div>

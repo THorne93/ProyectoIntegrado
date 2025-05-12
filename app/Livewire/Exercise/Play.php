@@ -15,7 +15,7 @@ class Play extends Component
     public $minutes = 0;
     public $seconds = 0;
     public $finalScore = 0;
-    public $confirm = false;
+    public $confirmPlay = false;
     public $finished = false;
     public $userAnswers = [];
     public $startTime;
@@ -24,7 +24,7 @@ class Play extends Component
 
     public function triggerConfirm()
     {
-        $this->confirm = !$this->confirm;
+        $this->confirmPlay = !$this->confirmPlay;
     }
 
 
@@ -42,7 +42,7 @@ class Play extends Component
 
 
 
-        $this->confirm = false;
+        $this->confirmPlay = false;
         $this->finished = true;
         if ($this->exercise->part == 1) {
             foreach ($this->questions[0]->choices as $index => $choice) {
@@ -112,6 +112,11 @@ class Play extends Component
             'score' => $this->finalScore,
             'time_spent' => abs($elapsed),
         ]);
+        if ($this->exercise->id == Auth::user()->set_exercise && Auth::user()->role == 'Student') {
+            $student = Auth::user();
+            $student->set_exercise = null;
+            $student->save();
+        }
     }
 
     public function render()

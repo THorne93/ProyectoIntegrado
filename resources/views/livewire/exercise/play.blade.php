@@ -6,7 +6,7 @@
                 seconds: 0,
                 minutes: 0,
                 interval: null,
-                confirm: @entangle('confirm')
+                confirm: @entangle('confirmPlay')
             }" x-init="interval = setInterval(() => {
                 if (!confirm) {
                     seconds++;
@@ -223,24 +223,25 @@
             <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
             <input type="hidden" name="part" value="{{ $exercise->part }}">
             <input type="hidden" name="time" x-ref="time" :value="`${minutes}:${seconds}`">
-        </form>
-
-        <div x-data="{ confirm: @entangle('confirm').live }" x-show="confirm"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" x-transition>
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Confirm Submission</h2>
-                <p class="text-gray-700 dark:text-gray-300">Are you sure you want to submit your answers?</p>
-                <div class="flex justify-end gap-4">
-                    <button wire:click='triggerConfirm'
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
-                        Yes, Submit
-                    </button>
-                </div>
+           <div x-cloak x-data="{ confirm: @entangle('confirmPlay').live }" x-show="confirm"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" x-transition>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Confirm Submission</h2>
+            <p class="text-gray-700 dark:text-gray-300">Are you sure you want to submit your answers?</p>
+            <div class="flex justify-end gap-4">
+                <button wire:click='triggerConfirm'
+                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
+                    Yes, Submit
+                </button>
             </div>
         </div>
     </div>
+        </form>
+
+    </div>
+
 </div>

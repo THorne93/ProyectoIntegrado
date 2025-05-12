@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Exercise;
 use App\Models\Exercise;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,6 +10,13 @@ use Livewire\Component;
 class Launcher extends Component
 {
 
+    public $toDoStudents;
+    public $confirmLaunch = false;
+
+    public function triggerConfirm()
+    {
+        $this->confirmLaunch = !$this->confirmLaunch;
+    }
     public $isOpen = false;
     public $results;
     public $titleEx;
@@ -16,7 +24,20 @@ class Launcher extends Component
     protected $listeners = ['openLauncher' => 'launch'];
 
 
+    public function setExercise()
+    {
+        $students = User::where('school_id', Auth::user()->school_id)
+            ->get();
+        foreach ($students as $student) {
+            $student->set_exercise = $this->exerciseId;
+            $student->save();
+        }
 
+        $this->isOpen = false;
+        $this->dispatch('unlock-scroll');
+        $this->confirmLaunch = !$this->confirmLaunch;
+        $this->redirect(request()->header('Referer'));
+    }
     public function launch($id)
     {
         $this->exerciseId = $id;
@@ -35,12 +56,20 @@ class Launcher extends Component
     public function render()
     {
 
+
         if (Auth::user()->role == 'Student') {
             $this->results = DB::table('user_records')
                 ->where('user_id', Auth::id())
                 ->where('exercise_id', $this->exerciseId)
                 ->orderBy('timestamp', 'desc')->get();
         } else {
+
+            if ($this->exerciseId == Auth::user()->set_exercise) {
+                $this->toDoStudents = User::where('school_id', Auth::user()->school_id)
+                    ->where('set_exercise', $this->exerciseId)
+                    ->get();
+            }
+
             $this->results = DB::table('user_records')
                 ->join('users', 'users.id', '=', 'user_records.user_id')
                 ->where('user_records.exercise_id', $this->exerciseId)
