@@ -10,7 +10,7 @@ new class extends Component {
     public function logout(Logout $logout): void
     {
         $logout();
-        
+
         $this->redirect('/', navigate: true);
     }
 }; ?>
@@ -20,12 +20,31 @@ new class extends Component {
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">B2 Exam
-                    Lab or something</span>
+                    Lab</span>
             </div>
-            <div class="flex items-end justify-end ">
-                    <span class="self-end text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Good @if (now()->hour < 12) morning, @elseif(now()->hour < 18) afternoon, @else evening, @endif {{ Auth::user()->name." ".Auth::user()->surname }}</span>
-            </div>
+            @if (Auth::user())
 
+
+                <div class="flex items-end justify-end ">
+                    <span class="self-end text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Good
+                        @if (now()->hour < 12) morning, @elseif(now()->hour < 18) afternoon, @else evening, @endif
+                        {{ Auth::user()->name . " " . Auth::user()->surname }}</span>
+                </div>
+            @else
+                <div class="flex items-end justify-end ">
+                    <a href="{{ route('login') }}"
+                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                        Log in
+                    </a>
+
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}"
+                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                            Register
+                        </a>
+                    @endif
+                </div>
+            @endif
         </div>
     </div>
 </nav>

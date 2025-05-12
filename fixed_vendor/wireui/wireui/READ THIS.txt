@@ -1,0 +1,8 @@
+Don't start to try to understand why this is here. Basically it's the only way I could find to get a 
+component to work the way I wanted.
+
+If you're in here trying to debug something, it's already too late. Editing this component is kind of
+like performing a lobotomy... delete stuff until something happens and hope you haven't deleted something
+important....
+
+Good luck!

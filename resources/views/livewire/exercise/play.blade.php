@@ -1,5 +1,5 @@
 <div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-    <div class="w-3/4 mx-auto space-y-6 p-8 bg-white">
+    <div class="w-3/4 mx-auto space-y-6 p-2 bg-white">
         <form x-ref="submitForm" class="p-4" method="post" wire:submit.prevent="submitAnswers">
 
             <div x-data="{
@@ -17,8 +17,7 @@
                 } else {
                     clearInterval(interval);
                 }
-            }, 1000)"
-                class="text-xl font-semibold dark:text-white bg-white px-4 py-2 z-50">
+            }, 1000)" class="text-xl font-semibold dark:text-white bg-white px-4 py-2 z-50">
                 <span x-text="String(minutes).padStart(2, '0')"></span> :
                 <span x-text="String(seconds).padStart(2, '0')"></span>
             </div>
@@ -38,30 +37,34 @@
                     @endforeach
                 @else
                     @foreach ($questions as $index => $question)
-                        <div class="max-w-full overflow-hidden py-3 border-b border-b-gray-200">
-                            <p>{!! $question->prompt !!}</p>
-                            <p class="my-1"><strong>{{ $question->answers[0]->hint }}</strong></p>
-                            <p>
-                                {{ $question->before_prompt }}
-                                <input type="text" autocomplete="off" id="{{ $index }}"
-                                    wire:model.defer="userAnswers.{{ $index }}"
-                                    class="w-2/5 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                {{ $question->after_prompt }}
-                                @if ($finished)
-                                    @if (isset($results[$index]))
-                                        @if ($results[$index] == 2)
-                                            <span class="text-green-600 font-bold ml-2">✔ {{ $results[$index] }}/2</span>
-                                        @elseif($results[$index] == 1)
-                                            <span class="text-yellow-300 font-bold ml-2">✘ {{ $results[$index] }}/2</span>
-                                            <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
-                                        @else
-                                            <span class="text-red-600 font-bold ml-2">✘ {{ $results[$index] }}/2</span>
-                                            <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
-                                        @endif
-                                    @endif
-                                @endif
-                            </p>
-                        </div>
+                                        <div class="max-w-full overflow-hidden py-3 border-b border-b-gray-200">
+                                        <p><span class="text-lg w-4 font-semibold mr-2">{{ $index+1 }}.</span> {!! $question->prompt !!}</p>
+                                            <p class="my-1"><strong>{{ $question->answers[0]->hint }}</strong></p>
+                                            <p>
+                                                {{ $question->before_prompt }}
+                                                <input type="text" autocomplete="off" id="answer-{{ $index }}" data-index="{{ $index }}"
+                                                    oninput="validateWordCount(this, 2, 5)" wire:model.defer="userAnswers.{{ $index }}"
+                                                    class="w-2/5 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                                                {{ $question->after_prompt }}
+
+                                                <span id="word-count-{{ $index }}" class="block text-xs mt-1 text-gray-500"></span>
+                        <span id="word-warning-{{ $index }}" class="block text-xs mt-1 text-red-500 font-semibold"></span>
+                                                        @if ($finished)
+                                                            @if (isset($results[$index]))
+                                                                @if ($results[$index] == 2)
+                                                                    <span class="text-green-600 font-bold ml-2">✔ {{ $results[$index] }}/2</span>
+                                                                @elseif($results[$index] == 1)
+                                                                    <span class="text-yellow-300 font-bold ml-2">✘ {{ $results[$index] }}/2</span>
+                                                                    <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
+                                                                @else
+                                                                    <span class="text-red-600 font-bold ml-2">✘ {{ $results[$index] }}/2</span>
+                                                                    <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
+                                                                @endif
+                                                            @endif
+                                                        @endif
+                                                    </p>
+                                                </div>
                     @endforeach
 
                 @endunless
@@ -70,9 +73,9 @@
                     <div class="w-full overflow-y-auto scrollBarThin">
                         @if ($exercise->part == 1)
                             @foreach ($questions[0]->choices as $index => $choice)
-                                <div class="flex items-center mb-4 w-full">
+                                <div class="flex  items-center mb-2 w-full">
                                     <!-- Question Index on the left -->
-                                    <span class="text-lg font-semibold mr-2">{{ $index }}.</span>
+                                    <span class="text-lg w-4 font-semibold mr-2">{{ $index }}.</span>
 
                                     <ul
                                         class="flex items-center justify-between  mx-2 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -86,8 +89,8 @@
                                                     type="radio" name="question-{{ $index }}"
                                                     value="{{ $value }}"
                                                     @if ($index == 0) disabled
-                                                @if (trim($value) === trim($choice->is_correct)) checked @endif
-                                                @else wire:model.defer="userAnswers.{{ $index }}"
+                                                        @if (trim($value) === trim($choice->is_correct)) checked @endif
+                                                        @else wire:model.defer="userAnswers.{{ $index }}"
                                                     @endif
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                                                 >
@@ -114,8 +117,8 @@
                             @endforeach
                         @elseif($exercise->part == 2)
                             @foreach ($questions[0]->answers as $index => $question)
-                                <div class="flex items-center mb-4 w-full">
-                                    <span class="text-lg font-semibold mr-2">{{ $index }}.</span>
+                                <div class="flex items-center mb-2 w-full">
+                                    <span class="text-lg w-4 font-semibold mr-2">{{ $index }}.</span>
 
                                     <input type="text" autocomplete="off" id="{{ $index }}"
                                         placeholder="{{ $index == 0 ? $question->value : '' }}"
@@ -136,8 +139,8 @@
                             @endforeach
                         @elseif($exercise->part == 3)
                             @foreach ($questions[0]->answers as $index => $question)
-                                <div class="flex items-center mb-4 w-full">
-                                    <span class="text-lg font-semibold mr-2">{{ $index }}.</span>
+                                <div class="flex items-center mb-2 w-full">
+                                    <span class="text-lg w-4 font-semibold mr-2">{{ $index }}.</span>
 
                                     <input type="text" autocomplete="off" id="{{ $index }}"
                                         placeholder="{{ $index == 0 ? $question->value : '' }}"
@@ -192,7 +195,34 @@
                 </div>
 
 
+@push('scripts')
+    <script>
+        function validateWordCount(input, min, max) {
+            const index = input.dataset.index;
+            const words = input.value.trim().split(/\s+/).filter(w => w.length);
+            const countDisplay = document.getElementById(`word-count-${index}`);
+            const warningDisplay = document.getElementById(`word-warning-${index}`);
 
+            countDisplay.textContent = `${words.length} / ${max} words`;
+
+            if (words.length < min) {
+                warningDisplay.textContent = `You need to use at least ${min} words.`;
+            } else if (words.length > max) {
+                warningDisplay.textContent = `You can only use a maximum of ${max} words.`;
+            } else {
+                warningDisplay.textContent = '';
+            }
+        }
+    </script>
+
+
+@endpush
+
+            </div>
+
+            <input type="hidden" name="exercise_id" value="{{ $exercise->id }}">
+            <input type="hidden" name="part" value="{{ $exercise->part }}">
+            <input type="hidden" name="time" x-ref="time" :value="`${minutes}:${seconds}`">
         </form>
 
         <div x-data="{ confirm: @entangle('confirm').live }" x-show="confirm"

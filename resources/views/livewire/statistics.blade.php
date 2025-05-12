@@ -1,5 +1,14 @@
 <div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
+<h3 class="text-base lg:text-2xl font-bold tracking-tight pb-1 dark:text-white text-center w-full p-1 mb-3">
+           Statistics for @if (Auth::user()->role == 'Student')
+            {{ Auth::user()->name . ' ' . Auth::user()->surname }}
+        @else
+            {{ $student->name . ' ' . $student->surname }}
+           
+           @endif 
+        </h3>
     <div class="flex gap-4 items-end mx-auto w-4/5">
+
         <!-- Selects with individual labels -->
         <div class="flex flex-col gap-2 w-3/4">
             <div class="flex gap-4">
@@ -180,6 +189,7 @@
                         };
                         console.log(filteredData.map(d => d.part));
                         myChart.options.scales.y.max = filteredData.some(item => item.part == 4) ? 12 : 8;
+                        myChart.options.scales.y.min = 0;
                         myChart.update();
                         console.log(filteredData);
                     }
@@ -316,19 +326,19 @@
                 </ul>
 
                 {{-- Summary + PDF button (below parts) --}}
-                <div class="mt-4 text-sm text-gray-700">
-                    <p class="mb-2">
-                        You have selected parts: {{ implode(', ', $selectedParts ?? []) ?: 'none' }},
-                        stats mode: {{ $detailedStatsSelect ?? 'none' }},
-                        selected exercises:
-                        @if (!empty($detailedSelectedExercises))
-                            {{ implode(', ', $detailedSelectedExercises) }}
+                <div class="mt-4 ps-3 text-sm text-gray-700">
+                <button wire:click='getPrediction' @if (empty($detailedStats)) disabled @endif
+                        class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
                         @else
-                            none
-                        @endif,
-                        with a limit of {{ $detailedStatsLimit }}
-                    </p>
-                </div>
+                            bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer @endif">
+                            Predictor <span style=" background: #eee; color: #333; padding: 2px 4px; border-radius: 4px;">BETA</span> </button>
+                            <button wire:click='printPDF' @if (empty($detailedStats)) disabled @endif
+                        class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
+                        @else
+                            bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer @endif">
+                        Print PDF </button>
+                        </div>
+
             </div>
 
             {{-- The rest of the options --}}
@@ -356,11 +366,7 @@
                     </li>
                 </ul>
                 <div class="mt-4 text-sm text-gray-700">
-                    <button wire:click='printPDF' @if (empty($detailedStats)) disabled @endif
-                        class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
-                        @else
-                            bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer @endif">
-                        Print PDF </button>
+
                 </div>
             </div>
 
@@ -407,6 +413,12 @@
             </div>
 
         </div>
+        @if ($prediction)
+<div class="px-4 pb-3">
+<p class="ps-3">{!! $prediction !!}</p>
+</div>
+
+@endif
     </div>
 
 

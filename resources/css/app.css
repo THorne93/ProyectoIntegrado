@@ -29,7 +29,7 @@
 }
 
 .appbg {
-    background-color: #C5F1FF;
+    background-color: #C5F1FF !important;
     background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
 }
 

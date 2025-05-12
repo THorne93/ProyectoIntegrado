@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('set null');
             $table->enum('role', ['Admin', 'Teacher','Student'])->default('Student');
             $table->timestamp('email_verified_at')->nullable();
+            $table->integer('set_exercise')->nullable()->default(null);
             $table->softDeletes(); 
             $table->rememberToken();
             $table->timestamps();
