@@ -6,6 +6,8 @@
                 @livewire('dashboard-admin')
             @elseif(Auth::user()->role === 'Teacher')
                 @livewire('dashboard-teacher')
+                <div class="grid grid-cols-2 gap-x-8 gap-y-12 justify-items-center items-center">
+                </div>
             @else
                 <div class="grid grid-cols-2 gap-x-8 gap-y-12 justify-items-center items-center ">
 
