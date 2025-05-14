@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->enum('part', ['1','2','3','4']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -138,7 +138,8 @@ class Schoolstats extends ModalComponent
 
     public function loadSchool($id)
     {
-        $this->school = School::findOrFail($id);
+        $this->school = School::withTrashed()->findOrFail($id);
+
 
         // Get users currently in this school
         $this->schoolStudents = User::where('school_id', $this->school->id)->get();
@@ -159,7 +160,30 @@ class Schoolstats extends ModalComponent
         $this->selectedTeacher = $teacher?->id;
         $this->isOpen = true;
     }
+    public function delete()
+    {
+        $students = User::where('school_id',$this->school->id)->get();
+        foreach ($students as $student) {
+            $s = User::findOrFail( $student->id );
+            $s->delete();
+        }
+        $this->school->delete();
+        $this->dispatch('updateSchool');
+        $this->isOpen = false;
+    }
 
+    public function restore()
+    {
+        $this->school->restore();
+        $students = User::withTrashed()->where('school_id',$this->school->id)->get();
+        foreach ($students as $student) {
+            $s = User::withTrashed()->findOrFail( $student->id );
+            $s->restore();
+        }
+        $this->dispatch('updateSchool');
+        $this->isOpen = false;
+
+    }
 
     public function render()
     {

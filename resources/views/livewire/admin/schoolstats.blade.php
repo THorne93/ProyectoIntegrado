@@ -44,10 +44,9 @@
             @if ($isEdit)
                 @if ($success)
                     <div x-data="{ show: true }" x-init="setTimeout(() => {
-                        show = false;
-                        $wire.set('success', false);
-                    }, 5000)" x-show="show" x-transition.duration.500ms
-                        class="mb-6">
+                                show = false;
+                                $wire.set('success', false);
+                            }, 5000)" x-show="show" x-transition.duration.500ms class="mb-6">
                         <div
                             class="bg-green-100 border border-green-400 text-green-800 px-6 py-4 rounded-lg shadow flex items-center gap-3">
                             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
@@ -73,8 +72,7 @@
                         <div>
                             <x-input-label for="address" :value="__('Address')" />
                             <x-text-input wire:model="address" id="address" class="block mt-1 w-full" type="text"
-                                value="{{ $school->address }}" name="address" required autofocus
-                                autocomplete="address" />
+                                value="{{ $school->address }}" name="address" required autofocus autocomplete="address" />
                             <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
                     </div>
@@ -83,8 +81,7 @@
                         <div>
                             <x-input-label for="telephone" :value="__('Telephone Number')" />
                             <x-text-input wire:model="telephone" id="telephone" class="block mt-1 w-full" type="text"
-                                value="{{ $school->phone }}" name="telephone" required autofocus
-                                autocomplete="telephone" />
+                                value="{{ $school->phone }}" name="telephone" required autofocus autocomplete="telephone" />
                             <x-input-error :messages="$errors->get('telephone')" class="mt-2" />
                         </div>
                     </div>
@@ -110,13 +107,13 @@
                     <div class="mt-4">
                         <x-select label="Select Students" wire:model.live.debounce.500ms="selectedStudents" multiselect
                             :searchable="true" option-label="name" option-value="id" :options="$students
-                                ->map(
-                                    fn($s) => [
-                                        'id' => $s->id,
-                                        'name' => $s->name . ' ' . $s->surname . ' - ' . $s->email,
-                                    ],
-                                )
-                                ->toArray()"
+                ->map(
+                    fn($s) => [
+                        'id' => $s->id,
+                        'name' => $s->name . ' ' . $s->surname . ' - ' . $s->email,
+                    ],
+                )
+                ->toArray()"
                             class="text-black rounded-md shadow-sm border-gray-300 focus:border-primary-500 focus:ring focus:ring-primary-200 dark:bg-white dark:text-black"
                             option-class="hover:bg-primary-100 hover:text-black"
                             option-selected-class="bg-primary-200 text-black font-semibold"
@@ -128,15 +125,15 @@
                             $studentsData = \App\Models\User::whereIn('id', $selectedStudents)->get();
                         @endphp
 
-                        <x-select label="Select Teacher" wire:model="selectedTeacher" option-label="name"
-                            option-value="id" :options="collect($studentsData)
-                                ->map(
-                                    fn($s) => [
-                                        'id' => $s->id,
-                                        'name' => $s->name . ' ' . $s->surname . ' - ' . $s->email,
-                                    ],
-                                )
-                                ->toArray()"
+                        <x-select label="Select Teacher" wire:model="selectedTeacher" option-label="name" option-value="id"
+                            :options="collect($studentsData)
+                ->map(
+                    fn($s) => [
+                        'id' => $s->id,
+                        'name' => $s->name . ' ' . $s->surname . ' - ' . $s->email,
+                    ],
+                )
+                ->toArray()"
                             class="text-black rounded-md shadow-sm border-gray-300 focus:border-primary-500 focus:ring focus:ring-primary-200 dark:bg-white dark:text-black"
                             option-class="hover:bg-primary-100 hover:text-black"
                             option-selected-class="bg-primary-200 text-black font-semibold"
@@ -157,10 +154,17 @@
                     <button wire:click='editSchool'
                         class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
                 @else
-                    <button wire:click='openEdit'
-                        class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
-                    <button
-                        class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                    @if ($school && $school->trashed())
+                        <button wire:click='restore'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
+                    @else
+                        <button wire:click='openEdit'
+                            class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
+
+                        <button wire:click='delete'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                    @endif
+
                 @endif
 
             </div>

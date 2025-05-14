@@ -11,22 +11,31 @@ class Schools extends Component
     public $view = "cards";
     public $search;
     public $column;
-    
+    public $filterTrashed = false;
 
+    public function toggleTrashed() {
+        $this->filterTrashed = !$this->filterTrashed;
+    }
     public function toggleCards()
     {
-        $this->view ="cards";
+        $this->view = "cards";
     }
     public function toggleTable()
     {
-        $this->view ="table";
+        $this->view = "table";
     }
     #[On('newSchool')]
     #[On('updateSchool')]
 
     public function render()
     {
-        $this->schools = School::where('name', 'like', '%' . $this->search . '%')->get();
+        if (!$this->filterTrashed) {
+            $this->schools = School::where('name', 'like', '%' . $this->search . '%')->get();
+
+        } else {
+            $this->schools = School::onlyTrashed()->where('name', 'like', '%' . $this->search . '%')->get();
+
+        }
         return view('livewire.admin.schools')->layout('layouts.app');
     }
 }
