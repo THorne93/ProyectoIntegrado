@@ -38,6 +38,7 @@ class Schoolstats extends ModalComponent
         $this->success = true;
     }
 
+
     public function mount()
     {
         // Initialize selected students if needed
@@ -162,9 +163,9 @@ class Schoolstats extends ModalComponent
     }
     public function delete()
     {
-        $students = User::where('school_id',$this->school->id)->get();
+        $students = User::where('school_id', $this->school->id)->get();
         foreach ($students as $student) {
-            $s = User::findOrFail( $student->id );
+            $s = User::findOrFail($student->id);
             $s->delete();
         }
         $this->school->delete();
@@ -175,9 +176,9 @@ class Schoolstats extends ModalComponent
     public function restore()
     {
         $this->school->restore();
-        $students = User::withTrashed()->where('school_id',$this->school->id)->get();
+        $students = User::withTrashed()->where('school_id', $this->school->id)->get();
         foreach ($students as $student) {
-            $s = User::withTrashed()->findOrFail( $student->id );
+            $s = User::withTrashed()->findOrFail($student->id);
             $s->restore();
         }
         $this->dispatch('updateSchool');

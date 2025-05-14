@@ -12,11 +12,17 @@ class Users extends Component
 
     public $users;
     public $view = "cards";
+    public $filterTrashed = false;
     public $search;
     public $column;
     public function toggleCards()
     {
         $this->view = "cards";
+    }
+
+    public function toggleTrashed()
+    {
+        $this->filterTrashed = !$this->filterTrashed;
     }
     public function toggleTable()
     {
