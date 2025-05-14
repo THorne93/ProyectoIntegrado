@@ -28,8 +28,8 @@
                         <div class="flex gap-8"><h5 title="{{ $student->name . ' ' . $student->surname }}"
                             class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
                             {{ $student->name . ' ' . $student->surname }}
-                        </h5><a href="/your-link-here"
-                    class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
+                        </h5><a wire:click="goToStatistics({{ $student->id }})"
+                    class="p-2 cursor-pointer rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" viewBox="0 0 448 512"
                         fill="currentColor">
                         <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License -->

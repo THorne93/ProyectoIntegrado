@@ -1,6 +1,6 @@
 @if (sizeof($stats) > 0)
     <div wire:ignore>
-        <canvas id="partFourChart"></canvas>
+       <canvas height="200" id="partFourChart"></canvas>
     </div>
 
 

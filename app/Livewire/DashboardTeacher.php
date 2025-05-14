@@ -19,6 +19,11 @@ class DashboardTeacher extends Component
             'studentStats' => $this->studentStats,
         ]);
     }
+    public function goToStatistics($id)
+    {
+        session(['selected_student_id' => $id]);
+        return redirect()->route('statistics');
+    }
 
     public function getStudentStats()
     {
@@ -49,6 +54,7 @@ class DashboardTeacher extends Component
 
             $studentStats->push([
                 'name' => $student->name . ' ' . $student->surname,
+                'id' => $student->id,
                 'scores' => $stats->reverse()->map(function ($score) {
                     return [
                         ...get_object_vars($score),

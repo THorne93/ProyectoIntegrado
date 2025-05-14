@@ -1,7 +1,7 @@
 @if(sizeof($stats) > 0)
 
 <div wire:ignore>
-    <canvas id="partThreeChart"></canvas>
+    <canvas height="200" id="partThreeChart"></canvas>
 </div>
 
 @script

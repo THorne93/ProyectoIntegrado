@@ -1,4 +1,4 @@
-<div class=" h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
+<div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
 
 
 

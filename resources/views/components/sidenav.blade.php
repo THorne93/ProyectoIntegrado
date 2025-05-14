@@ -1,4 +1,4 @@
-<aside id="logo-sidebar" class="w-64 h-screen dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+<aside id="logo-sidebar" class="w-64 h-screen border-r border-gray-600 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
     <div class="pt-6 px-3 pb-4 h-full overflow-y-auto navbarbg dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
@@ -53,20 +53,20 @@
                     </a>
                 </li>
             @endif
-            @if (Auth::user()->role === 'Teacher')
-                <li>
-                    <a href="{{ route('students') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('students')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
-                            fill="currentColor">
-                            <path fill="currentColor"
-                                d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z"
-                                </svg>
-                                <span class="flex-1 ms-3 whitespace-nowrap">Students</span>
-                    </a>
-                </li>
-            @endif
+@if (Auth::user()->role === 'Teacher')
+    <li>
+        <a href="{{ route('students') }}"
+            class="flex items-center p-2 text-gray-900 rounded-lg {{ request()->routeIs('students') ? 'bg-blue-200 buttonBorder' : '' }} dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
+                fill="currentColor">
+                <path fill="currentColor"
+                    d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z" />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Students</span>
+        </a>
+    </li>
+@endif
             @if (Auth::user()->role === 'Teacher' || Auth::user()->role === 'Student')
                 @php
                     $isActive1 =
@@ -140,7 +140,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('statistics', ['id' => Auth::user()->id]) }}"
+                    <a href="{{ route('statistics')}}"
                         class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('statistics')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
@@ -148,7 +148,7 @@
                             <path fill="currentColor"
                                 d="M160 80c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 352c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-352zM0 272c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 160c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48L0 272zM368 96l32 0c26.5 0 48 21.5 48 48l0 288c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48z" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">My statistics</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">{{ Auth::user()->role == 'Student' ? 'My statistics' : 'Statistics'}}</span>
                     </a>
                 </li>
             @endif
@@ -165,10 +165,8 @@
                     </a>
                 </li>
             @endunless
-
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
                 <li :href="route('logout')"
                     onclick="event.preventDefault();
                                 this.closest('form').submit();">
@@ -184,7 +182,6 @@
                     </a>
                 </li>
             </form>
-
         </ul>
     </div>
 </aside>

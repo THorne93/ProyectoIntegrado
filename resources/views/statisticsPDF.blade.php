@@ -52,7 +52,7 @@
 </head>
 
 <body>
-    <h1>Statistics for {{ Auth::user()->name . ' ' . Auth::user()->surname }}. Dated
+    <h1>Statistics for {{ $user->name . ' ' . $user->surname }}. Dated
         {{ \Carbon\Carbon::now()->format('d/m/Y') }}</h1>
 
         <h3 style="color: orange;">Prediction (BETA) {!! $prediction !!}</h3>

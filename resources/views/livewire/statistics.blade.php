@@ -1,12 +1,23 @@
 <div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-<h3 class="text-base lg:text-2xl font-bold tracking-tight pb-1 dark:text-white text-center w-full p-1 mb-3">
-           Statistics for @if (Auth::user()->role == 'Student')
-            {{ Auth::user()->name . ' ' . Auth::user()->surname }}
-        @else
-            {{ $student->name . ' ' . $student->surname }}
-           
-           @endif 
+<div class="flex justify-center items-center gap-4 mb-3">
+    @if (Auth::user()->role == 'Student')
+        <h3 class="text-base lg:text-2xl font-bold tracking-tight dark:text-white text-center">
+            Statistics for {{ Auth::user()->name . ' ' . Auth::user()->surname }}
         </h3>
+    @else
+        @if ($students)
+            <h3 class="text-base lg:text-2xl font-bold tracking-tight dark:text-white">
+                Statistics for:
+            </h3>
+            <select id="studentSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                @foreach ($students as $student)
+                    <option {{ $studentSelectId && $studentSelectId == $student->id ? 'selected' : '' }}
+                     value="{{ $student->id }}">{{ $student->name . ' ' . $student->surname }}</option>
+                @endforeach
+            </select>
+        @endif
+    @endif
+</div>
     <div class="flex gap-4 items-end mx-auto w-4/5">
 
         <!-- Selects with individual labels -->
@@ -14,15 +25,14 @@
             <div class="flex gap-4">
                 <div class="flex flex-col flex-1 gap-1">
                     <label for="partSelect" class="text-sm font-medium text-gray-700 dark:text-gray-300">Part</label>
-                    <select id="partSelect"
+                    <select id="partSelect" wire:model="studentSelectId"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="null" disabled hidden selected>Choose part...</option>
                         <option value="1">Part 1</option>
                         <option value="2">Part 2</option>
                         <option value="3">Part 3</option>
                         <option value="4">Part 4</option>
-                    </select>
-                </div>
+                    </select> </div>
                 <div class="flex flex-col flex-1 gap-1">
                     <label for="exSelect" class="text-sm font-medium text-gray-700 dark:text-gray-300">Exercise</label>
                     <select id="exSelect"
@@ -74,6 +84,7 @@
                 document.addEventListener("DOMContentLoaded", () => {
                     const partSelect = document.getElementById("partSelect");
                     const exerciseSelect = document.getElementById("exSelect");
+                    const studentSelect = document.getElementById("studentSelect");
                     const avg10 = document.getElementById("avg10");
                     const avg20 = document.getElementById("avg20");
                     const avg50 = document.getElementById("avg50");
@@ -123,76 +134,103 @@
                         return x.map(xi => slope * xi + intercept);
                     }
 
-                    function updateExerciseOptions(selectedPart) {
-                        console.log("Part changed to:", selectedPart); // ✅ Console log
-                        const filteredData = data.filter(item => String(item.part) === String(selectedPart));
-                        const uniqueExercises = [...new Map(filteredData.map(item => [item.title, {
-                            id: item.id,
-                            title: item.title
-                        }])).values()];
-                        exerciseSelect.innerHTML = "";
-                        const defaultOption = document.createElement("option");
-                        defaultOption.value = "all";
-                        defaultOption.textContent = "All";
-                        exerciseSelect.appendChild(defaultOption);
-                        uniqueExercises.forEach(exercise => {
-                            const option = document.createElement("option");
-                            option.value = exercise.title;
-                            option.textContent = exercise.title;
-                            exerciseSelect.appendChild(option);
-                        });
-                    }
+  function updateExerciseOptions(selectedPart) {
+    const selectedStudentId = studentSelect && studentSelect.value && studentSelect.value !== "all"
+        ? studentSelect.value
+        : null;
+
+    // Save previously selected value
+    const previousValue = exerciseSelect.value;
+
+    const filteredData = data.filter(item => {
+        const matchesPart = String(item.part) === String(selectedPart);
+        const matchesStudent = !selectedStudentId || String(item.user_id) === String(selectedStudentId);
+        return matchesPart && matchesStudent;
+    });
+
+    const uniqueExercises = [...new Map(filteredData.map(item => [item.title, {
+        id: item.id,
+        title: item.title
+    }])).values()];
+
+    exerciseSelect.innerHTML = "";
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "all";
+    defaultOption.textContent = "All";
+    exerciseSelect.appendChild(defaultOption);
+
+    uniqueExercises.forEach(exercise => {
+        const option = document.createElement("option");
+        option.value = exercise.title;
+        option.textContent = exercise.title;
+        exerciseSelect.appendChild(option);
+    });
+
+    // Restore previous selection if it still exists
+    const restored = [...exerciseSelect.options].some(opt => opt.value === previousValue);
+    if (restored) {
+        exerciseSelect.value = previousValue;
+    } else {
+        exerciseSelect.value = "all";
+    }
+}
+
+
 
                     function updateChart() {
-                        const selectedPart = partSelect.value;
-                        const selectedExercise = exerciseSelect.value;
-                        const filteredData = data.filter(item => {
-                            return String(item.part) === String(selectedPart) &&
-                                (selectedExercise === "all" || item.title === selectedExercise);
-                        });
+    const selectedPart = partSelect.value;
+    let selectedExercise = exerciseSelect.value;
+    if (!selectedExercise || ![...exerciseSelect.options].some(opt => opt.value === selectedExercise)) {
+        selectedExercise = "all";
+    }
+        let selectedStudentId = null;
+    if (studentSelect && studentSelect.value && studentSelect.value !== "all") {
+        selectedStudentId = studentSelect.value;
+    }
+ const filteredData = data.filter(item => {
+        const matchesPart = String(item.part) === String(selectedPart);
+        const matchesExercise = selectedExercise === "all" || item.title === selectedExercise;
+        const matchesStudent = !selectedStudentId || String(item.user_id) === String(selectedStudentId);
+        return matchesPart && matchesExercise && matchesStudent;
+    });
 
-                        const labels = filteredData.map(item => {
-                            const date = new Date(item.record_date);
-                            return `${date.getDate().toString().padStart(2, '0')}/${
-                        (date.getMonth() + 1).toString().padStart(2, '0')
-                    }/${date.getFullYear()}`;
-                        });
-                        const scores = filteredData.map(item => Number(item.score));
-                        const maxScore = Math.max(...scores);
-                        const recommendedMax = Math.max(...scores);
-                        const avg10Data = movingAverage(scores, 10);
-                        const avg20Data = movingAverage(scores, 20);
-                        const avg50Data = movingAverage(scores, 50);
+    const labels = filteredData.map(item => {
+        const date = new Date(item.record_date);
+        return `${date.getDate().toString().padStart(2, '0')}/${
+            (date.getMonth() + 1).toString().padStart(2, '0')
+        }/${date.getFullYear()}`;
+    });
 
-                        // Generate trend line
-                        const xValues = Array.from({
-                            length: scores.length
-                        }, (_, i) => i); // simple index as x-axis
-                        const {
-                            slope,
-                            intercept
-                        } = linearRegression(xValues, scores);
-                        const trendLine = calculateTrendLine(xValues, slope, intercept);
+    const scores = filteredData.map(item => Number(item.score));
+    const avg10Data = movingAverage(scores, 10);
+    const avg20Data = movingAverage(scores, 20);
+    const avg50Data = movingAverage(scores, 50);
 
-                        myChart.data.labels = labels;
-                        myChart.data.datasets[0].data = scores;
-                        myChart.data.datasets[1].data = avg10Data;
-                        myChart.data.datasets[2].data = avg20Data;
-                        myChart.data.datasets[3].data = avg50Data;
-                        myChart.data.datasets[4] = {
-                            label: 'Trend Line',
-                            data: trendLine,
-                            borderColor: 'rgba(0, 123, 255, 1)',
-                            backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                            pointStyle: 'line',
-                            fill: false
-                        };
-                        console.log(filteredData.map(d => d.part));
-                        myChart.options.scales.y.max = filteredData.some(item => item.part == 4) ? 12 : 8;
-                        myChart.options.scales.y.min = 0;
-                        myChart.update();
-                        console.log(filteredData);
-                    }
+    const xValues = Array.from({ length: scores.length }, (_, i) => i);
+    const { slope, intercept } = linearRegression(xValues, scores);
+    const trendLine = calculateTrendLine(xValues, slope, intercept);
+
+    myChart.data.labels = labels;
+    myChart.data.datasets[0].data = scores;
+    myChart.data.datasets[1].data = avg10Data;
+    myChart.data.datasets[2].data = avg20Data;
+    myChart.data.datasets[3].data = avg50Data;
+    myChart.data.datasets[4] = {
+        label: 'Trend Line',
+        data: trendLine,
+        borderColor: 'rgba(0, 123, 255, 1)',
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+        pointStyle: 'line',
+        fill: false
+    };
+
+    myChart.options.scales.y.max = filteredData.some(item => item.part == 4) ? 12 : 8;
+    myChart.options.scales.y.min = 0;
+    myChart.update();
+
+}
+
 
                     myChart = new Chart(ctx, {
                         type: 'line',
@@ -265,11 +303,16 @@
                         }
                     });
 
+                    studentSelect.addEventListener("change", () => {
+updateExerciseOptions(partSelect.value);                       
+ updateChart();
+                    })
+
                     // Event Listeners ✅
-                    partSelect.addEventListener("change", () => {
-                        updateExerciseOptions(partSelect.value);
-                        updateChart();
-                    });
+partSelect.addEventListener("change", () => {
+    updateExerciseOptions(partSelect.value);
+    requestAnimationFrame(updateChart);
+});
 
                     exerciseSelect.addEventListener("change", updateChart);
 
@@ -297,12 +340,29 @@
 
 
     </div>
+    <form wire:submit.prevent="getDetailedStats">
     <div class="flex my-4 gap-4 items-end mx-auto w-3/4">
-        <h5 class="text-base lg:text-xl font-bold tracking-tight pb-1 dark:text-white text-center w-full">
-            Detailed Stats
-        </h5>
+        <div class="flex justify-center items-center gap-4 mb-3">
+        @if ($students)
+            <h3 class="text-base lg:text-2xl font-bold tracking-tight dark:text-white">
+                Detailed Stats for:
+            </h3>
+            <select wire:model="studentSelectId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                @foreach ($students as $student)
+                    <option {{ isset($id) && $id == $student->id ? 'selected' : '' }}
+                     value="{{ $student->id }}">{{ $student->name . ' ' . $student->surname }}</option>
+                @endforeach
+            </select>
+            @else
+
+            <h5 class="text-base lg:text-xl font-bold tracking-tight pb-1 dark:text-white text-center w-full">
+                Detailed Stats for {{ Auth::user()->name. ' '.Auth::user()->surname }}
+            </h5>
+        @endif
+        </div>
     </div>
     <div class="bg-white border w-4/5 border-gray-300 rounded-lg shadow-sm mx-auto">
+
         <div class="flex  gap-4 items-start my-4 min-h-48">
 
             {{-- PARTS + SUMMARY/BUTTON BLOCK --}}
@@ -395,24 +455,24 @@
                 </select>
             </div>
 
-            <div class="mt-4 pe-4">
-                {{-- 5. Go Button --}}
-                <label class="block mb-2 text-sm font-semibold text-gray-700">Action</label>
                 @php
                     $isDisabled =
                         empty($selectedParts) ||
                         ($detailedStatsSelect === null ||
                             ($detailedStatsSelect === 'custom' && empty($detailedSelectedExercises)));
                 @endphp
-                <button wire:click="getDetailedStats"
-                    class="flex-grow px-4 py-2 border rounded transition-colors
+<div class="mt-4 pe-4">
+        <label class="block mb-2 text-sm font-semibold text-gray-700">Action</label>
+        <button type="submit"
+            class="flex-grow px-4 py-2 border rounded transition-colors
             {{ $isDisabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300' : 'bg-gray-300 text-black hover:bg-gray-400 border-gray-400 cursor-pointer' }}"
-                    @if ($isDisabled) disabled @endif>
-                    Go
-                </button>
-            </div>
+            @if ($isDisabled) disabled @endif>
+            Go
+        </button>
+    </div>
 
         </div>
+        </form>
         @if ($prediction)
 <div class="px-4 pb-3">
 <p class="ps-3">{!! $prediction !!}</p>

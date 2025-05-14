@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
                 'account_verified' => true,
                 'remember_token' => Str::random(10),
                 'set_exercise' => null,
+                'created_at' => now(),
             ]
         ]);
 

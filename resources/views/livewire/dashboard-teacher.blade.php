@@ -4,8 +4,8 @@
             class="place-self-center flex flex-col items-center p-6 my-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border dark:border-gray-700">
             <div class="flex items-center gap-6 mb-2">
                 <h5 class="text-lg font-extrabold text-gray-900 dark:text-gray-100">{{ $student['name'] }}</h5>
-                <a href="/your-link-here"
-                    class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
+                <a wire:click="goToStatistics({{ $student['id'] }})"
+                    class="p-2 cursor-pointer rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" viewBox="0 0 448 512"
                         fill="currentColor">
                         <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License -->

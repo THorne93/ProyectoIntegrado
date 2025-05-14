@@ -25,10 +25,18 @@
                 </div>
                 @if ($student)
                     <div class="flex-1">
-                        <h5 title="{{ $student->name . ' ' . $student->surname }}"
+                        <div class="flex gap-8"><h5 title="{{ $student->name . ' ' . $student->surname }}"
                             class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
                             {{ $student->name . ' ' . $student->surname }}
-                        </h5>
+                        </h5><a href="{{ route('statistics.print.admin', ['id' => $student->id]) }}" 
+                    class="p-2 cursor-pointer rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" viewBox="0 0 448 512"
+                        fill="currentColor">
+                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License -->
+                        <path
+                            d="M160 80c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 352c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-352zM0 272c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 160c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48L0 272zM368 96l32 0c26.5 0 48 21.5 48 48l0 288c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48z" />
+                    </svg>
+                </a></div>
                         <h5 class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
                             Last active:
                             @if (\Carbon\Carbon::parse($student->date)->isFuture())
@@ -128,7 +136,7 @@
                 </div>
                 @if ($latestScores)
                     <div class="my-2 text-center">Latest Results</div>
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <div class="relative overflow-x-auto  sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

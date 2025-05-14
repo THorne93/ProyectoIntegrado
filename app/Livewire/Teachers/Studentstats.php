@@ -34,6 +34,11 @@ class Studentstats extends ModalComponent
         $this->dispatch('lock-scroll');
     }
 
+    public function goToStatistics($id)
+    {
+        session(['selected_student_id' => $id]);
+        return redirect()->route('statistics');
+    }
     public function openEdit()
     {
         $this->isEdit = true;

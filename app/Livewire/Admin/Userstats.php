@@ -39,6 +39,11 @@ class Userstats extends ModalComponent
     {
         $this->isEdit = true;
     }
+
+        public function goToStatistics($studentId)
+    {
+        return redirect()->route('statistics.print.admin', ['id' => $studentId]);
+    }
     public function closeEdit()
     {
         $this->isEdit = false;
