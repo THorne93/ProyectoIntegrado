@@ -303,10 +303,10 @@
                         }
                     });
 
-                    studentSelect.addEventListener("change", () => {
+                    if(studentSelect){studentSelect.addEventListener("change", () => {
 updateExerciseOptions(partSelect.value);                       
  updateChart();
-                    })
+                    })}
 
                     // Event Listeners ✅
 partSelect.addEventListener("change", () => {
