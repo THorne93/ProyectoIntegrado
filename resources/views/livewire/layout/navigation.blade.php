@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Models\School;
 use Livewire\Volt\Component;
 
 new class extends Component {
@@ -21,14 +22,20 @@ new class extends Component {
             <div class="flex items-center justify-start rtl:justify-end">
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">B2 Exam
                     Lab</span>
+
             </div>
             @if (Auth::user())
 
 
                 <div class="flex items-end justify-end ">
+
                     <span class="self-end text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Good
                         @if (now()->hour < 12) morning, @elseif(now()->hour < 18) afternoon, @else evening, @endif
-                        {{ Auth::user()->name . " " . Auth::user()->surname }}</span>
+                        {{ Auth::user()->name . " " . Auth::user()->surname }}
+                        @if (Auth::user()->school_id != null)
+                            - <span class="text-blue-800">{{ (School::findOrFail(Auth::user()->school_id))->name }}</span>
+                        @endif
+                    </span>
                 </div>
             @else
                 <div class="flex items-end justify-end ">

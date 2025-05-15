@@ -15,9 +15,7 @@ class DashboardTeacher extends Component
     {
         $this->studentStats = $this->getStudentStats();
 
-        return view('livewire.dashboard-teacher', [
-            'studentStats' => $this->studentStats,
-        ]);
+        return view('livewire.dashboard-teacher')->layout('layouts.app');
     }
     public function goToStatistics($id)
     {

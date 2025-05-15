@@ -13,22 +13,52 @@ class ExerciseController extends Controller
 {
     public function getIndex($part)
     {
-        $exercises = DB::table('exercises as E')
-            ->leftJoin('user_records as UR', function ($join) {
-                $join->on('E.id', '=', 'UR.exercise_id')
-                    ->where('UR.user_id', Auth::id())
-                    ->whereRaw('UR.timestamp = (
+        if (Auth::user()->role == "Student") {
+            $exercises = DB::table('exercises as E')
+                ->leftJoin('user_records as UR', function ($join) {
+                    $join->on('E.id', '=', 'UR.exercise_id')
+                        ->where('UR.user_id', Auth::id())
+                        ->whereRaw('UR.timestamp = (
                      SELECT MAX(UR2.timestamp) 
                      FROM user_records UR2 
                      WHERE UR2.exercise_id = E.id 
                      AND UR2.user_id = ?
                  )', [Auth::id()]);
-            })
-            ->where('E.part', $part) // Always get exercises for the given part
-            ->orderBy('UR.timestamp', 'DESC') // Order by latest records (optional)
-            ->select('E.*', 'UR.score', 'UR.time_spent', 'UR.timestamp')
-            ->get();
+                })
+                ->where('E.part', $part) // Always get exercises for the given part
+                ->orderBy('UR.timestamp', 'DESC') // Order by latest records (optional)
+                ->select('E.*', 'UR.score', 'UR.time_spent', 'UR.timestamp')
+                ->get();
+        } else {
+            $schoolId = Auth::user()->school_id;
 
+            $exercises = DB::table('user_records as UR')
+                ->join('exercises as E', 'UR.exercise_id', '=', 'E.id')
+                ->join('users as U', 'UR.user_id', '=', 'U.id')
+                ->where('E.part', $part)
+                ->where('U.id', '!=', Auth::user()->id)
+                ->where('U.school_id', $schoolId)
+                ->whereRaw('UR.timestamp = (
+        SELECT MAX(UR2.timestamp)
+        FROM user_records UR2
+        JOIN users U2 ON UR2.user_id = U2.id
+        WHERE UR2.exercise_id = UR.exercise_id
+          AND U2.school_id = ?
+    )', [$schoolId])
+                ->select(
+                    'E.id as id',
+                    'E.title as title',
+                    'E.part',
+                    'UR.score as score',
+                    'UR.time_spent',
+                    'UR.timestamp',
+                    'U.name as student_name',
+                    'U.surname as student_surname'
+                )
+                ->orderBy('UR.timestamp', 'DESC')
+                ->get();
+
+        }
         return view('exercises.exercises-users')->with('exercises', $exercises);
     }
 
@@ -154,7 +184,7 @@ class ExerciseController extends Controller
                     $choice->values = implode('/', $value['choices']);
                     $choice->save();
                 }
-                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+                return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');
             case 2:
                 $exercise = new Exercise();
                 $exercise->part = 2;
@@ -170,7 +200,7 @@ class ExerciseController extends Controller
                     $answer->value = $value['value'];
                     $answer->save();
                 }
-                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+                return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');
 
             case 3:
                 $exercise = new Exercise();
@@ -188,7 +218,7 @@ class ExerciseController extends Controller
                     $answer->hint = $value['hint'];
                     $answer->save();
                 }
-                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+                return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');
             case 4:
                 $exercise = new Exercise();
                 $exercise->part = 4;
@@ -207,7 +237,7 @@ class ExerciseController extends Controller
                     $answer->value = implode('|', [$value['a1'], $value['a2']]);
                     $answer->save();
                 }
-                return redirect()->route('admin.exercises')->with('success', 'Exercise updated successfully.');
+                return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');
         }
     }
 }

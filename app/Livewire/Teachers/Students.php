@@ -3,29 +3,98 @@
 namespace App\Livewire\Teachers;
 use DB;
 use Livewire\Attributes\On;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 class Students extends Component
 {
 
+    public $successDelete = false;
+    public $successRestore = false;
     public $students;
+    public $view = "cards";
+    public $search;
+    public $school;
 
+    public $orderDirection = "desc";
+    public $column = "name";
+    public function toggleCards()
+    {
+        $this->view = "cards";
+    }
+
+    public function order($order)
+    {
+
+        if ($this->column == $order) {
+            if ($this->orderDirection == "desc") {
+                $this->orderDirection = "asc";
+            } else
+                $this->orderDirection = "desc";
+        } else {
+            $this->column = $order;
+            $this->orderDirection = "desc";
+        }
+    }
+
+    #[On('deleteUser')]
+    public function changeDeleteSuccess()
+    {
+        $this->successDelete = true;
+    }
+    #[On('restoreUser')]
+    public function changeRestoreSuccess()
+    {
+        $this->successRestore = true;
+    }
+    public function toggleTable()
+    {
+        $this->view = "table";
+    }
+    public $filterTrashed = false;
+
+    public function toggleTrashed()
+    {
+        $this->filterTrashed = !$this->filterTrashed;
+    }
 
     #[On('editStudent')]
     #[On('newUser')]
     public function render()
     {
-        $school = Auth::user()->school;
-        $this->students = DB::table('users')
-            ->leftJoin('user_records', function ($join) {
-                $join->on('users.id', '=', 'user_records.user_id')
-                    ->whereRaw('user_records.timestamp = (SELECT MAX(timestamp) FROM user_records WHERE user_records.user_id = users.id)');
-            })
-            ->where('users.school_id', $school->id)
-            ->whereNot('users.id', Auth::id())
-            ->select('users.*', 'user_records.score', 'user_records.timestamp as date')
-            ->get();
+        $this->school = Auth::user()->school;
+        if (!$this->filterTrashed) {
+            $this->students = User::where('school_id', $this->school->id)
+                ->where('users.id', '!=', Auth::id())
+                ->leftJoin('user_records as ur', function ($join) {
+                    $join->on('users.id', '=', 'ur.user_id')
+                        ->whereRaw('ur.timestamp = (
+                SELECT MAX(timestamp)
+                FROM user_records
+                WHERE user_records.user_id = users.id
+            )');
+                })
+                ->select('users.*', 'ur.score', 'ur.timestamp as date')
+                ->orderBy($this->column, $this->orderDirection)
+                ->get();
+        } else {
+            $this->students = User::onlyTrashed()
+                ->where('school_id', $this->school->id)
+                ->where('users.id', '!=', Auth::id())
+                ->leftJoin('user_records as ur', function ($join) {
+                    $join->on('users.id', '=', 'ur.user_id')
+                        ->whereRaw('ur.timestamp = (
+                SELECT MAX(timestamp)
+                FROM user_records
+                WHERE user_records.user_id = users.id
+            )');
+                })
+                ->select('users.*', 'ur.score', 'ur.timestamp as date')
+                ->orderBy($this->column, $this->orderDirection)
+                ->get();
+        }
+
         return view('livewire.teachers.students')->layout('layouts.app');
     }
 }

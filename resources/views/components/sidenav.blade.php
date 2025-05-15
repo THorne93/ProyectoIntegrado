@@ -3,7 +3,7 @@
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('dashboard') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard', 'dashboard.teacher')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                         <path
@@ -152,10 +152,21 @@
                     </a>
                 </li>
             @endif
-            @unless (Auth::user()->role === 'Admin')
+            @if(Auth::user()->role === 'Teacher')
+                            <li>
+                    <a href="{{route('school')}}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('school')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewBox="0 0 640 512">
+                <path fill="currentColor"
+                    d="M337.8 5.4C327-1.8 313-1.8 302.2 5.4L166.3 96 48 96C21.5 96 0 117.5 0 144L0 464c0 26.5 21.5 48 48 48l208 0 0-96c0-35.3 28.7-64 64-64s64 28.7 64 64l0 96 208 0c26.5 0 48-21.5 48-48l0-320c0-26.5-21.5-48-48-48L473.7 96 337.8 5.4zM96 192l32 0c8.8 0 16 7.2 16 16l0 64c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-64c0-8.8 7.2-16 16-16zm400 16c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16l0 64c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-64zM96 320l32 0c8.8 0 16 7.2 16 16l0 64c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-64c0-8.8 7.2-16 16-16zm400 16c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16l0 64c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-64zM232 176a88 88 0 1 1 176 0 88 88 0 1 1 -176 0zm88-48c-8.8 0-16 7.2-16 16l0 32c0 8.8 7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-16 0 0-16c0-8.8-7.2-16-16-16z" />
+            </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">School</span>
+                    </a>
+                </li>
+            @endif
                 <li>
-                    <a href="#"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('mystatistics')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <a href="{{route('profile')}}"
+                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('profile')) bg-blue-200 buttonBorder @endif dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512" fill="currentColor">
                             <path fill="currentColor"
@@ -164,7 +175,6 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
                     </a>
                 </li>
-            @endunless
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <li :href="route('logout')"

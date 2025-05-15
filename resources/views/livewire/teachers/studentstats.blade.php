@@ -176,10 +176,16 @@
                     <button wire:click='editStudent'
                         class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
                 @else
-                    <button wire:click='openEdit'
-                        class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
-                    <button
-                        class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                    @if ($student && $student->trashed())
+                        <button wire:click='restore'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
+                    @else
+                        <button wire:click='openEdit'
+                            class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
+
+                        <button wire:click='delete'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                    @endif
                 @endif
 
             </div>

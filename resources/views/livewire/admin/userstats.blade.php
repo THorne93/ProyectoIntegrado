@@ -121,9 +121,10 @@
                         option-selected-class="bg-primary-200 text-black font-semibold"
                         option-empty-class="text-gray-400 italic px-2 py-1" />
                     <div class="mt-4">
-                        <input type="checkbox" {{ !is_numeric($selectedSchool) ? 'disabled' : '' }}
+                        <input type="checkbox" {{ !is_numeric($selectedSchool) ? 'disabled' : '' }} {{ $is_admin ? 'disabled' : '' }}
                             wire:model="is_teacher" /><x-input-label class="inline mr-10" :value="__('Is teacher')" />
-
+                        <input type="checkbox" {{ Auth::user()->id == $student->id ? 'disabled' : '' }}
+                            wire:model.live="is_admin" wire:click="setAdmin" /><x-input-label class="inline mr-10" :value="__('Is Admin')" />
                     </div>
                 </form>
             @else
@@ -190,13 +191,20 @@
                     <button wire:click='editStudent'
                         class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
                 @else
-                    <button wire:click='openEdit'
-                        class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
-                    <button
-                        class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
-                @endif
+                     @if ($student && $student->trashed())
+                        <button wire:click='restore'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
+                    @else
+                        <button wire:click='openEdit'
+                            class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
+
+                        <button wire:click='delete'
+                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                    @endif
+                     @endif
 
             </div>
         </div>
     </div>
+
 </div>

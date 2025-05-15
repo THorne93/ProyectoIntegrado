@@ -19,6 +19,7 @@ class Userstats extends ModalComponent
     public $password;
     public $password_confirmation;
     public $is_teacher;
+    public $is_admin;
 
     public $part1percent;
     public $part2percent;
@@ -35,12 +36,41 @@ class Userstats extends ModalComponent
         $this->dispatch('lock-scroll');
     }
 
+    public function setAdmin()
+    {
+        $student = User::findOrFail($this->student->id);
+        if ($student->role !== 'Admin') {
+            $student->role = 'Admin';
+            $student->school_id = null;
+        } else {
+            $student->role = 'Student';
+        }
+        $student->save();
+    }
+
+    public function delete()
+    {
+        $this->student->delete();
+        $this->dispatch('updateUser');
+        $this->isOpen = false;
+        $this->dispatch('deleteUser');
+
+    }
+
+    public function restore()
+    {
+        $this->student->restore();
+        $this->dispatch('updateUser');
+        $this->isOpen = false;
+        $this->dispatch('restoreUser');
+    }
+
     public function openEdit()
     {
         $this->isEdit = true;
     }
 
-        public function goToStatistics($studentId)
+    public function goToStatistics($studentId)
     {
         return redirect()->route('statistics.print.admin', ['id' => $studentId]);
     }
@@ -77,7 +107,7 @@ class Userstats extends ModalComponent
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
-        $student = User::findOrFail($this->student->id);
+        $student = User::withTrashed()->findOrFail($this->student->id);
 
         $student->name = $this->f_name;
         $student->surname = $this->l_name;
@@ -112,18 +142,21 @@ class Userstats extends ModalComponent
             ->where('user_records.user_id', $id)->orderBy('user_records.timestamp', 'desc')
             ->select('user_records.score', 'user_records.timestamp', 'exercises.title', 'exercises.part')->take(5)->get();
 
-        $this->student = DB::table('users')
+        $this->student = User::withTrashed()
             ->leftJoin('user_records', function ($join) {
                 $join->on('users.id', '=', 'user_records.user_id')
                     ->whereRaw('user_records.timestamp = (SELECT MAX(timestamp) FROM user_records WHERE user_records.user_id = users.id)');
             })
             ->where('users.id', $id)
-            ->select('users.*', 'user_records.timestamp as date', 'users.school_id')->first();
+            ->select('users.*', 'user_records.timestamp as date', 'users.school_id')
+            ->first();
 
         $this->selectedSchool = $this->student->school_id ?? '';
         $this->f_name = $this->student->name;
         $this->l_name = $this->student->surname;
         $this->is_teacher = $this->student->role === 'Teacher';
+        $this->is_admin = $this->student->role === 'Admin';
+
         $this->isOpen = true;
     }
 

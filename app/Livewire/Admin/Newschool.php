@@ -77,7 +77,6 @@ class Newschool extends Component
             User::whereIn('id', $this->selectedStudents)->update(['school_id' => $school->id]);
         }
         $this->dispatch('success');
-        $this->dispatch('newSchool');
         $this->name = '';
         $this->address = '';
         $this->phone = '';

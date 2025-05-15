@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin;
 use App\Models\Exercise;
 use Livewire\Component;
+use Livewire\Attributes\On;
+
 
 class Exercises extends Component
 {
@@ -14,12 +16,29 @@ class Exercises extends Component
     public $search2;
     public $search3;
     public $search4;
+
+    public function delete($id)
+    {
+        $ex = Exercise::find($id);
+        $ex->delete();
+        $this->dispatch('updateUser');
+
+    }
+    public function restore($id)
+    {
+        $ex = Exercise::withTrashed()->find($id);
+        $ex->restore();
+        $this->dispatch('updateUser');
+
+    }
+
+    #[On('updateUser')]
     public function render()
     {
-        $this->part1 = Exercise::where('part', 1)->where('title', 'like', '%' . $this->search1 . '%')->get();
-        $this->part2 = Exercise::where('part', 2)->where('title', 'like', '%' . $this->search2 . '%')->get();
-        $this->part3 = Exercise::where('part', 3)->where('title', 'like', '%' . $this->search3 . '%')->get();
-        $this->part4 = Exercise::where('part', 4)->where('title', 'like', '%' . $this->search4 . '%')->get();
+        $this->part1 = Exercise::withTrashed()->where('part', 1)->where('title', 'like', '%' . $this->search1 . '%')->get();
+        $this->part2 = Exercise::withTrashed()->where('part', 2)->where('title', 'like', '%' . $this->search2 . '%')->get();
+        $this->part3 = Exercise::withTrashed()->where('part', 3)->where('title', 'like', '%' . $this->search3 . '%')->get();
+        $this->part4 = Exercise::withTrashed()->where('part', 4)->where('title', 'like', '%' . $this->search4 . '%')->get();
 
         return view('livewire.admin.exercises')->layout('layouts.app');
     }

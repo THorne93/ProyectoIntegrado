@@ -60,6 +60,25 @@ class Studentstats extends ModalComponent
         $this->dispatch('unlock-scroll');
     }
 
+    public function delete()
+    {
+        $this->student->delete();
+        $this->dispatch('editStudent');
+        $this->isOpen = false;
+        $this->dispatch('deleteUser');
+
+    }
+
+    public function restore()
+    {
+        $this->student->restore();
+        $this->dispatch('editStudent');
+        $this->isOpen = false;
+        $this->dispatch('restoreUser');
+
+
+
+    }
 
     public function editStudent()
     {
@@ -103,13 +122,13 @@ class Studentstats extends ModalComponent
             ->where('user_records.user_id', $id)->orderBy('user_records.timestamp', 'desc')
             ->select('user_records.score', 'user_records.timestamp', 'exercises.title', 'exercises.part')->take(5)->get();
 
-        $this->student = DB::table('users')
+        $this->student = User::withTrashed()
             ->leftJoin('user_records', function ($join) {
                 $join->on('users.id', '=', 'user_records.user_id')
                     ->whereRaw('user_records.timestamp = (SELECT MAX(timestamp) FROM user_records WHERE user_records.user_id = users.id)');
             })
             ->where('users.id', $id)
-            ->select('users.*', 'user_records.timestamp as date')
+            ->select('users.*', 'user_records.timestamp as date', 'users.school_id')
             ->first();
 
         $this->f_name = $this->student->name;

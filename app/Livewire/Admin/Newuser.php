@@ -60,23 +60,28 @@ class Newuser extends ModalComponent
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
         ]);
-        $user = User::create(array_merge(
-            $validated,
-            [
-                'password' => Hash::make('1234'),
-                'school_id' => Auth::user()->school->id
-            ]
-        ));
+
+        $data = $validated;
+
+        // Add school_id only if selectedSchool is not empty/null
+        if (!empty($this->selectedSchool)) {
+            $data['school_id'] = $this->selectedSchool;
+        }
+
+        $data['password'] = Hash::make('1234');
+
+        $user = User::create($data);
+
         Mail::to($user->email)->send(new LoginLinkEmail($user));
-        $this->dispatch('newUser');
+
         $this->dispatch('success');
+
         $this->name = '';
         $this->surname = '';
         $this->email = '';
         $this->selectedSchool = '';
-
-
     }
+
 
     protected $listeners = ['openModal' => 'open'];
     public function render()

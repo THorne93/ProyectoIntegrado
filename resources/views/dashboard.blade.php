@@ -3,8 +3,6 @@
         <div class="p-4">
             @if (Auth::user()->role === 'Admin')
                 @livewire('dashboard-admin')
-            @elseif(Auth::user()->role === 'Teacher')
-                @livewire('dashboard-teacher')
             @else
                 <h3 class="text-center font-extrabold underline pb-2">Your most recent stats</h3>
 

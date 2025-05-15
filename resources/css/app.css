@@ -42,7 +42,10 @@
     height: auto !important;
     min-height: unset !important;
 }
-
+.toast {
+  opacity: 1 !important;                /* remove transparency */
+  color: white !important;              /* make sure text is visible */
+}
 
 [x-data="wireui_select"] li:hover {
     background-color: #e0f2fe !important;

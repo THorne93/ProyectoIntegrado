@@ -171,6 +171,8 @@ class Schoolstats extends ModalComponent
         $this->school->delete();
         $this->dispatch('updateSchool');
         $this->isOpen = false;
+        $this->dispatch('deleteSchool');
+
     }
 
     public function restore()
@@ -183,6 +185,8 @@ class Schoolstats extends ModalComponent
         }
         $this->dispatch('updateSchool');
         $this->isOpen = false;
+        $this->dispatch('restoreSchool');
+
 
     }
 
