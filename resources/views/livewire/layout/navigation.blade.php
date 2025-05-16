@@ -20,8 +20,7 @@ new class extends Component {
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">B2 Exam
-                    Lab</span>
+                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"><img style="height: 36px;" src="/storage/img/logo.png"></span>
 
             </div>
             @if (Auth::user())

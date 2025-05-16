@@ -6,7 +6,9 @@
                 <h5 class="text-lg font-extrabold text-gray-900 dark:text-gray-100">{{ $student['name'] }}</h5>
 
                 @if(count($student['scores']) === 0)
-                    <p>No records available</p>
+                <div style="display: block; height: 300px; width: 300px; text-align: center; line-height: 300px; ">
+                    <p >No records available</p>
+                    </div>
                 @else
                     <canvas id="chart-{{ $index }}" height="300"></canvas>
                 @endif
