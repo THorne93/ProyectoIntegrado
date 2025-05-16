@@ -21,8 +21,26 @@
                 <span x-text="String(minutes).padStart(2, '0')"></span> :
                 <span x-text="String(seconds).padStart(2, '0')"></span>
             </div>
-
-
+            <div class="my-2 pb-2">
+            @switch($exercise->part)
+            @case(1)
+            <p>For questions <strong>1-8</strong>, read the text below and decide which answer (<strong>A,B,C</strong> or <strong>D</strong>) best fits each gap. There is an example at the beginning (<strong>0</strong>).</p>
+            @break
+            @case(2)
+            <p>For questions <strong>1-8</strong>, read the text below and think of the word that best fits each gap. Use only one word in each gap. There is an example at the beginning (<strong>0</strong>).</p>
+            @break
+            @case(3)
+            <p>For questions <strong>1-8</strong>, read the text below. Use the word given in capitals to form a word that fits in the gap. There is an example at the beginning (<strong>0</strong>).</p>
+            @break
+            @case(4)
+            <p>For questions <strong>1-8</strong>, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. <strong>Do not change the word given.</strong> You must use between two and five words, including the word given. Here is an example.</p>
+            <p>0. A very friendly taxi driver drove us into town.</p>
+            <p><strong>DRIVEN</strong></p>
+            <p>We <strong>were driven into town by</strong> a very friendly taxi driver.</p>
+            @break
+            @default
+            @endswitch
+</div>
             <h3 class="my-2 text-center text-3xl font-bold dark:text-white">{{ $exercise->title }}</h3>
 
             <div x-data>
@@ -81,6 +99,7 @@
                                         class="flex items-center justify-between  mx-2 w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                         @php
                                             $choiceOptions = explode('/', $choice->values);
+                                            $optionLabels = ['A', 'B', 'C', 'D'];
                                         @endphp
                                         @foreach ($choiceOptions as $key => $value)
                                             <li
@@ -96,7 +115,7 @@
                                                 >
                                                 <label for="question-{{ $index }}-option-{{ $key }}"
                                                     class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                    {{ $value }}
+                                                    <strong>{{ $optionLabels[$key] }}. </strong>{{ $value }}
                                                 </label>
                                             </li>
                                         @endforeach

@@ -1,4 +1,4 @@
-<div class=" h-screen w-full p-6 pb-28">
+<div class=" h-screen w-full p-6 pb-28 overflow-y-auto scrollBarThin">
     <div class="grid grid-cols-3 place-items-center">
         @foreach ($studentStats as $index => $student)
             <div

@@ -84,27 +84,34 @@ class Play extends Component
         }
         if ($this->exercise->part == 4) {
             foreach ($this->questions as $index => $question) {
-                $parts = explode('|', strtolower($question->answers[0]->value));
+                $rawAnswer = strtolower($question->answers[0]->value);
+                $rawAnswer = preg_replace('/\((.*?)\)/', '', $rawAnswer); // Remove optional bracketed words
+                $parts = explode('|', $rawAnswer);
                 $score = 0;
                 $userAnswer = strtolower(trim($this->userAnswers[$index] ?? ''));
+
                 foreach ($parts as $part) {
                     if (strpos($part, '/') !== false) {
                         $options = explode('/', $part); // Split by `/`
                         foreach ($options as $option) {
-                            if (preg_match('/\b' . preg_quote(trim($option), '/') . '\b/i', $userAnswer)) {
+                            $option = trim($option);
+                            if (preg_match('/\b' . preg_quote($option, '/') . '\b/i', $userAnswer)) {
                                 $score++;
                                 break;
                             }
                         }
                     } else {
-                        if (preg_match('/\b' . preg_quote(trim($part), '/') . '\b/i', $userAnswer)) {
+                        $part = trim($part);
+                        if (preg_match('/\b' . preg_quote($part, '/') . '\b/i', $userAnswer)) {
                             $score++;
                         }
                     }
                 }
+
                 $this->results[$index] = $score;
             }
         }
+
         $this->finalScore = array_sum($this->results);
         DB::table('user_records')->insert([
             'user_id' => Auth::id(),
