@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 //General stuff
 
+Route::fallback(function () {
+  return redirect()->route('dashboard')->with('msg', 'That page does not exist');
+});
 Route::view('/', 'welcome');
 Route::get('/dashboard', function () {
     if (auth()->user()->role === 'Teacher') {
@@ -76,7 +79,6 @@ Route::get('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, '
 Route::post('admin/exercises/part{part}/{id}/edit', [ExerciseController::class, 'updateExercise'])->name('admin.exercises.edit')->middleware(['auth', IsAdmin::class]);
 Route::get('admin/schools', Schools::class)->name('admin.schools')->middleware(['auth', IsAdmin::class]);
 Route::get('admin/users', Users::class)->name('admin.users')->middleware(['auth', IsAdmin::class]);
-
 
 
 require __DIR__ . '/auth.php';

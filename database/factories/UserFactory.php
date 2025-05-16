@@ -32,7 +32,6 @@ class UserFactory extends Factory
             'email' => fake('es_ES')->unique()->safeEmail(),
             'school_id' => $possible_schools[fake()->numberBetween(0,5)],
             'role' => 'Student',
-            'email_verified_at' => now(),
             'account_verified' => true,
             'remember_token' => Str::random(10),
             'set_exercise' => null,

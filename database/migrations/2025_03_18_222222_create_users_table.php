@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('email')->unique();
-            $table->boolean('account_verified')->default(false);
             $table->unsignedBigInteger('school_id')->nullable()->default(null);
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('set null');
             $table->enum('role', ['Admin', 'Teacher','Student'])->default('Student');

@@ -60,7 +60,7 @@
                 </button>
             @endif
             @foreach ($students as $student)
-                <button @if ($student->account_verified == 1) wire:click="$dispatch('openStats', { id: {{ $student->id }} })"
+                <button @if (!$student->email_verified_at == null) wire:click="$dispatch('openStats', { id: {{ $student->id }} })"
                 @endif
                     class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
                     <div class="flex items-center px-6 gap-8 w-full">
@@ -79,7 +79,7 @@
 
                             <h5
                                 class="tracking-tight truncate text-gray-900 dark:text-white {{ Str::length($student->date) > 28 ? 'text-sm lg:text-base' : 'text-base lg:text-xl' }}">
-                                @if ($student->account_verified == 1)
+                                @if (!$student->email_verified_at == null)
                                     @if (\Carbon\Carbon::parse($student->date)->isFuture())
                                         Less than an hour ago
                                     @else
