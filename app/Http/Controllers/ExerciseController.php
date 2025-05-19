@@ -26,7 +26,7 @@ class ExerciseController extends Controller
                           AND UR2.user_id = ?
                     )
                 WHERE E.part = ?
-                ORDER BY UR.timestamp DESC
+                ORDER BY UR.timestamp ASC
             ";
 
             $exercises = DB::select($sql, [Auth::user()->id, Auth::user()->id, $part]);

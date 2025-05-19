@@ -1,5 +1,5 @@
 <div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-    <div class="w-full mx-auto space-y-6 p-2 px-4 bg-white">
+    <div class="w-full mx-auto space-y-6 p-2 px-4 bg-white border border-black rounded-lg">
 
         <div x-data="{
             seconds: 0,
@@ -73,6 +73,7 @@
                                 <p>
                                     {{ $question->before_prompt }}
                                     <input type="text" autocomplete="off" id="answer-{{ $index }}"
+                                    {{ $finished ? 'disabled' : '' }}
                                         data-index="{{ $index }}" oninput="validateWordCount(this, 2, 5)"
                                         wire:model.defer="userAnswers.{{ $index }}"
                                         class="w-2/5 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -106,7 +107,7 @@
                             @if ($finished === false)
                                 @if ($exercise->part == '4')
                                     <button type="button" wire:click="triggerConfirm"
-                                        class=" text-gray-900 font-extrabold bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                        class=" text-gray-900 font-extrabold bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                                         Finish
                                     </button>
                                 @endif
@@ -128,7 +129,7 @@
                                             Wow! Amazing! Perfect score!
                                         @endif
                                     </p>
-                                    <a class="text-gray-900 my-2 font-extrabold bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                    <a class="text-gray-900 my-2 font-extrabold bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                         href="{{ route('exercises.part', ['part' => $exercise->part]) }}">Go back
                                         to
                                         Exercises</a>
@@ -158,6 +159,7 @@
                                                     class="flex-1 flex items-center justify-center border-b border-gray-200 sm:border-b-0 dark:border-gray-600">
                                                     <input
                                                         id="question-{{ $index }}-option-{{ $key }}"
+                                                        @if ($finished) disabled @endif
                                                         type="radio" name="question-{{ $index }}"
                                                         value="{{ $value }}"
                                                         @if ($index == 0) disabled
@@ -201,6 +203,7 @@
 
                                         <input type="text" autocomplete="off" id="{{ $index }}"
                                             placeholder="{{ $index == 0 ? $question->value : '' }}"
+                                            {{ $finished ? 'disabled' : '' }}
                                             wire:model.defer="userAnswers.{{ $index }}"
                                             {{ $index == 0 ? 'disabled' : '' }}
                                             class="w-1/2  mx-2 p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -222,6 +225,7 @@
                                         <span class="text-lg w-4 font-semibold mr-2">{{ $index }}.</span>
 
                                         <input type="text" autocomplete="off" id="{{ $index }}"
+                                        {{ $finished ? 'disabled' : '' }}
                                             placeholder="{{ $index == 0 ? $question->value : '' }}"
                                             wire:model.defer="userAnswers.{{ $index }}"
                                             {{ $index == 0 ? 'disabled' : '' }}
@@ -245,7 +249,7 @@
                                     @if ($exercise->part !== '4')
 
                                         <button type="button" wire:click="triggerConfirm"
-                                            class=" text-gray-900 font-extrabold bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                            class=" text-gray-900 font-extrabold bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                                             Finish
                                         </button>
 
@@ -269,7 +273,7 @@
                                                 Wow! Amazing! Perfect score!
                                             @endif
                                         </p>
-                                        <a class="text-gray-900 my-2 font-extrabold bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                                        <a class="text-gray-900 my-2 font-extrabold bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 rounded-lg text-m px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                                             href="{{ route('exercises.part', ['part' => $exercise->part]) }}">Go back
                                             to
                                             Exercises</a>

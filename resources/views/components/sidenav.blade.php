@@ -1,5 +1,5 @@
 <aside id="logo-sidebar"
-    class="w-64 h-screen border-r sidenavBorder dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300"
+    class="w-72 h-screen border-r sidenavBorder dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300"
     aria-label="Sidebar">
     <div class="py-2 h-full overflow-y-auto navbarbg">
 
@@ -38,7 +38,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.schools') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[ ] dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.schools') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">

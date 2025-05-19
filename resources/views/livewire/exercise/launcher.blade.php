@@ -19,7 +19,7 @@
                 @if ($titleEx)
                     <div class="flex justify-center mb-4">
                         <a href="{{ route('exercises.play', ['part' => $titleEx->part, 'id' => $titleEx->id]) }}"
-                            class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                            class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             Start Now
                         </a>
                     </div>
@@ -70,11 +70,11 @@
                     </div>
                     <div class="flex justify-center p-4">
                         <a href="{{ route('exercises.play', ['part' => $titleEx->part, 'id' => $titleEx->id]) }}"
-                            class="w-1/2 text-gray-900 text-center bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                            class="w-1/2 text-gray-900 text-center bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             Test
                         </a>
                         <button wire:click="triggerConfirm"
-                            class=" w-1/2 text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                            class=" w-1/2 text-gray-900 bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                             @if ($exerciseId == Auth::user()->set_exercise)
                                 Unset
                             @else
@@ -125,7 +125,7 @@
                             Not done by:
                             <div class="flex flex-wrap text-center gap-2 p-2 my-2">
                                 @foreach ($toDoStudents as $student)
-                            <span class="bg-amber-400 rounded-full text-sm mx-1 p-2">{{ $student->name.' '.$student->surname }}</span>
+                            <span class="bg-[#DBA159] rounded-full text-sm mx-1 p-2">{{ $student->name.' '.$student->surname }}</span>
                             @endforeach
 </div>
                         </h5>

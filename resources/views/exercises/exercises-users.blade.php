@@ -10,7 +10,7 @@
                     <button x-data @click="$dispatch('openLauncher', { id: {{ $exercise->id }} })"
                         wire:key="exercise-{{ $exercise->id }}"
                         class="p-6 col col-4 min-w-full min-h-36 border border-black rounded-lg shadow-sm transition 
-                {{ $isActive ? 'bg-white shadow-lg  hover:bg-yellow-100 animate-customPulse ' : 'bg-white hover:bg-yellow-100 ' }}">
+                {{ $isActive ? 'bg-white shadow-lg  hover:bg-[#FCFDAF] animate-customPulse ' : 'bg-white hover:bg-[#FCFDAF] ' }}">
                         <div class="flex min-w-full gap-4 mb-4 border-b border-gray-300 -mx-6 px-6 pb-4">
                             <h5 class="text-base lg:text-xl font-bold tracking-tight pb-1 text-gray-400 dark:text-white">
                                 {{ $index + 1 }}

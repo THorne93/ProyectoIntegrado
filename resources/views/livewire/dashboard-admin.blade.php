@@ -18,14 +18,14 @@
                 {{ Carbon\Carbon::createFromTime($stats['mostActiveHour'])->format('g A') }}</p>
             <p><strong>Total time spent:</strong>
                 {{ (floor($stats['totalTime'] / (30 * 86400)) ? floor($stats['totalTime'] / (30 * 86400)) . 'mo ' : '') .
-                    (floor(($stats['totalTime'] % (30 * 86400)) / 86400)
-                        ? floor(($stats['totalTime'] % (30 * 86400)) / 86400) . 'd '
-                        : '') .
-                    (floor((($stats['totalTime'] % (30 * 86400)) % 86400) / 3600)
-                        ? floor((($stats['totalTime'] % (30 * 86400)) % 86400) / 3600) . 'h '
-                        : '') .
-                    floor(((($stats['totalTime'] % (30 * 86400)) % 86400) % 3600) / 60) .
-                    'm' }}
+    (floor(($stats['totalTime'] % (30 * 86400)) / 86400)
+        ? floor(($stats['totalTime'] % (30 * 86400)) / 86400) . 'd '
+        : '') .
+    (floor((($stats['totalTime'] % (30 * 86400)) % 86400) / 3600)
+        ? floor((($stats['totalTime'] % (30 * 86400)) % 86400) / 3600) . 'h '
+        : '') .
+    floor(((($stats['totalTime'] % (30 * 86400)) % 86400) % 3600) / 60) .
+    'm' }}
             </p>
 
         </div>
@@ -40,7 +40,7 @@
             <h3 class="text-center mt-2 font-bold">Users</h3>
             <a href="{{ route('admin.users') }}">
                 <button type="button"
-                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                     Manage
                 </button></a>
         </div>
@@ -82,28 +82,28 @@
             <h3 class="text-center my-2 font-bold">Exercises</h3>
             <a href="{{ route('admin.exercises') }}">
                 <button type="button"
-                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                     Manage
                 </button></a>
         </div>
         <div class="flex-1 my-auto items-center">
             <p>
-                <strong>Nº Part 1 exercises:</strong> 
+                <strong>Nº Part 1 exercises:</strong>
                 <span title="New this week: {{ $stats['countWeekPart1'] }}"
                     style="cursor: help; font-weight: bold; font-size: 16px; color: black; margin-left: 4px;">{{ $stats['countPart1'] }}</span>
             </p>
             <p>
-                <strong>Nº Part 2 exercises:</strong> 
+                <strong>Nº Part 2 exercises:</strong>
                 <span title="New this week: {{ $stats['countWeekPart2'] }}"
                     style="cursor: help; font-weight: bold; font-size: 16px; color: black; margin-left: 4px;">{{ $stats['countPart2'] }}</span>
             </p>
             <p>
-                <strong>Nº Part 3 exercises:</strong> 
+                <strong>Nº Part 3 exercises:</strong>
                 <span title="New this week: {{ $stats['countWeekPart3'] }}"
                     style="cursor: help; font-weight: bold; font-size: 16px; color: black; margin-left: 4px;">{{ $stats['countPart3'] }}</span>
             </p>
             <p>
-                <strong>Nº Part 4 exercises:</strong> 
+                <strong>Nº Part 4 exercises:</strong>
                 <span title="New this week: {{ $stats['countWeekPart4'] }}"
                     style="cursor: help; font-weight: bold; font-size: 16px; color: black; margin-left: 4px;">{{ $stats['countPart4'] }}</span>
             </p>
@@ -150,7 +150,7 @@
             <h3 class="text-center my-2 font-bold">Schools</h3>
             <a href="{{ route('admin.schools') }}">
                 <button type="button"
-                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                    class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-[#FCFDAF] focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                     Manage
                 </button>
             </a>
@@ -160,7 +160,10 @@
             <p><strong>New schools this week:</strong> {{ $stats['weeklySchools'] }}</p>
             <p><strong>Average school size:</strong> {{ $stats['usersPerSchool'] }}</p>
             <p><strong>School growth this week:</strong> {{ $stats['schoolGrowth'] }}%</p>
-            <p><strong>Most active school this week:</strong> {{ $stats['mostActiveSchool']}}</p>
+            <p><strong>Most active school this week:</strong> </p>
+            @if ($stats['mostActiveSchool'])
+                <p>{{$stats['mostActiveSchool']->school_name}}</p>
+            @endif
 
         </div>
     </div>

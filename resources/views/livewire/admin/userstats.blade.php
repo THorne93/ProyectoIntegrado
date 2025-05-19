@@ -29,7 +29,7 @@
                             class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
                             {{ $student->name . ' ' . $student->surname }}
                         </h5><a href="{{ route('statistics.print.admin', ['id' => $student->id]) }}" 
-                    class="p-2 cursor-pointer rounded-md bg-white hover:bg-gray-200 border border-gray-400 hover:bg-yellow-100 transition inline-flex items-center">
+                    class="p-2 cursor-pointer rounded-md bg-white hover:bg-gray-200 border border-gray-400 hover:bg-[#FCFDAF] transition inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" viewBox="0 0 448 512"
                         fill="currentColor">
                         <path

@@ -11,7 +11,7 @@
                         class="flex-grow rounded-md text-sm border border-black p-2 mr-4" placeholder="Search" />
                     <a href="{{ route('admin.exercises.create', ['part' => $i]) }}">
                         <button type="button" wire:click="toggleCards"
-                            class="h-auto flex items-center bg-white hover:bg-yellow-100 border border-black text-sm px-4 py-2 rounded-md transition">
+                            class="h-auto flex items-center bg-white hover:bg-[#FCFDAF] border border-black text-sm px-4 py-2 rounded-md transition">
                             Add New Exercise
                         </button>
                     </a>
@@ -21,7 +21,7 @@
                     <div class="max-h-48 overflow-y-auto scrollBarThin">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-200 sticky top-0 z-10 ">
+                                class="text-xs text-black uppercase bg-gray-200 sticky top-0 z-10 ">
                                 <tr>
                                     <th class="px-4 text-center py-2">Title</th>
                                     <th class="px-4 w-2/6 text-center py-2">Actions</th>
@@ -30,7 +30,7 @@
                             <tbody class="bg-white dark:bg-gray-800">
                                 @foreach (${'part' . $i} as $exercise)
                                     <tr
-                                        class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        class="border-t border-gray-200 dark:border-gray-700 hover:bg-[#FCFDAF] dark:hover:bg-gray-600">
                                         <td class="px-12 py-2 text-black 
                                     @if ($exercise->trashed()) opacity-50 text-gray-400 @endif">
                                             {{ $exercise->title }}

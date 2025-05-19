@@ -19,17 +19,17 @@
             placeholder="Search by name, surname, school and email..." />
         @if ($view == 'table')
             <button type="button" wire:click="toggleCards"
-                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-[#FCFDAF] transition px-6">
                 Change view ⇄
             </button>
         @else
             <button type="button" wire:click="toggleTable"
-                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-[#FCFDAF] transition px-6">
                 Change view ⇄
             </button>
         @endif
         <button type="button" wire:click="toggleTrashed"
-            class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-yellow-100 
+            class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-[#FCFDAF] 
                transition px-6 gap-8">{{ !$filterTrashed ? 'Show deleted' : 'Show active' }}</button>
     </div>
     <div class="mb-4 flex justify-between items-center">
@@ -40,7 +40,7 @@
             @if (!$filterTrashed)
                 <div class="text-end">
                     <button type="button" wire:click="$dispatch('openModal')"
-                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-yellow-200 transition">
+                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-[#FCFDAF] transition">
                        +
                     </button>
 
@@ -52,7 +52,7 @@
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
             @if (!$filterTrashed)
                 <button type="button" wire:click="$dispatch('openModal')"
-                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-yellow-100 
+                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-[#FCFDAF] 
                                                        dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition px-6 gap-8">
                     <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700 dark:text-white"
@@ -68,7 +68,7 @@
             @endif
             @foreach ($users as $user)
                 <button wire:click="$dispatch('openUserStats', { id: {{ $user->id }} })"
-                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-yellow-100 
+                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-[#FCFDAF] 
                                                                dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
 
                     <div class="flex items-center px-6 gap-8 w-full">
@@ -86,7 +86,7 @@
                             </h5>
                             <h5 title="{{ $user->email }}" class=" {{ Str::length($user->email) > 32
                     ? 'text-[10px] lg:text-xs'
-                    : (Str::length($user->email) > 28
+                    : (Str::length($user->email) > 25
                         ? 'text-sm lg:text-base'
                         : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
                                 {{ $user->email }}
@@ -187,7 +187,7 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr wire:click="$dispatch('openUserStats', { id: {{ $user->id }} })"
-                        class="bg-white border text-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-400 hover:bg-yellow-100 dark:hover:bg-gray-600">
+                        class="bg-white border text-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-400 hover:bg-[#FCFDAF] dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">
                             {{ $user->name }}

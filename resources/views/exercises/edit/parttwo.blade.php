@@ -23,7 +23,7 @@
                         <input type="file" name="image_input" id="image_input"
                             class="block w-full md:w-2/3 text-sm text-gray-900 border border-black rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                         <button type="button" id="extractTextBtn"
-                            class="w-full md:w-1/3 bg-white border border-black hover:bg-yellow-100 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
+                            class="w-full md:w-1/3 bg-white border border-black hover:bg-[#FCFDAF] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
                             Extract Text from Image
                         </button>
                     </div>

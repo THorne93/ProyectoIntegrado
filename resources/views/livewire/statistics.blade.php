@@ -403,14 +403,14 @@
                         <button wire:click='getPrediction' @if (empty($detailedStats)) disabled @endif
                             class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
                         @else
-                            bg-white text-black hover:bg-yellow-100 border-black cursor-pointer @endif">
+                            bg-white text-black hover:bg-[#FCFDAF] border-black cursor-pointer @endif">
                             Predictor <span
                                 style=" background: #eee; color: #333; padding: 2px 4px; border-radius: 4px;">BETA</span>
                         </button>
                         <button wire:click='printPDF' @if (empty($detailedStats)) disabled @endif
                             class="px-4 py-2 border rounded transition-colors @if (empty($detailedStats)) bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300
                         @else
-                            bg-white text-black hover:bg-yellow-100 border-black cursor-pointer @endif">
+                            bg-white text-black hover:bg-[#FCFDAF] border-black cursor-pointer @endif">
                             Print PDF </button>
                     </div>
 
@@ -480,7 +480,7 @@
                     <label class="block mb-2 text-sm font-semibold text-gray-700">Action</label>
                     <button type="submit"
                         class="flex-grow px-4 py-2 border rounded transition-colors
-            {{ $isDisabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300' : 'bg-white text-black hover:bg-yellow-100 border-black cursor-pointer' }}"
+            {{ $isDisabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300' : 'bg-white text-black hover:bg-[#FCFDAF] border-black cursor-pointer' }}"
                         @if ($isDisabled) disabled @endif>
                         Go
                     </button>
