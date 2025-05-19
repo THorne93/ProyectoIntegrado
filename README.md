@@ -1,6 +1,6 @@
 # ProyectoIntegrado
 
-# Español
+# Español 🇪🇸
 
 Para que la aplicación funcione correctamente, deben estar instalados los siguientes servicios:
 
@@ -21,7 +21,7 @@ Una vez instalado, todo lo demás que se necesita se proporciona dentro de la ca
 
 Con estos comandos, la aplicación ya estará funcionando. Habrá un número de usuarios generado aleatoriamente, y también una cuenta de administrador con la que se puede acceder usando admin@admin.com con la contraseña '1234'. Se recomienda encarecidamente cambiar las contraseñas cuando o si se ejecuta esta aplicación en vivo.
 
-# English
+# English 🇬🇧
 
 For the application to fully run correctly, the following services must be installed.:
 
