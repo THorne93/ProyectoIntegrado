@@ -16,39 +16,46 @@
 
     <livewire:admin.newschool />
     <livewire:admin.schoolstats />
-    <div class="text-end flex justify-items-end col col-2 mb-12 bg-white border border-gray-400 rounded-lg shadow-sm">
-        <input type="text" wire:model.live="search" class="flex-grow rounded-r-none text-sm rounded-lg"
+    <div class="text-end flex justify-items-end col col-2 mb-6 bg-white  rounded-lg ">
+        <input type="text" wire:model.live="search" class="flex-grow rounded-r-none border border-black text-sm rounded-lg"
             placeholder="Search" />
         @if ($view == 'table')
             <button type="button" wire:click="toggleCards"
-                class="w-20 h-auto flex items-center justify-center text-center hover:bg-gray-100 transition px-6 rounded-l-lg">
-                Cards
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                Change view ⇄
             </button>
         @else
             <button type="button" wire:click="toggleTable"
-                class="w-20 h-auto flex items-center justify-center text-center border-l border-gray-400 rounded-r-lg hover:bg-gray-100 transition px-6">
-                Table
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                Change view ⇄
             </button>
         @endif
-        <button type="button" wire:click="toggleTrashed" class=" col col-1 h-auto flex items-center border-l-gray-400 border-l rounded-r-lg  hover:bg-gray-100 
+        <button type="button" wire:click="toggleTrashed"
+            class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-yellow-100 
                transition px-6 gap-8">{{ !$filterTrashed ? 'Show deleted' : 'Show active' }}</button>
     </div>
-    @if ($view !== 'cards')
-        @if (!$filterTrashed)
-            <div class="text-end">
-                <button type="button" wire:click="$dispatch('openSchoolModal')"
-                    class="p-1 px-2 -mt-12 bg-white border border-gray-400 text-black rounded-full hover:bg-gray-100 transition">
-                    <span class="text-2xl">+</span>
-                </button>
-            </div>
+    <div class="mb-4 flex justify-between items-center">
+        <div class="text-start">
+            {{ ucfirst($view) }} view
+        </div>
+        @if ($view !== 'cards')
+            @if (!$filterTrashed)
+                <div class="text-end">
+                    <button type="button" wire:click="$dispatch('openModal')"
+                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-gray-100 transition">
+                       +
+                    </button>
+
+                </div>
+            @endif
         @endif
-    @endif
+    </div>
     @if ($view === 'cards')
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
             @if (!$filterTrashed)
 
 
-                <button type="button" wire:click="$dispatch('openSchoolModal')" class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 
+                <button type="button" wire:click="$dispatch('openSchoolModal')" class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-yellow-100 
                                    dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition px-6 gap-8">
                     <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700 dark:text-white"
@@ -63,7 +70,7 @@
                 </button>
             @endif
             @foreach ($schools as $school)
-                <button wire:click="$dispatch('openSchoolStats', { id: {{ $school->id }} })" class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 
+                <button wire:click="$dispatch('openSchoolStats', { id: {{ $school->id }} })" class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-yellow-100 
                                    dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
 
                     <div class="flex items-center px-6 gap-8 w-full">
@@ -101,8 +108,8 @@
         </div>
     @else
         <table class="w-full text-sm text-left rtl:text-right rounded-lg text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+            <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="border border-black">
                     <th wire:click="order('name')" scope="col" class="px-6 py-3 cursor-pointer">
                         <div class="flex items-center gap-1">
                             <p @class(['underline text-black' => $column == 'name'])>Name</p>
@@ -183,7 +190,7 @@
             <tbody>
                 @foreach ($schools as $school)
                     <tr wire:click="$dispatch('openSchoolStats', { id: {{ $school->id }} })"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        class="bg-white border dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-400 hover:bg-yellow-100 dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">
                             {{ $school->name }}

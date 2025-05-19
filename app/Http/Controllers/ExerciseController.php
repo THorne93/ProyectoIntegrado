@@ -14,21 +14,22 @@ class ExerciseController extends Controller
     public function getIndex($part)
     {
         if (Auth::user()->role == "Student") {
-            $exercises = DB::table('exercises as E')
-                ->leftJoin('user_records as UR', function ($join) {
-                    $join->on('E.id', '=', 'UR.exercise_id')
-                        ->where('UR.user_id', Auth::id())
-                        ->whereRaw('UR.timestamp = (
-                     SELECT MAX(UR2.timestamp) 
-                     FROM user_records UR2 
-                     WHERE UR2.exercise_id = E.id 
-                     AND UR2.user_id = ?
-                 )', [Auth::id()]);
-                })
-                ->where('E.part', $part) // Always get exercises for the given part
-                ->orderBy('UR.timestamp', 'DESC') // Order by latest records (optional)
-                ->select('E.*', 'UR.score', 'UR.time_spent', 'UR.timestamp')
-                ->get();
+            $sql = "
+                SELECT E.*, UR.score, UR.time_spent, UR.timestamp
+                FROM exercises E
+                LEFT JOIN user_records UR ON E.id = UR.exercise_id
+                    AND UR.user_id = ?
+                    AND UR.timestamp = (
+                        SELECT MAX(UR2.timestamp)
+                        FROM user_records UR2
+                        WHERE UR2.exercise_id = E.id
+                          AND UR2.user_id = ?
+                    )
+                WHERE E.part = ?
+                ORDER BY UR.timestamp DESC
+            ";
+
+            $exercises = DB::select($sql, [Auth::user()->id, Auth::user()->id, $part]);
         } else {
             $schoolId = Auth::user()->school_id;
 

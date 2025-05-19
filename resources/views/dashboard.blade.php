@@ -8,41 +8,41 @@
 
                 <div class="w-4/5 mx-auto grid grid-cols-2 gap-4 justify-items-center items-center ">
                     <div
-                        class="place-self-center flex flex-col items-center  h-72 w-full p-6  bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        class="place-self-center flex flex-col items-center  h-72 w-full p-6 bg-white border border-black   rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         @livewire('dashboard-part-one-stats')
                         <a href="{{ route('exercises.part', ['part' => 1]) }}">
                             <button type="button"
-                                class="text-gray-900 bg-gray-100 border-gray-500 focus:outline-none hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Practise now!
                             </button>
                         </a>
                     </div>
                     <div
-                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white border border-black rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         @livewire('dashboard-part-two-stats')
                         <a href="{{ route('exercises.part', ['part' => 2]) }}">
                             <button type="button"
-                                class="text-gray-900 bg-gray-100 border-gray-500 focus:outline-none hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Practise now!
                             </button>
                         </a>
                     </div>
                     <div
-                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white border border-black  rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         @livewire('dashboard-part-three-stats')
                         <a href="{{ route('exercises.part', ['part' => 3]) }}">
                             <button type="button"
-                                class="text-gray-900 bg-gray-100 border-gray-500 focus:outline-none hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Practise now!
                             </button>
                         </a>
                     </div>
                     <div
-                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        class="place-self-center flex flex-col items-center w-full  h-72 p-6  bg-white border border-black  rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         @livewire('dashboard-part-four-stats')
                         <a href="{{ route('exercises.part', ['part' => 4]) }}">
                             <button type="button"
-                                class="text-gray-900 bg-gray-100 border-gray-500 focus:outline-none hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                                class="text-gray-900 bg-white border border-black focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Practise now!
                             </button>
                         </a>

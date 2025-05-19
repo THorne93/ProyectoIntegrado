@@ -18,8 +18,7 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.css">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.js"
-        defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-uploader@1.3.0/dist/quill.imageUploader.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
     <script src="https://kit.fontawesome.com/04e8bd4d22.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -32,37 +31,38 @@
 
 <body class="font-sans antialiased appbg overflow-hidden">
 
-    <div class="min-h-screen ">
-        <livewire:layout.navigation />
+    <div class="min-h-screen flex md:flex-row flex-row">
+        <x-sidenav />
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+
 
         <!-- Page Content -->
 
-        <main class="flex flex-row">
-            <x-sidenav />
+        <main class="flex w-full flex-col">
+            <livewire:layout.navigation />
             {{ $slot }}
         </main>
     </div>
 
-
     <script>
+        const toggleBtn = document.getElementById('toggle-sidebar');
+        const sidebar = document.getElementById('logo-sidebar');
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+
+            if (sidebar.classList.contains('hidden')) {
+                toggleBtn.textContent = '→';
+            } else {
+                toggleBtn.textContent = '←';
+            }
+        });
         document.addEventListener('livewire:load', () => {
             console.log('Livewire has loaded!');
         });
-    </script>
-    <script>
-        @if(session('success'))
+        @if (session('success'))
             toastr.success("{{ session('success') }}");
         @endif
-        @if(session('msg'))
+        @if (session('msg'))
             toastr.warning("{{ session('msg') }}");
         @endif
     </script>

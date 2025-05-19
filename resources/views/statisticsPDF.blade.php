@@ -1,3 +1,7 @@
+<?php
+$logopath = public_path('storage/img/logo.png');
+$logo = file_exists($logopath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($logopath)) : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,10 +56,17 @@
 </head>
 
 <body>
+    @if ($logo)
+        <div style="position: absolute; top: 0; right: 0; padding: 10px;">
+            @if ($logo)
+                <img src="{{ $logo }}" alt="Logo" style="width: 150px;">
+            @endif
+        </div>
+    @endif
     <h1>Statistics for {{ $user->name . ' ' . $user->surname }}. Dated
         {{ \Carbon\Carbon::now()->format('d/m/Y') }}</h1>
 
-        <h3 style="color: orange;">Prediction (BETA) {!! $prediction !!}</h3>
+    <h3 style="color: orange;">Prediction (BETA) {!! $prediction !!}</h3>
     <div class="grid-container">
         @foreach ($detailedStats as $key => $stat)
             <div class="table-wrapper">

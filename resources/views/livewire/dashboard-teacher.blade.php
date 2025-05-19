@@ -1,16 +1,16 @@
 <div class=" h-screen w-full p-6 pb-28 overflow-y-auto scrollBarThin">
-    <div class="grid grid-cols-3 place-items-center">
+    <div class="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 gap-4 place-items-center">
         @foreach ($studentStats as $index => $student)
             <div
-                class="place-self-center flex flex-col items-center p-6 my-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                class="place-self-center border border-black flex flex-col items-center w-full aspect-square p-6 my-4 bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <h5 class="text-lg font-extrabold text-gray-900 dark:text-gray-100">{{ $student['name'] }}</h5>
 
                 @if(count($student['scores']) === 0)
-                <div style="display: block; height: 300px; width: 300px; text-align: center; line-height: 300px; ">
+                <div style="display: block;  text-align: center; " class="w-full justify-center h-full">
                     <p >No records available</p>
                     </div>
                 @else
-                    <canvas id="chart-{{ $index }}" height="300"></canvas>
+                    <canvas id="chart-{{ $index }}" height="260" width="260"></canvas>
                 @endif
             </div>
         @endforeach
@@ -74,6 +74,7 @@
             document.addEventListener('livewire:navigated', () => {
                 createCharts();
             });
+            
 
             Livewire.hook('message.processed', (message, component) => {
                 // Recreate charts after every Livewire update

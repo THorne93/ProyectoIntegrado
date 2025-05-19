@@ -3,49 +3,53 @@
     <livewire:teachers.newstudents />
     <livewire:teachers.studentstats />
     @if ($successDelete)
-        <div x-data x-init="
-                    toastr.success('Student deleted successfully');
-                    setTimeout(() => $wire.set('successDelete', false), 5000);
-                "></div>
+        <div x-data x-init="toastr.success('Student deleted successfully');
+        setTimeout(() => $wire.set('successDelete', false), 5000);"></div>
     @endif
     @if ($successRestore)
-        <div x-data x-init="
-                    toastr.success('Student restored successfully');
-                    setTimeout(() => $wire.set('successRestore', false), 5000);
-                "></div>
+        <div x-data x-init="toastr.success('Student restored successfully');
+        setTimeout(() => $wire.set('successRestore', false), 5000);"></div>
     @endif
-    <div class="text-end flex justify-items-end col col-2 mb-12 bg-white border border-gray-400 rounded-lg shadow-sm">
-        <input type="text" wire:model.live="search" class="flex-grow rounded-r-none text-sm rounded-lg"
+    <div class="text-end flex justify-items-end col col-2 mb-6 bg-white  rounded-lg">
+        <input type="text" wire:model.live="search" class="flex-grow rounded-r-none text-sm rounded-lg border-black"
             placeholder="Search by name, surname and email..." />
         @if ($view == 'table')
             <button type="button" wire:click="toggleCards"
-                class="w-20 h-auto flex items-center justify-center text-center hover:bg-gray-100 transition px-6 rounded-l-lg">
-                Cards
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                Change view ⇄
             </button>
         @else
             <button type="button" wire:click="toggleTable"
-                class="w-20 h-auto flex items-center justify-center text-center border-l border-gray-400 rounded-r-lg hover:bg-gray-100 transition px-6">
-                Table
+                class="w-38 h-auto flex items-center justify-center text-center border-l-none border border-black bg-white  hover:bg-yellow-100 transition px-6">
+                Change view ⇄
             </button>
         @endif
-        <button type="button" wire:click="toggleTrashed" class=" col col-1 h-auto flex items-center border-l-gray-400 border-l rounded-r-lg  hover:bg-gray-100 
+        <button type="button" wire:click="toggleTrashed"
+            class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-yellow-100 
                transition px-6 gap-8">{{ !$filterTrashed ? 'Show deleted' : 'Show active' }}</button>
     </div>
-    @if ($view !== 'cards')
-        @if (!$filterTrashed)
-            <div class="text-end">
-                <button type="button" wire:click="$dispatch('openModal')"
-                    class="p-1 px-2 -mt-12 bg-white border border-gray-400 text-black rounded-full hover:bg-gray-100 transition">
-                    <span class="text-2xl">+</span>
-                </button>
-            </div>
+    <div class="mb-4 flex justify-between items-center">
+        <div class="text-start">
+            {{ ucfirst($view) }} view
+        </div>
+        @if ($view !== 'cards')
+            @if (!$filterTrashed)
+                <div class="text-end">
+                    <button type="button" wire:click="$dispatch('openModal')"
+                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-gray-100 transition">
+                       +
+                    </button>
+
+                </div>
+            @endif
         @endif
-    @endif
+    </div>
+
     @if ($view === 'cards')
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4  gap-12">
             @if (!$filterTrashed)
                 <button type="button" wire:click="$dispatch('openModal')"
-                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 
+                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-yellow-100
                                                        dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition px-6 gap-8">
                     <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700 dark:text-white"
@@ -60,11 +64,12 @@
                 </button>
             @endif
             @foreach ($students as $student)
-                <button @if (!$student->email_verified_at == null) wire:click="$dispatch('openStats', { id: {{ $student->id }} })"
-                @endif
-                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
+                <button
+                    @if (!$student->email_verified_at == null) wire:click="$dispatch('openStats', { id: {{ $student->id }} })" @endif
+                    class="relative col col-4 min-w-full min-h-36 h-full flex items-center  bg-white border border-gray-950 rounded-lg shadow-sm hover:bg-yellow-100 transition">
                     <div class="flex items-center px-6 gap-8 w-full">
-                        <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
+                        <div
+                            class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700 dark:text-white"
                                 viewBox="0 0 448 512">
                                 <path
@@ -90,12 +95,13 @@
                                 @endif
                             </h5>
 
-                            <h5 title="{{ $student->email }}" class="tracking-tight truncate text-gray-900 dark:text-white
+                            <h5 title="{{ $student->email }}"
+                                class="tracking-tight truncate text-gray-900 dark:text-white
                                                                         {{ Str::length($student->email) > 32
-                    ? 'text-[10px] lg:text-xs'
-                    : (Str::length($student->email) > 28
-                        ? 'text-sm lg:text-base'
-                        : 'text-base lg:text-xl') }}">
+                                                                            ? 'text-[10px] lg:text-xs'
+                                                                            : (Str::length($student->email) > 28
+                                                                                ? 'text-sm lg:text-base'
+                                                                                : 'text-base lg:text-xl') }}">
                                 {{ $student->email }}
                             </h5>
 
@@ -106,21 +112,23 @@
             @endforeach
         </div>
     @else
-        <table class="w-full text-sm text-left rtl:text-right rounded-lg text-gray-500 dark:text-gray-400">
+        <table class="w-full text-sm text-left rtl:text-right rounded-lg  text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+                <tr class="border border-black">
                     <th wire:click="order('name')" scope="col" class="px-6 py-3 w-1/4 cursor-pointer">
                         <div class="flex items-center gap-1">
                             <p @class(['underline text-black' => $column == 'name'])>Name</p>
                             @if ($column == 'name')
                                 @if ($orderDirection == 'desc')
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m18 15-6-6-6 6"></path>
                                     </svg>
                                 @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m6 9 6 6 6-6"></path>
                                     </svg>
                                 @endif
@@ -134,13 +142,15 @@
                             <p @class(['underline text-black' => $column == 'surname'])>Surname</p>
                             @if ($column == 'surname')
                                 @if ($orderDirection == 'desc')
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m18 15-6-6-6 6"></path>
                                     </svg>
                                 @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m6 9 6 6 6-6"></path>
                                     </svg>
                                 @endif
@@ -152,13 +162,15 @@
                             <p @class(['underline text-black' => $column == 'email'])>Email</p>
                             @if ($column == 'email')
                                 @if ($orderDirection == 'desc')
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m18 15-6-6-6 6"></path>
                                     </svg>
                                 @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="m6 9 6 6 6-6"></path>
                                     </svg>
                                 @endif
@@ -172,7 +184,7 @@
             <tbody>
                 @foreach ($students as $student)
                     <tr wire:click="$dispatch('openUserStats', { id: {{ $student->id }} })"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        class="bg-white border text-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-400 hover:bg-yellow-100 dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">
                             {{ $student->name }}

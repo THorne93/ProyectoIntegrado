@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class=" h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="grid grid-cols-2 lg:grid-cols-3  3xl:grid-cols-4 gap-12">
 
             @foreach ($exercises as $index => $exercise)
                     @php
@@ -9,8 +9,8 @@
                     @endphp
                     <button x-data @click="$dispatch('openLauncher', { id: {{ $exercise->id }} })"
                         wire:key="exercise-{{ $exercise->id }}"
-                        class="p-6 col col-4 min-w-full min-h-36 border rounded-lg shadow-sm transition 
-                {{ $isActive ? 'bg-white border-4 shadow-lg shadow-yellow-200 border-yellow-200 hover:bg-gray-100 animate-customPulse ' : 'bg-white border-gray-400 hover:bg-gray-100 ' }}">
+                        class="p-6 col col-4 min-w-full min-h-36 border border-black rounded-lg shadow-sm transition 
+                {{ $isActive ? 'bg-white shadow-lg  hover:bg-yellow-100 animate-customPulse ' : 'bg-white hover:bg-yellow-100 ' }}">
                         <div class="flex min-w-full gap-4 mb-4 border-b border-gray-300 -mx-6 px-6 pb-4">
                             <h5 class="text-base lg:text-xl font-bold tracking-tight pb-1 text-gray-400 dark:text-white">
                                 {{ $index + 1 }}

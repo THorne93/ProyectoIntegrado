@@ -20,33 +20,26 @@
     <livewire:layout.navigation />
     <!-- Main Content Area -->
     <div class="flex-grow flex items-center justify-center">
-        <div class="flex flex-row  w-4/5 max-w-7xl m-4 gap-12 items-center justify-center">
+        <div class="flex flex-row  w-4/5 max-w-7xl   items-center justify-center">
 
             <!-- Left Panel -->
-            <div class="flex w-full bg-gray-100 border border-gray-400 rounded overflow-hidden">
+            <div class="flex w-full  rounded overflow-hidden">
 
                 <!-- Column 1: Image -->
-                <div class="w-4/6 p-2 h-full">
-                    <div id="default-carousel" class="relative w-full" data-carousel="slide">
-                        <!-- Carousel wrapper -->
-                        <div class="relative h-56 overflow-hidden justify-center items-center rounded-lg md:h-96">
-                            @for ($index = 1; $index < 8; $index++)
-                                <div class="hidden my-auto duration-700 ease-in-out" data-carousel-item>
-                                    <img src="/storage/img/{{$index}}.jpg" class="h-full w-full object-contain object-center" alt="...">
-                                </div>
-                            @endfor
-
-                        </div>
-                    </div>
+                <div class="w-4/6  m-4 h-full">
+                    <img src="/storage/img/welcome.png" class="rounded-lg" alt="">
                 </div>
 
                 <!-- Column 2: Text -->
-                <div class="w-2/6 bg-gray-100 flex flex-col items-center justify-center p-6">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+                <div
+                    class="w-2/6 m-4 border border-black rounded-lg bg-white flex flex-col items-center justify-center p-6">
+                    <img src="/storage/img/logo.png" class="w-auto h-16 mx-auto" alt="Logo">
+
+                    <h2 class="text-3xl font-semibold text-black ">
                         Results. Fast.
                     </h2>
-
-                    <ul class="text-gray-600 ms-3 ps-3 text-sm space-y-2">
+                    <p class="mb-6">Cambridge B2 exam preparation</p>
+                    <ul class="text-gray-600 ms-3 text-sm space-y-2">
                         <li><span class="text-green-500 font-extrabold">✓</span> Multiple exam exercises</li>
                         <li><span class="text-green-500 font-extrabold">✓</span> Proven results</li>
                         <li><span class="text-green-500 font-extrabold">✓</span> Instant feedback</li>

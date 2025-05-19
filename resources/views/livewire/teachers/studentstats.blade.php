@@ -29,10 +29,9 @@
                             class="text-base lg:text-xl tracking-tight truncate text-gray-900 dark:text-white">
                             {{ $student->name . ' ' . $student->surname }}
                         </h5><a wire:click="goToStatistics({{ $student->id }})"
-                    class="p-2 cursor-pointer rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
+                    class="p-2 cursor-pointer rounded-md bg-white border border-gray-400 hover:bg-yellow-100 dark:bg-gray-700 dark:hover:bg-gray-600 transition inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400" viewBox="0 0 448 512"
                         fill="currentColor">
-                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License -->
                         <path
                             d="M160 80c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 352c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-352zM0 272c0-26.5 21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 160c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48L0 272zM368 96l32 0c26.5 0 48 21.5 48 48l0 288c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48z" />
                     </svg>
@@ -172,19 +171,19 @@
             <div class="flex justify-center gap-8 mt-2">
                 @if ($isEdit)
                     <button wire:click='closeEdit'
-                        class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Cancel</button>
+                        class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-red-400 text-black transition-colors">Cancel</button>
                     <button wire:click='editStudent'
-                        class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
+                        class="flex-1 px-4 py-2 bg-white border border-black rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
                 @else
                     @if ($student && $student->trashed())
                         <button wire:click='restore'
-                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
+                            class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
                     @else
                         <button wire:click='openEdit'
-                            class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
+                            class="flex-1 px-4 py-2 bg-white border border-black rounded hover:bg-green-400 text-black transition-colors">Edit</button>
 
                         <button wire:click='delete'
-                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                            class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-red-400 text-black transition-colors">Delete</button>
                     @endif
                 @endif
 

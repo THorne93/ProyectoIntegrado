@@ -1,12 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.navbarbg {
-    background-color: #E0E0E0;
-    background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
-
-}
 [x-cloak] { display: none !important; }
 .auto-resize-input {
     width: auto;
@@ -19,24 +13,28 @@
 }
 
 .navbarBorder {
-    border-bottom-width: 1px;
-    border-color: #390040;
+    border-bottom-width: 2px;
+    border-color: black;
 }
 
 .sidenavBorder {
-    border-right-width: 1px;
-    border-color: #390040;
+    border-right-width: 2px;
+    border-color: black;
 }
 
 .appbg {
-    background-color: #C5F1FF !important;
-    background-image: url("https://www.transparenttextures.com/patterns/bedge-grunge.png");
+    background-color: #eaf8ff !important;
+}
+
+.navbarbg {
+    background-color: #FCFDAF     ;
 }
 
 .buttonBorder {
     border-width: 1px;
     border-color: #390040;
 }
+
 
 .wireui-select .wireui-label {
     height: auto !important;

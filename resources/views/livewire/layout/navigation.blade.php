@@ -16,36 +16,46 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="w-full navbarbg navbarBorder">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+<nav x-data="{ open: false }" class="w-full bg-white navbarBorder">
+    <div class="">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"><img style="height: 36px;" src="/storage/img/logo.png"></span>
-
+                @if (Auth::user())
+                <button id="toggle-sidebar" class="border-y border-e border-gray-400 px-1">
+                    ←
+                </button>
+                @endif
             </div>
             @if (Auth::user())
 
 
-                <div class="flex items-end justify-end ">
+
+                <div class="flex items-end justify-end px-3 py-3 lg:px-5 lg:pl-3">
 
                     <span class="self-end text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Good
-                        @if (now()->hour < 12) morning, @elseif(now()->hour < 18) afternoon, @else evening, @endif
-                        {{ Auth::user()->name . " " . Auth::user()->surname }}
+                        @if (now()->hour < 12)
+                            morning,
+                        @elseif(now()->hour < 18)
+                            afternoon,
+                        @else
+                            evening,
+                        @endif
+                        {{ Auth::user()->name . ' ' . Auth::user()->surname }}
                         @if (Auth::user()->school_id != null)
-                            - <span class="text-blue-800">{{ (School::findOrFail(Auth::user()->school_id))->name }}</span>
+                            - <span class="text-blue-800">{{ School::findOrFail(Auth::user()->school_id)->name }}</span>
                         @endif
                     </span>
                 </div>
             @else
-                <div class="flex items-end justify-end ">
+                <div class="flex items-end justify-end px-3 py-4 sm:text-xl font-semibold text-xl lg:px-5 lg:pl-3">
                     <a href="{{ route('login') }}"
-                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                        class="rounded-md px-3  text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                         Log in
                     </a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}"
-                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                            class="rounded-md px-3  text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                             Register
                         </a>
                     @endif

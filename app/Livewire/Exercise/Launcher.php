@@ -56,6 +56,7 @@ class Launcher extends Component
     public function render()
     {
 
+        $this->toDoStudents = null;
 
         if (Auth::user()->role == 'Student') {
             $this->results = DB::table('user_records')

@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class=" h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
-        <div class="border border-gray-400 rounded-lg shadow-sm overflow-hidden bg-white p-4">
+        <div class="border border-black rounded-lg shadow-sm overflow-hidden bg-white p-4">
         <form action="{{ route('admin.exercises.edit', ['part' => $exercise->part, 'id' => $exercise->id]) }}" method="POST" class="max-w mx-auto" enctype="multipart/form-data">
         @csrf
                 @method('post')
@@ -10,7 +10,7 @@
                         <label for="base-input"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
                         <input type="text" name="title" id="title" required
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-white border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             value="{{ old('title', $exercise->title) }}" @error('title') <h5
                                 style="color:red">{{ $message }}</h5>
                             @enderror
@@ -20,13 +20,13 @@
                         Text</label>
                     <div class="mb-5 flex flex-col md:flex-row w-full gap-4">
                         <input type="file" name="image_input" id="image_input"
-                            class="block w-full md:w-2/3 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                            class="block w-full md:w-2/3 text-sm text-gray-900 border border-black rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                         <button type="button" id="extractTextBtn"
-                            class="w-full md:w-1/3 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
+                            class="w-full md:w-1/3 bg-white border border-black hover:bg-yellow-100 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700">
                             Extract Text from Image
                         </button>
                     </div>
-                    <div class="mb-5">
+                    <div class="mb-5 border border-black">
                         <input type="hidden" name="content" id="hidden_content"
                             value="{{ old('content', $exercise->questions[0]->prompt) }}">
                         <div id="content">{!! old('content', $exercise->questions[0]->prompt) !!}</div>
@@ -54,7 +54,7 @@
                             name="question[{{ $index }}][choice]"
                             value="{{ $value }}"
                             @if (trim($value) === trim($choice->is_correct)) checked @endif
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            class="w-4 h-4 text-blue-600 bg-white border-black focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
 
                         <!-- Text Input for Editing -->
                         <input type="text" required
@@ -69,7 +69,7 @@
     </div>
                 <div class="flex justify-center w-full mt-4">
                     <button type="submit"
-                        class="px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Submit</button>
+                            class="px-4 py-2 bg-white border border-black rounded hover:bg-green-400 text-black transition-colors">Submit</button>
                 </div>
             </form>
         </div>

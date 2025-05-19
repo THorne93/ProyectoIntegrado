@@ -150,19 +150,19 @@
             <div class="flex justify-center gap-8 mt-2">
                 @if ($isEdit)
                     <button wire:click='closeEdit'
-                        class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Cancel</button>
+                        class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-red-400 text-black transition-colors">Cancel</button>
                     <button wire:click='editSchool'
-                        class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
+                        class="flex-1 px-4 py-2 bg-white border border-black rounded hover:bg-green-400 text-black transition-colors">Confirm</button>
                 @else
                     @if ($school && $school->trashed())
                         <button wire:click='restore'
-                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
+                            class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-blue-400 text-black transition-colors">Restore</button>
                     @else
                         <button wire:click='openEdit'
-                            class="flex-1 px-4 py-2 bg-gray-300 border border-gray-400 rounded hover:bg-green-400 text-black transition-colors">Edit</button>
+                            class="flex-1 px-4 py-2 bg-white border border-black rounded hover:bg-green-400 text-black transition-colors">Edit</button>
 
                         <button wire:click='delete'
-                            class="flex-1 px-4 py-2 bg-gray-300  border border-gray-400 rounded hover:bg-red-400 text-black transition-colors">Delete</button>
+                            class="flex-1 px-4 py-2 bg-white  border border-black rounded hover:bg-red-400 text-black transition-colors">Delete</button>
                     @endif
 
                 @endif

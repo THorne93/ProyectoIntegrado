@@ -53,7 +53,6 @@ class Statistics extends Component
 
     public function updateStudentSelectId()
     {
-        dd($this->studentSelectId);
     }
 
     public function updatedSelectedParts()
@@ -110,14 +109,14 @@ class Statistics extends Component
         $last4 = array_slice($percentages, -4);
         $aboveThreshold = array_filter($last4, fn($p) => $p >= $threshold);
         if (count($aboveThreshold) >= 3) {
-            return "The student is consistently ready to pass (≥70% in at least 3 of the last 4 attempts).";
+            return "Based on the data, the student is ready now";
         }
 
         $last5 = array_slice($percentages, -5);
         if (count($last5)) {
             $averageLast5 = array_sum($last5) / count($last5);
             if ($averageLast5 >= $threshold) {
-                return "The student's average score over the last 5 attempts is above the threshold.";
+                return "Based on the data, the student is nearly ready now";
             }
         }
 
@@ -135,14 +134,14 @@ class Statistics extends Component
         $intercept = ($sumY - $slope * $sumX) / $n;
 
         if ($slope <= 0)
-            return "Not quite ready yet — keep practising and you will be!";
+            return "The student is not ready yet";
 
         $targetTimestamp = ($threshold - $intercept) / $slope;
         $targetDate = Carbon::createFromTimestamp((int) $targetTimestamp);
         $today = Carbon::now();
 
         if ($targetDate->lessThanOrEqualTo($today)) {
-            return "Based on the data, the student is ready now!";
+            return "Based on the data, the student is ready now";
         }
 
         if ($targetDate->greaterThan($today) && $targetDate->lessThanOrEqualTo($today->copy()->addMonths(6))) {
@@ -180,7 +179,7 @@ class Statistics extends Component
     public function printPDF()
     {
         $detailedStats = $this->detailedStats;
-        $student = $this->studentSelectId ? User::find($this->studentSelectId) : Auth::user();
+        $student = Auth::user()->role == 'Teacher' ? User::find($this->studentSelectId) : Auth::user();
         $this->getPrediction();
         $pdf = Pdf::loadView('statisticsPDF', ['detailedStats' => $detailedStats, 'prediction' => $this->prediction, 'user' => $student])
             ->setOptions([
@@ -217,7 +216,7 @@ class Statistics extends Component
                         'exercises.title as title',
                         'exercises.part as part'
                     )
-                    ->where('users.id', auth()->user()->role == 'User' ? auth()->id() : $this->studentSelectId)
+                    ->where('users.id', auth()->user()->role == 'User' ? auth()->user()->id : $this->studentSelectId)
                     ->where('exercises.id', $exercise->id)
                     ->orderBy('user_records.timestamp', 'ASC')
                     ->when($this->detailedStatsLimit > 0, function ($query) {
@@ -290,12 +289,12 @@ class Statistics extends Component
         $last4 = array_slice($percentages, -4);
         $aboveThreshold = array_filter($last4, fn($p) => $p >= $this->threshold);
         if (count($aboveThreshold) >= 3) {
-            return "The student is consistently ready to pass (≥70% in at least 3 of the last 4 attempts).";
+            return "Based on the data, the you are ready now!";
         }
         $last5 = array_slice($percentages, -5);
         $averageLast5 = array_sum($last5) / count($last5);
         if ($averageLast5 >= $this->threshold) {
-            return "The student's average score over the last 5 attempts is above the threshold.";
+            return "Based on the data, the you are almost ready now!";
         }
         $n = count($timestamps);
         $sumX = array_sum($timestamps);

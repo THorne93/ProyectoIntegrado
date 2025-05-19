@@ -11,6 +11,11 @@ export default {
 
     theme: {
         extend: {
+            screens: {
+                '3xl': '1920px',
+                '4xl': '2560px',
+                '5xl': '3840px'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
@@ -20,26 +25,24 @@ export default {
             keyframes: {
                 customPulse: {
                     '0%, 100%': {
-                        boxShadow: '0 0 0 0 rgba(250, 204, 21, 0.4)',
+                        boxShadow: '0 0 0 0 rgba(68,0,204, 0.4)',
                         transform: 'scale(1)',
-                        borderColor: 'rgba(250, 204, 21, 1)',
+                        borderColor: 'rgba(68,0,204, 1)',
                     },
                     '50%': {
-                        boxShadow: '0 0 10px 5px rgba(250, 204, 21, 0.4)',
+                        boxShadow: '0 0 10px 5px rgba(68,0,204, 0.4)',
                         transform: 'scale(1.03)',
-                        borderColor: 'rgba(250, 204, 21, 1)',
+                        borderColor: 'rgba(68,0,204, 1)',
                     },
                 },
                 customPulseNav: {
                     '0%, 100%': {
-                        boxShadow: '0 0 0 0 rgba(250, 204, 21, 0.4)',
+                        boxShadow: '0 0 0 0 rgba(68,0,204, 0.4)',
                         borderWidth: '2px',
-                        borderColor: 'rgb(255, 217, 67)',
                     },
                     '50%': {
-                        boxShadow: '0 0 10px 5px rgba(250, 204, 21, 0.4)',
+                        boxShadow: '0 0 10px 5px rgba(68,0,204, 0.4)',
                         borderWidth: '2px',
-                        borderColor: 'rgba(255, 217, 67, 1)',
                     },
                 }
             },
