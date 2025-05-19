@@ -88,7 +88,7 @@
                     ? 'text-[10px] lg:text-xs'
                     : (Str::length($user->email) > 24
                         ? 'text-sm lg:text-base'
-                        : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
+                        : 'text-base lg:text-md') }} tracking-tight truncate text-gray-900 dark:text-white">
                                 {{ $user->email }}
                             </h5>
                             @if ($user->school !== null)

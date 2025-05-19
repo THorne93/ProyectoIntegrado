@@ -39,14 +39,15 @@
 
                 <!-- Column 2: Text -->
                 <div
-                    class="w-2/6 m-4 border border-black rounded-lg bg-white flex flex-col items-center justify-center p-6">
-                    <img src="/storage/img/logo.png" class="w-auto h-16 mx-auto" alt="Logo">
-
+                    class="w-2/6 m-4 border border-black rounded-lg bg-white flex flex-col items-center justify-center">
+                    <a href="{{ url('/') }}">
+                        <img src="/storage/img/logo.png" class="w-auto h-16 mx-auto" alt="Logo">
+                    </a>
                     <h2 class="text-3xl font-semibold text-black ">
                         Results. Fast.
                     </h2>
-                    <p class="mb-6">Cambridge B2 exam preparation</p>
-                    <ul class="text-gray-600 ms-3 text-sm space-y-2">
+                    <p class="mb-2">Cambridge B2 exam preparation</p>
+                    <ul class="text-gray-600 ms-3 mb-2 text-sm space-y-2">
                         <li><span class="text-green-500 font-extrabold">✓</span> Multiple exam exercises</li>
                         <li><span class="text-green-500 font-extrabold">✓</span> Proven results</li>
                         <li><span class="text-green-500 font-extrabold">✓</span> Instant feedback</li>
@@ -55,6 +56,14 @@
                         <li><span class="text-green-500 font-extrabold">✓</span> Track your progress</li>
                         <li><span class="text-green-500 font-extrabold">✓</span> Practice anytime, anywhere</li>
                     </ul>
+                    <div class="flex gap-4 justify-between">
+                        <x-primary-button >
+                            <a href="{{ route('login') }}">Login</a>
+                        </x-primary-button>
+                        <x-primary-button >
+                            <a href="{{ route('register') }}">Register</a>
+                        </x-primary-button>
+                    </div>
                 </div>
 
             </div>
