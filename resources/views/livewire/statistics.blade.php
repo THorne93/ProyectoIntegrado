@@ -49,23 +49,23 @@
             <ul class="flex items-center text-sm font-medium text-gray-900  w-full">
                 <li class="w-1/3">
                     <div class="flex items-center">
-                        <input id="avg10" type="checkbox" value="10" checked
+                        <input id="avg5" type="checkbox" value="5" checked
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="avg5" class="ms-2">5</label>
+                    </div>
+                </li>
+                <li class="w-1/3">
+                    <div class="flex items-center">
+                        <input id="avg10" type="checkbox" value="10"checked
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500">
                         <label for="avg10" class="ms-2">10</label>
                     </div>
                 </li>
                 <li class="w-1/3">
                     <div class="flex items-center">
-                        <input id="avg20" type="checkbox" value="20"checked
+                        <input id="avg20" type="checkbox" value="20" checked"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500">
                         <label for="avg20" class="ms-2">20</label>
-                    </div>
-                </li>
-                <li class="w-1/3">
-                    <div class="flex items-center">
-                        <input id="avg50" type="checkbox" value="50" checked"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500">
-                        <label for="avg50" class="ms-2">50</label>
                     </div>
                 </li>
             </ul>
@@ -85,9 +85,9 @@
                     const partSelect = document.getElementById("partSelect");
                     const exerciseSelect = document.getElementById("exSelect");
                     const studentSelect = document.getElementById("studentSelect");
+                    const avg5 = document.getElementById("avg5");
                     const avg10 = document.getElementById("avg10");
                     const avg20 = document.getElementById("avg20");
-                    const avg50 = document.getElementById("avg50");
 
                     const data = @json($stats); 
                     let myChart;
@@ -203,9 +203,9 @@
                         });
 
                         const scores = filteredData.map(item => Number(item.score));
-                        const avg10Data = movingAverage(scores, 10);
-                        const avg20Data = movingAverage(scores, 20);
-                        const avg50Data = movingAverage(scores, 50);
+                        const avg5Data = movingAverage(scores, 10);
+                        const avg10Data = movingAverage(scores, 20);
+                        const avg20Data = movingAverage(scores, 50);
 
                         const xValues = Array.from({
                             length: scores.length
@@ -218,9 +218,9 @@
 
                         myChart.data.labels = labels;
                         myChart.data.datasets[0].data = scores;
-                        myChart.data.datasets[1].data = avg10Data;
-                        myChart.data.datasets[2].data = avg20Data;
-                        myChart.data.datasets[3].data = avg50Data;
+                        myChart.data.datasets[1].data = avg5Data;
+                        myChart.data.datasets[2].data = avg10Data;
+                        myChart.data.datasets[3].data = avg20Data;
                         myChart.data.datasets[4] = {
                             label: 'Trend Line',
                             data: trendLine,
@@ -252,28 +252,28 @@
                                     fillColor: 'rgba(0, 209, 2, 0.2)',
                                 },
                                 {
-                                    label: '50-Period Average',
+                                    label: '20-Period Average',
                                     data: [],
                                     borderColor: 'rgba(255, 159, 64, 1)',
                                     backgroundColor: 'rgba(255, 159, 64, 0.2)',
                                     borderDash: [5, 5],
-                                    hidden: !avg50.checked
+                                    hidden: !avg20.checked
                                 },
                                 {
-                                    label: '10-Period Average',
+                                    label: '5-Period Average',
                                     data: [],
                                     borderColor: 'rgba(153, 102, 255, 1)',
                                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                                     borderDash: [5, 5],
-                                    hidden: !avg10.checked
+                                    hidden: !avg5.checked
                                 },
                                 {
-                                    label: '20-Period Average',
+                                    label: '10-Period Average',
                                     data: [],
                                     borderColor: 'rgba(255, 99, 132, 1)',
                                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                                     borderDash: [5, 5],
-                                    hidden: !avg20.checked
+                                    hidden: !avg10.checked
                                 }
                             ]
                         },
@@ -324,18 +324,18 @@
 
                     exerciseSelect.addEventListener("change", updateChart);
 
-                    avg50.addEventListener("change", () => {
-                        myChart.getDatasetMeta(1).hidden = !avg50.checked;
+                    avg20.addEventListener("change", () => {
+                        myChart.getDatasetMeta(1).hidden = !avg20.checked;
+                        myChart.update();
+                    });
+
+                    avg5.addEventListener("change", () => {
+                        myChart.getDatasetMeta(2).hidden = !avg5.checked;
                         myChart.update();
                     });
 
                     avg10.addEventListener("change", () => {
-                        myChart.getDatasetMeta(2).hidden = !avg10.checked;
-                        myChart.update();
-                    });
-
-                    avg20.addEventListener("change", () => {
-                        myChart.getDatasetMeta(3).hidden = !avg20.checked;
+                        myChart.getDatasetMeta(3).hidden = !avg10.checked;
                         myChart.update();
                     });
 
