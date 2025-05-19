@@ -82,10 +82,10 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h5 title="{{ $school->name }}" class="{{ Str::length($school->address) > 32
+                            <h5 title="{{ $school->name }}" class="{{ Str::length($school->name) > 32
                     ? 'text-[10px] lg:text-xs'
-                    : (Str::length($school->address) > 28
-                        ? 'text-sm lg:text-base'
+                    : (Str::length($school->name) > 24
+                        ? 'text-sm lg:text-sml'
                         : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
                                 {{ $school->name }}
                             </h5>
@@ -98,8 +98,8 @@
                             </h5>
                             <h5 title="{{ $school->email }}" class="{{ Str::length($school->email) > 32
                     ? 'text-[10px] lg:text-xs'
-                    : (Str::length($school->email) > 28
-                        ? 'text-sm lg:text-base'
+                    : (Str::length($school->email) > 24
+                        ? 'text-[14px] lg:text-sm'
                         : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
                                 {{ $school->email }}
                             </h5>

@@ -17,7 +17,7 @@ class Students extends Component
     public $search;
     public $school;
 
-    public $orderDirection = "desc";
+    public $orderDirection = "asc";
     public $column = "name";
     public function toggleCards()
     {

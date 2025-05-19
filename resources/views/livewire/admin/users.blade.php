@@ -4,18 +4,19 @@
     <livewire:admin.userstats />
     @if ($successDelete)
         <div x-data x-init="
-                toastr.success('User deleted successfully');
-                setTimeout(() => $wire.set('successDelete', false), 5000);
-            "></div>
+                    toastr.success('User deleted successfully');
+                    setTimeout(() => $wire.set('successDelete', false), 5000);
+                "></div>
     @endif
     @if ($successRestore)
         <div x-data x-init="
-                toastr.success('User restored successfully');
-                setTimeout(() => $wire.set('successRestore', false), 5000);
-            "></div>
+                    toastr.success('User restored successfully');
+                    setTimeout(() => $wire.set('successRestore', false), 5000);
+                "></div>
     @endif
     <div class="text-end flex justify-items-end col col-2 mb-6 bg-white  rounded-lg">
-        <input type="text" wire:model.live="search" class="flex-grow rounded-r-none border border-black text-sm rounded-lg"
+        <input type="text" wire:model.live="search"
+            class="flex-grow rounded-r-none border border-black text-sm rounded-lg"
             placeholder="Search by name, surname, school and email..." />
         @if ($view == 'table')
             <button type="button" wire:click="toggleCards"
@@ -28,8 +29,7 @@
                 Change view ⇄
             </button>
         @endif
-        <button type="button" wire:click="toggleTrashed"
-            class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-[#FCFDAF] 
+        <button type="button" wire:click="toggleTrashed" class=" col col-1 h-auto flex items-center border-black border rounded-r-lg  hover:bg-[#FCFDAF] 
                transition px-6 gap-8">{{ !$filterTrashed ? 'Show deleted' : 'Show active' }}</button>
     </div>
     <div class="mb-4 flex justify-between items-center">
@@ -41,7 +41,7 @@
                 <div class="text-end">
                     <button type="button" wire:click="$dispatch('openModal')"
                         class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-[#FCFDAF] transition">
-                       +
+                        +
                     </button>
 
                 </div>
@@ -53,7 +53,7 @@
             @if (!$filterTrashed)
                 <button type="button" wire:click="$dispatch('openModal')"
                     class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-[#FCFDAF] 
-                                                       dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition px-6 gap-8">
+                                                               dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition px-6 gap-8">
                     <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-700 dark:text-white"
                             viewBox="0 0 448 512">
@@ -69,7 +69,7 @@
             @foreach ($users as $user)
                 <button wire:click="$dispatch('openUserStats', { id: {{ $user->id }} })"
                     class="relative col col-4 min-w-full min-h-36 h-full flex items-center bg-white border border-black rounded-lg shadow-sm hover:bg-[#FCFDAF] 
-                                                               dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
+                                                                       dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition">
 
                     <div class="flex items-center px-6 gap-8 w-full">
                         <div class="w-20 h-20 flex items-center justify-center bg-gray-300 dark:bg-gray-700 rounded-full">
@@ -86,16 +86,24 @@
                             </h5>
                             <h5 title="{{ $user->email }}" class=" {{ Str::length($user->email) > 32
                     ? 'text-[10px] lg:text-xs'
-                    : (Str::length($user->email) > 25
+                    : (Str::length($user->email) > 24
                         ? 'text-sm lg:text-base'
                         : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
                                 {{ $user->email }}
                             </h5>
                             @if ($user->school !== null)
-                                <h5 title="{{ optional(json_decode($user->school))->name }}"
-                                    class="{{ Str::length($user->school) > 28 ? 'text-sm lg:text-base' : 'text-base lg:text-xl' }} tracking-tight truncate text-gray-900 dark:text-white">
-                                    {{ optional(json_decode($user->school))->name }}
-                                </h5>
+                                    @php
+                                        if ($user->school) {
+                                            $school = json_decode($user->school)->name;
+                                        }
+                                    @endphp
+                                    <h5 title="{{ $school }}" class="{{ Str::length($school) > 32
+                                ? 'text-[10px] lg:text-xs'
+                                : (Str::length($school) > 24
+                                    ? 'text-sm lg:text-sm'
+                                    : 'text-base lg:text-xl') }} tracking-tight truncate text-gray-900 dark:text-white">
+                                        {{ $school }}
+                                    </h5>
                             @endif
 
                         </div>

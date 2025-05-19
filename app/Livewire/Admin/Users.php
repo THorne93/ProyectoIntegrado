@@ -16,7 +16,7 @@ class Users extends Component
     public $filterTrashed = false;
     public $search;
 
-    public $orderDirection = "desc";
+    public $orderDirection = "asc";
     public $column = "name";
     public function toggleCards()
     {

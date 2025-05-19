@@ -12,7 +12,7 @@ class Schools extends Component
     public $schools;
     public $view = "cards";
     public $search;
-    public $orderDirection = "desc";
+    public $orderDirection = "asc";
     public $column = "name";
     public $filterTrashed = false;
 

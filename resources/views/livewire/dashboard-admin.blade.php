@@ -51,8 +51,8 @@
                 <strong>Teachers:</strong> {{ $stats['roleBreakdown']['Teacher'] ?? 0 }} |
                 <strong>Admins:</strong> {{ $stats['roleBreakdown']['Admin'] ?? 0 }}
             </p>
-            <p><strong>New users this week:</strong> {{ $stats['weeklyUsers'] }}</p>
-            <p><strong>User growth this week:</strong> {{ $stats['userGrowthPercentage'] }}%</p>
+            <p><strong>New users (last 7 days):</strong> {{ $stats['weeklyUsers'] }}</p>
+            <p><strong>User growth this calendar week:</strong> {{ $stats['userGrowthPercentage'] }}%</p>
             <h3><strong>Most Active Users This Week:</strong></h3>
 
             <ul>
@@ -157,9 +157,9 @@
         </div>
         <div class="flex-1 my-auto items-center ">
             <p><strong>Total schools:</strong> {{ $stats['totalSchools'] }}</p>
-            <p><strong>New schools this week:</strong> {{ $stats['weeklySchools'] }}</p>
+            <p><strong>New schools (last 7 days):</strong> {{ $stats['weeklySchools'] }}</p>
             <p><strong>Average school size:</strong> {{ $stats['usersPerSchool'] }}</p>
-            <p><strong>School growth this week:</strong> {{ $stats['schoolGrowth'] }}%</p>
+            <p><strong>School growth this calendar week:</strong> {{ $stats['schoolGrowth'] }}%</p>
             <p><strong>Most active school this week:</strong> </p>
             @if ($stats['mostActiveSchool'])
                 <p>{{$stats['mostActiveSchool']->school_name}}</p>

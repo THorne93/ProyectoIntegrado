@@ -27,11 +27,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $possible_schools = [1,2,3,4,5,null];
+        $name = fake('es_ES')->firstName();
+        $surname = fake('es_ES')->lastName();
+        $email = strtolower(str_replace(' ', '', $name . '.' . $surname . '@example.com'));
         return [
             'password' => static::$password ??= Hash::make('1234'),
-            'name' => fake('es_ES')->firstName(),
-            'surname' => fake('es_ES')->lastName(),
-            'email' => fake('es_ES')->unique()->safeEmail(),
+            'name' => $name,
+            'surname' => $surname,
+            'email' => $email,
             'school_id' => $possible_schools[fake()->numberBetween(0,5)],
             'role' => 'Student',
             'email_verified_at' => now(),
