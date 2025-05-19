@@ -25,9 +25,11 @@ Con estos comandos, la aplicación ya estará funcionando. Habrá un número de 
 
 For the application to fully run correctly, the following services must be installed.:
 
-Php
-Composer
-Python (with Tesseract - https://github.com/tesseract-ocr/tesseract)
+<ul>
+    <li>Php</li>
+    <li>Composer</li>
+    <li>Python (with Tesseract - https://github.com/tesseract-ocr/tesseract)</li>
+</ul>
 
 Once installed, everything else that is needed is provided within the project folder. The next step is to run the following commands via the terminal (inside the projects folder):
 
