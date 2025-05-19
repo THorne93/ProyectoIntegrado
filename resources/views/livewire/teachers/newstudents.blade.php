@@ -1,10 +1,8 @@
 <div x-cloak x-data="{ open: @entangle('isOpen').live }">
-    <!-- Overlay (Prevents clicking on background) -->
     <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 z-40" x-transition.opacity @click="open = false">
     </div>
 
 
-    <!-- Modal (Interactive) -->
     <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50" x-transition>
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
             <h2 class="text-lg font-semibold mb-4">New Student</h2>
@@ -27,7 +25,6 @@
                 </div>
             @endif
 
-            <!-- Form -->
             <form wire:submit.prevent="submit">
                 <div class="mb-4">
                     <label class="block text-sm font-medium">Name</label>

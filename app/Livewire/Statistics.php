@@ -42,7 +42,7 @@ class Statistics extends Component
         $parts = collect($this->selectedParts ?? [])
             ->push($value)
             ->unique()
-            ->filter(); // remove nulls or empty strings
+            ->filter();
 
         if ($parts->isNotEmpty()) {
             $this->detailedListExercises = Exercise::whereIn('part', $parts)->get();
@@ -66,7 +66,7 @@ class Statistics extends Component
 
     public function printPDFAdmin($id)
     {
-        $detailedStats = $this->getStatsForUser($id); // Custom helper
+        $detailedStats = $this->getStatsForUser($id);  
         $student = User::find($id);
         $prediction = $this->generatePrediction($detailedStats);
 
@@ -362,7 +362,7 @@ class Statistics extends Component
                 ->where('id', '!=', Auth::user()->id)
                 ->get();
 
-            $studentIds = $this->students->pluck('id'); // 👈 get array of student IDs
+            $studentIds = $this->students->pluck('id');
 
             $stats = DB::table('user_records')
                 ->join('users', function (JoinClause $join) {
@@ -380,7 +380,7 @@ class Statistics extends Component
                     'exercises.title as title',
                     'exercises.part as part'
                 )
-                ->whereIn('users.id', $studentIds) // 👈 include all students
+                ->whereIn('users.id', $studentIds)
                 ->orderBy('user_records.timestamp', 'ASC')
                 ->get();
         }

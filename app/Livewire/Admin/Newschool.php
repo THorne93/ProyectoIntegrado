@@ -25,7 +25,6 @@ class Newschool extends Component
 
     public function updatedSelectedStudents($value)
     {
-        // If the currently selected teacher is no longer in the list of selected students, reset it
         if (!in_array($this->selectedTeacher, $this->selectedStudents)) {
             $this->selectedTeacher = null;
         }
@@ -60,7 +59,6 @@ class Newschool extends Component
             'password' => 'required|string|min:6',
         ]);
 
-        // Create the school
         $school = School::create([
             'name' => $this->name,
             'address' => $this->address,

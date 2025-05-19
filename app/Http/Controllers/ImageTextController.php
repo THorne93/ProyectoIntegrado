@@ -14,8 +14,7 @@ class ImageTextController extends Controller
         $file = $request->file('image');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
-        // Save to temp storage (storage/app/temp)
-        $storedPath = $file->storeAs('temp', $filename, 'private'); // 'private' is the disk name
+        $storedPath = $file->storeAs('temp', $filename, 'private');
         $fullPath = storage_path('app/private/' . $storedPath);
 
         $fullPath = storage_path("app/private/{$storedPath}");
@@ -24,7 +23,6 @@ class ImageTextController extends Controller
             return response()->json(['error' => 'File not saved properly'], 500);
         }
 
-        // Run Python script
         $script = base_path('scripts/img_to_text.py');
         $escapedPath = str_replace("\\", "/", $fullPath);
         exec("python " . escapeshellarg($script) . " " . escapeshellarg($escapedPath) . " 2>&1", $output, $returnCode);

@@ -22,7 +22,6 @@
     let labels = scoresData.map(item => new Date(item.record_date).toLocaleDateString());
     let scores = scoresData.map(item => item.score);
 
-    // Function to calculate the linear regression coefficients (slope 'm' and intercept 'b')
     function linearRegression(x, y) {
         let n = x.length;
         let sumX = x.reduce((sum, val) => sum + val, 0);
@@ -36,14 +35,11 @@
         return { m, b };
     }
 
-    // Convert the labels (dates) into numeric x values (e.g., number of days since the first date)
-    let xValues = scoresData.map((item, idx) => idx); // Simple indexing (0, 1, 2, ...)
+    let xValues = scoresData.map((item, idx) => idx); 
     let yValues = scores;
 
-    // Calculate the linear regression line (m and b)
     let { m, b } = linearRegression(xValues, yValues);
 
-    // Generate the regression line data
     let trendLineData = xValues.map(x => m * x + b);
 
     const ctx = document.getElementById("partThreeChart")?.getContext("2d");
@@ -66,12 +62,12 @@
                     {
                         label: "Trend Line",
                         data: trendLineData,
-                        borderColor: "rgba(255, 99, 132, 1)", // Trend line color (Red)
+                        borderColor: "rgba(255, 99, 132, 1)", 
                         borderWidth: 2,
                         fill: false,
-                        tension: 0, // Straight line (no curve)
-                        pointRadius: 0, // No points displayed on the trend line
-                        borderDash: [5, 5] // Dotted line style
+                        tension: 0, 
+                        pointRadius: 0,
+                        borderDash: [5, 5] 
                     }
                 ]
             },
@@ -79,7 +75,7 @@
                 responsive: true,
                 plugins: {
                     legend: { 
-                        display: false // Hide the legend (key)
+                        display: false 
                     },
                     title: { 
                         display: true, 
@@ -90,7 +86,7 @@
                     x: {
                         title: { display: false, text: "Date" },
                         ticks: {
-                            display: false,  // Hide the x-axis ticks (dates)
+                            display: false, 
                         }
                     },
                     y: {

@@ -63,7 +63,7 @@
 
         @push('scripts')
             <script>
-                let quill; // declare globally so both scripts can access
+                let quill;
 
                 function loadScript(url, callback) {
                     const script = document.createElement('script');

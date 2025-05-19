@@ -27,7 +27,6 @@
             let charts = [];
 
             function createCharts() {
-                // Destroy old charts if any
                 charts.forEach(chart => chart.destroy());
                 charts = [];
 
@@ -77,7 +76,6 @@
             
 
             Livewire.hook('message.processed', (message, component) => {
-                // Recreate charts after every Livewire update
                 createCharts();
             });
         </script>

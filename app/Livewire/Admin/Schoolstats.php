@@ -41,14 +41,12 @@ class Schoolstats extends ModalComponent
 
     public function mount()
     {
-        // Initialize selected students if needed
 
         $this->selectedStudents = collect($this->selectedStudents);
     }
 
     public function updatedSelectedStudents($value)
     {
-        // If the currently selected teacher is no longer in the list of selected students, reset it
         if (!in_array($this->selectedTeacher, $this->selectedStudents)) {
             $this->selectedTeacher = null;
         }
@@ -81,7 +79,6 @@ class Schoolstats extends ModalComponent
         $current = $this->selectedStudents;
         $previous = $this->previousSelectedStudents;
 
-        // Determine added and removed students
         $added = array_diff($current, $previous);
         $removed = array_diff($previous, $current);
 
@@ -89,7 +86,6 @@ class Schoolstats extends ModalComponent
             User::where('school_id', $this->school->id)->update(['role' => 'Student']);
             User::where('id', $this->selectedTeacher)->update(['role' => 'Teacher']);
         }
-        // Update DB
         if (!empty($added)) {
             User::whereIn('id', $added)->update(['school_id' => $this->school->id]);
         }
@@ -98,11 +94,9 @@ class Schoolstats extends ModalComponent
             User::whereIn('id', $removed)->update(['school_id' => null]);
         }
 
-        // Reset teacher if deselected
         if (!in_array($this->selectedTeacher, $current)) {
             $this->selectedTeacher = null;
         }
-        // Store new state
         $this->previouslySelectedStudents = $current;
         $this->loadSchool($this->school->id);
         $this->dispatch('updateSchool');
@@ -115,7 +109,7 @@ class Schoolstats extends ModalComponent
         $this->isOpen = false;
         $this->dispatch('unlock-scroll');
         $this->selectedTeacher = null;
-        $this->selectedStudents = collect(); // Make sure it's a collection
+        $this->selectedStudents = collect();
     }
 
     public function openEdit()
@@ -142,13 +136,10 @@ class Schoolstats extends ModalComponent
         $this->school = School::withTrashed()->findOrFail($id);
 
 
-        // Get users currently in this school
         $this->schoolStudents = User::where('school_id', $this->school->id)->get();
 
-        // Set selected students to the IDs of those users
         $this->selectedStudents = $this->schoolStudents->pluck('id')->toArray();
         $this->previousSelectedStudents = $this->selectedStudents;
-        // Show both unassigned and assigned students in the dropdown
         $this->students = User::whereNull('school_id')
             ->orWhere('school_id', $this->school->id)
             ->get();

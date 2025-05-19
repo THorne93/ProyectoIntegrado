@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\School;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\UserRecordsFactory;
 use DB;
 use Illuminate\Database\Seeder;

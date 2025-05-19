@@ -28,16 +28,11 @@ class UserFactory extends Factory
 
     function removeAccents($string)
     {
-        // Use Normalizer if available
         if (class_exists('Normalizer')) {
-            // Normalize to decomposed form (base + accent)
             $string = Normalizer::normalize($string, Normalizer::FORM_D);
-            // Remove combining marks (accents)
             return preg_replace('/\p{Mn}/u', '', $string);
         } else {
-            // Fallback to iconv (may produce unwanted characters like ')
             $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
-            // Remove any stray non-alphanumeric characters (like apostrophes)
             return preg_replace('/[^A-Za-z0-9@.]/', '', $string);
         }
     }

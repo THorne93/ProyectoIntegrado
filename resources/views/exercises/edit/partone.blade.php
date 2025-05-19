@@ -47,7 +47,6 @@
                 @endphp
                 @foreach ($choiceOptions as $key => $value)
                 <li class="flex flex-1 items-center gap-2">
-                    <!-- Radio Button -->
                     <input type="hidden" name="question[{{ $index }}][id]" value="{{ $choice->id }}">
                         <input type="radio" 
                             id="question-{{ $index }}-option-{{ $key }}"
@@ -56,11 +55,10 @@
                             @if (trim($value) === trim($choice->is_correct)) checked @endif
                             class="w-4 h-4 text-blue-600 bg-white border-black focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
 
-                        <!-- Text Input for Editing -->
                         <input type="text" required
                             name="question[{{ $index }}][choices][{{ $key }}]"
                             class="w-full border rounded px-2 py-1 bg-white text-black dark:bg-gray-800 dark:text-white"
-                            value="{{ old('question.' . $index . '.choices.' . $key, $value) }}"> <!-- Pre-fill value for editing -->
+                            value="{{ old('question.' . $index . '.choices.' . $key, $value) }}"> 
                     </li>
                 @endforeach
             </ul>
@@ -75,7 +73,7 @@
         </div>
         @push('scripts')
             <script>
-                let quill; // declare globally so both scripts can access
+                let quill;
 
                 function loadScript(url, callback) {
                     const script = document.createElement('script');

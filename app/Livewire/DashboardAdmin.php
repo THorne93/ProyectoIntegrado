@@ -50,13 +50,10 @@ class DashboardAdmin extends Component
         $startOfLastWeek = Carbon::now()->subWeek()->startOfWeek();
         $endOfLastWeek = Carbon::now()->subWeek()->endOfWeek();
 
-        // Get the number of users registered this week
         $currentWeekUsers = User::whereBetween('created_at', [$startOfWeek, Carbon::now()])->count();
 
-        // Get the number of users registered last week
         $lastWeekUsers = User::whereBetween('created_at', [$startOfLastWeek, $endOfLastWeek])->count();
 
-        // Calculate growth percentage
         if ($lastWeekUsers > 0) {
             $growthPercentage = (($currentWeekUsers - $lastWeekUsers) / $lastWeekUsers) * 100;
         } else {
@@ -76,7 +73,7 @@ class DashboardAdmin extends Component
             ->join('users', 'user_records.user_id', '=', 'users.id')
             ->select('users.name', DB::raw('COUNT(user_records.id) as activity_count'))
             ->where('user_records.timestamp', '>=', $startOfWeek)
-            ->groupBy('users.id', 'users.name') // Add 'users.name' to the GROUP BY
+            ->groupBy('users.id', 'users.name')
             ->orderByDesc('activity_count')
             ->limit(3)
             ->get();

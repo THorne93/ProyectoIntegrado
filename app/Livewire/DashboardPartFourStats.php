@@ -29,7 +29,7 @@ class DashboardPartFourStats extends Component
             )
             ->where('exercises.part', '=', '4')
             ->where('users.id', '=', auth()->id())
-            ->orderBy('user_records.timestamp', 'DESC')  // Order by timestamp in descending order
+            ->orderBy('user_records.timestamp', 'DESC') 
             ->limit(10)
             ->get();
 

@@ -1,11 +1,9 @@
 <div x-cloak x-data="{ open: @entangle('isOpen').live }">
 
-    <!-- Overlay (Prevents clicking on background) -->
     <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 z-40" x-transition.opacity @click="open = false">
     </div>
 
 
-    <!-- Modal (Interactive) -->
     <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50" x-transition>
         <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative max-h-[80vh] overflow-y-auto scrollBarThin">
             <h2 class="text-lg font-semibold mb-4">New School</h2>
@@ -20,16 +18,13 @@
             </button>
 
 
-            <!-- Form -->
             <form wire:submit="register" class="mt-2 overflow-y-auto scrollBarThin">
-                <!-- Name -->
                 <div>
                     <x-input-label for="name" :value="__('Name')" />
                     <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text"
                         value="" name="name" required autofocus autocomplete="name" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
-                <!-- Email -->
                 <div class="mt-4">
                     <div>
                         <x-input-label for="address" :value="__('Address')" />
@@ -48,7 +43,6 @@
                     </div>
                 </div>
 
-                <!-- Email -->
                 <div class="mt-4">
                     <div>
                         <x-input-label for="email" :value="__('Email')" />
@@ -58,7 +52,6 @@
                     </div>
                 </div>
 
-                <!-- Code -->
                 <div class="mt-4">
                     <x-input-label for="password" :value="__('New Code')" />
                     <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password"

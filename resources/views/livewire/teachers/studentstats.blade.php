@@ -1,9 +1,7 @@
 <div x-cloak x-data="{ open: @entangle('isOpen').live }">
-    <!-- Overlay (Prevents clicking on background) -->
     <div x-show="open" class="fixed inset-0 bg-black bg-opacity-50 z-40" x-transition.opacity @click="open = false">
     </div>
 
-    <!-- Modal (Interactive) -->
     <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50" x-transition>
         <div class="bg-white p-6 rounded-lg shadow-lg w-1/3 relative">
             <button type="button" wire:click="close"
@@ -73,14 +71,12 @@
                     </div>
                 @endif
                 <form wire:submit="editStudent" class="mt-2">
-                    <!-- Name -->
                     <div>
                         <x-input-label for="f_name" :value="__('First name')" />
                         <x-text-input wire:model="f_name" id="f_name" class="block mt-1 w-full" type="text"
                             value="{{ $student->name }}" name="f_name" required autofocus autocomplete="f_name" />
                         <x-input-error :messages="$errors->get('f_name')" class="mt-2" />
                     </div>
-                    <!-- Name -->
                     <div class="mt-4">
                         <div>
                             <x-input-label for="l_name" :value="__('Last name(s)')" />
@@ -90,14 +86,12 @@
                             <x-input-error :messages="$errors->get('l_name')" class="mt-2" />
                         </div>
                     </div>
-                    <!-- Password -->
                     <div class="mt-4">
                         <x-input-label for="password" :value="__('Password')" />
                         <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password"
                             name="password" required autocomplete="new-password" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
-                    <!-- Confirm Password -->
                     <div class="mt-4">
                         <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
                         <x-text-input wire:model="password_confirmation" id="password_confirmation"

@@ -75,7 +75,6 @@ class ExerciseController extends Controller
     {
         $exercise = Exercise::findOrFail($id);
 
-        // Map part number to corresponding view file
         $views = [
             1 => 'exercises.edit.partone',
             2 => 'exercises.edit.parttwo',
@@ -83,7 +82,6 @@ class ExerciseController extends Controller
             4 => 'exercises.edit.partfour',
         ];
 
-        // If the part is not valid, abort with 404
         if (!array_key_exists($part, $views)) {
             abort(404);
         }

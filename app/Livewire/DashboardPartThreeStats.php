@@ -25,7 +25,7 @@ class DashboardPartThreeStats extends Component
                 'users.id as user_id',
                 'user_records.score as score',
                 'exercises.title as title'
-            )->where('exercises.part', '=', '3')->where('users.id', '=', auth()->id())->orderBy('user_records.timestamp', 'DESC')  // Order by timestamp in descending order
+            )->where('exercises.part', '=', '3')->where('users.id', '=', auth()->id())->orderBy('user_records.timestamp', 'DESC') 
             ->limit(10)
             ->get();
 

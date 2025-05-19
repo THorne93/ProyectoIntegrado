@@ -75,7 +75,7 @@ class Launcher extends Component
                 ->join('users', 'users.id', '=', 'user_records.user_id')
                 ->where('user_records.exercise_id', $this->exerciseId)
                 ->where('users.school_id', Auth::user()->school_id)
-                ->where('users.id', '!=', Auth::id()) // Exclude current user
+                ->where('users.id', '!=', Auth::user()->id)
                 ->orderBy('user_records.timestamp', 'desc')
                 ->select('user_records.*', 'users.name', 'users.surname')
                 ->get();

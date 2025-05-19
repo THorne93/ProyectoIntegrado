@@ -41,10 +41,8 @@
                         big/large/huge.</>
                         @foreach ($questions[0]->answers as $index => $answer)
                             <div class="flex items-center mb-4 w-full">
-                                <!-- Hidden input for the ID -->
                                 <input type="hidden" name="answers[{{ $index }}][id]" value="{{ $answer->id }}">
 
-                                <!-- Input for the value -->
                                 <span class="text-lg w-4 font-semibold mr-2">{{ $index }}</span>
                                 <input type="text" required name="answers[{{ $index }}][value]"
                                     class="w-2/5 border border-black rounded px-2 py-1 bg-white text-black dark:bg-gray-800 dark:text-white"
@@ -62,7 +60,7 @@
 
         @push('scripts')
             <script>
-                let quill; // declare globally so both scripts can access
+                let quill;
 
                 function loadScript(url, callback) {
                     const script = document.createElement('script');

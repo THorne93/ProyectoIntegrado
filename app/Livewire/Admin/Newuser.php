@@ -63,7 +63,6 @@ class Newuser extends ModalComponent
 
         $data = $validated;
 
-        // Add school_id only if selectedSchool is not empty/null
         if (!empty($this->selectedSchool)) {
             $data['school_id'] = $this->selectedSchool;
         }
