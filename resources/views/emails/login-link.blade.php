@@ -18,20 +18,21 @@
     <div class="max-w-md mx-auto p-6">
         <div class="text-center">
             <!-- Logo/Header -->
-            <img src="https://your-logo-url.com/logo.png" alt="Company Logo" class="h-12 mx-auto mb-6">
+
+            <img src="/storage/img/logo.png" alt="Company Logo" class="h-12 mx-auto mb-6">
 
             <!-- Main Card -->
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome, {{ $user->name }}! 👋</h2>
 
                 <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-                    You have been successfully addded to your class at {{ $school }}. Click below to access your account:
+                    You have been successfully addded to your class at {{ $school }}. Click below to access your
+                    account:
                 </p>
 
                 <!-- Login Button -->
                 <div class="mb-8">
-                    <a href="{{ $loginUrl }}"
-                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg 
+                    <a href="{{ $loginUrl }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg 
                               transition-all duration-200 transform hover:scale-105">
                         Get Started →
                     </a>

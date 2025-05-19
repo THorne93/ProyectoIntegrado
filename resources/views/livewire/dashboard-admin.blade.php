@@ -159,8 +159,8 @@
             <p><strong>Total schools:</strong> {{ $stats['totalSchools'] }}</p>
             <p><strong>New schools this week:</strong> {{ $stats['weeklySchools'] }}</p>
             <p><strong>Average school size:</strong> {{ $stats['usersPerSchool'] }}</p>
-            <p><strong>Most active school this week:</strong> {{ $stats['mostActiveSchool']->school_name }}</p>
             <p><strong>School growth this week:</strong> {{ $stats['schoolGrowth'] }}%</p>
+            <p><strong>Most active school this week:</strong> {{ $stats['mostActiveSchool']}}</p>
 
         </div>
     </div>

@@ -62,6 +62,7 @@ class DashboardAdmin extends Component
         } else {
             $growthPercentage = (User::count()) * 100;
         }
+        $growthPercentage = max(0, $growthPercentage);
 
         $stats['userGrowthPercentage'] = round($growthPercentage, 2);
 
@@ -109,8 +110,8 @@ class DashboardAdmin extends Component
                 ->count();
 
             $growthRate = $lastWeekCount > 0
-                ? round((($thisWeekCount - $lastWeekCount) / $lastWeekCount) * 100, 2)
-                : ($thisWeekCount > 0 ? 100 : 0); // handle no schools last week
+                ? max(0, round((($thisWeekCount - $lastWeekCount) / $lastWeekCount) * 100, 2))
+                : ($thisWeekCount > 0 ? 100 : 0);
 
             return $growthRate;
         };

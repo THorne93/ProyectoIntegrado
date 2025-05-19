@@ -42,7 +42,7 @@
             @if (!$filterTrashed)
                 <div class="text-end">
                     <button type="button" wire:click="$dispatch('openModal')"
-                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-gray-100 transition">
+                        class="h-8 w-8 flex items-center text-xl justify-center bg-white border border-black text-black rounded-full hover:bg-yellow-200 transition">
                        +
                     </button>
 
