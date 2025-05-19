@@ -9,9 +9,7 @@
     <meta name="description" content="B2 Lab - Cambridge B2 exam preparation">
     <meta name="keywords" content="B2 Lab, Cambridge B2, exam preparation, English language, practice tests">
 
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="/public/favicon.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="/public/favicon.png" sizes="32x32">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
 
     <!-- Fonts -->
