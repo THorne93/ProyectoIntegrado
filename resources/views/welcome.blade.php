@@ -5,20 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>B2 Lab</title>
+    <title>B2Go</title>
     <meta name="description" content="B2 Lab - Cambridge B2 exam preparation">
     <meta name="keywords" content="B2 Lab, Cambridge B2, exam preparation, English language, practice tests">
 
-    <!-- favicon -->
     <link rel="icon" type="image/png" href="/public/favicon.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/public/favicon.png" sizes="32x32">
 
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>

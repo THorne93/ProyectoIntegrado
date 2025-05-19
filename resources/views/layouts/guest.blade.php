@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>B2 Lab</title>
+    <title>B2Go</title>
     <meta name="description" content="B2 Lab - Cambridge B2 exam preparation">
     <meta name="keywords" content="B2 Lab, Cambridge B2, exam preparation, English language, practice tests">
 

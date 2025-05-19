@@ -145,7 +145,6 @@
                             @if ($exercise->part == 1)
                                 @foreach ($questions[0]->choices as $index => $choice)
                                     <div class="flex  items-center mb-2 w-full">
-                                        <!-- Question Index on the left -->
                                         <span class="text-lg w-4 font-semibold mr-2">{{ $index }}.</span>
 
                                         <ul
@@ -290,11 +289,11 @@
                             </p>
                             <div class="flex justify-end gap-4">
                                 <button wire:click='triggerConfirm'
-                                    class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+                                    class="px-4 py-2 bg-white hover:bg-[#FCFDAF] border border-black rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
                                     Cancel
                                 </button>
                                 <button type="submit"
-                                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
+                                    class="px-4 py-2 bg-white hover:bg-green-400 border border-black text-black rounded-md text-sm">
                                     Yes, Submit
                                 </button>
                             </div>

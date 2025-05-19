@@ -21,6 +21,34 @@
     border-right-width: 2px;
     border-color: black;
 }
+.Gradient {
+    background: linear-gradient(to bottom, #FCFDAF, #ffffff);
+}
+
+.custom-gradient-lr {
+  position: relative;
+  background-color: #fcfdaf00;
+  overflow: hidden;
+  z-index: 0; 
+  color: black; 
+}
+
+.custom-gradient-lr::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:  #DBA159;
+  background-size: 200% 100%;
+  background-position: left;
+  transition: transform 0.6s ease-in-out;
+  z-index: -1;  
+  pointer-events: none;
+  transform: translateX(-100%);
+}
+
+.custom-gradient-lr:hover::before {
+  transform: translateX(0);
+}
 
 .appbg {
     background-color: #eaf8ff !important;

@@ -45,7 +45,6 @@ new #[Layout('layouts.guest')] class extends Component {
      */
     public function register(): void
     {
-        // Base validation for all users
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'surname' => ['required', 'string', 'max:255'],
@@ -53,10 +52,8 @@ new #[Layout('layouts.guest')] class extends Component {
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Extra validation if user is a teacher
         if ($this->school) {
             if ($this->newSchool) {
-                // New school registration
                 $this->validate([
                     'school_name' => ['required', 'string', 'max:255'],
                     'address' => ['required', 'string'],
@@ -64,7 +61,6 @@ new #[Layout('layouts.guest')] class extends Component {
                     'school_password' => ['required', 'string', 'confirmed'],
                 ]);
 
-                // Create the new school
                 $school = School::create([
                     'name' => $this->school_name,
                     'address' => $this->address,
@@ -72,7 +68,6 @@ new #[Layout('layouts.guest')] class extends Component {
                     'password' => Hash::make($this->school_password),
                 ]);
             } else {
-                // Existing school
                 $this->validate([
                     'school_select' => ['required', 'exists:schools,id'],
                     'school_password' => ['required', 'string'],
@@ -86,11 +81,10 @@ new #[Layout('layouts.guest')] class extends Component {
                 }
             }
 
-            // Attach the school ID to the user
             $validated['school_id'] = $school->id;
             $validated['role'] = 'Teacher';
         } else {
-            $validated['role'] = 'Student'; // or whatever role you're using for non-teachers
+            $validated['role'] = 'Student'; 
         }
 
         $validated['password'] = Hash::make($validated['password']);
@@ -163,8 +157,7 @@ new #[Layout('layouts.guest')] class extends Component {
 
         @if ($school)
             @if (!$newSchool)
-                <div class="mt-4 flex items-center space-x-4">
-                    <div>
+                <div class="mt-4 ">
                         <x-input-label for="school_select" :value="__('Choose your school')" />
                         <select class="rounded" wire:model='school_select' id="school_select">
                             @foreach ($schools as $value)
@@ -172,13 +165,12 @@ new #[Layout('layouts.guest')] class extends Component {
                             @endforeach
                         </select>
                     </div>
-                    <div>
+                    <div class="mt-4 ">
                         <x-input-label for="school_password" :value="__('Enter your school\'s code')" />
                         <x-text-input wire:model="school_password" id="school_password" class="block w-full"
                             type="password" name="school_password" required autocomplete="school-password" />
                         <x-input-error :messages="$errors->get('school_password')" class="mt-2" />
                     </div>
-                </div>
             @else
                 <div>
                     <x-input-label for="school_name" :value="__('School name')" />

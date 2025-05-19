@@ -21,7 +21,6 @@
     </div>
     <div class="flex gap-4 items-end mx-auto w-4/5">
 
-        <!-- Selects with individual labels -->
         <div class="flex flex-col gap-2 w-3/4">
             <div class="flex gap-4">
                 <div class="flex flex-col flex-1 gap-1">
@@ -45,7 +44,6 @@
             </div>
         </div>
 
-        <!-- Radio buttons with label and Go button -->
         <div class="flex flex-col gap-2 flex-grow">
             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Select moving average</label>
             <ul class="flex items-center text-sm font-medium text-gray-900  w-full">
@@ -91,7 +89,7 @@
                     const avg20 = document.getElementById("avg20");
                     const avg50 = document.getElementById("avg50");
 
-                    const data = @json($stats); // Assuming $data is passed from the controller
+                    const data = @json($stats); 
                     let myChart;
 
                     const observer = new ResizeObserver(() => {
@@ -141,7 +139,6 @@
                             studentSelect.value :
                             null;
 
-                        // Save previously selected value
                         const previousValue = exerciseSelect.value;
 
                         const filteredData = data.filter(item => {
@@ -170,7 +167,6 @@
                             exerciseSelect.appendChild(option);
                         });
 
-                        // Restore previous selection if it still exists
                         const restored = [...exerciseSelect.options].some(opt => opt.value === previousValue);
                         if (restored) {
                             exerciseSelect.value = previousValue;
@@ -285,9 +281,11 @@
                             responsive: true,
                             plugins: {
                                 legend: {
+                                    display: false,
                                     position: 'top'
                                 }
                             },
+                            
                             layout: {
                                 padding: {
                                     top: 10,
@@ -319,7 +317,6 @@
                         })
                     }
 
-                    // Event Listeners ✅
                     partSelect.addEventListener("change", () => {
                         updateExerciseOptions(partSelect.value);
                         requestAnimationFrame(updateChart);
@@ -342,7 +339,6 @@
                         myChart.update();
                     });
 
-                    // Initialize chart
                     updateExerciseOptions(partSelect.value);
                     updateChart();
                     partSelect.value = "1";

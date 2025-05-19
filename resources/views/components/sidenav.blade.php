@@ -1,7 +1,7 @@
 <aside id="logo-sidebar"
     class="w-72 h-screen border-r sidenavBorder dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300"
     aria-label="Sidebar">
-    <div class="py-2 h-full overflow-y-auto navbarbg">
+    <div class="py-2 h-full overflow-y-auto Gradient">
 
         <div class="p-2 navbarbg text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
             <img class="mx-auto" style="height: 42px;" src="/storage/img/logo.png">
@@ -9,8 +9,11 @@
         <div class="pt-6 px-3 pb-4 dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a href="{{ route('dashboard') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard', 'dashboard.teacher')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                    <a href="{{ route('dashboard') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard', 'dashboard.teacher')) bg-[#DBA159] buttonBorder
+                    @else 
+                            custom-gradient-lr
+                        @endif
+                             group">
                         <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('dashboard', 'dashboard.teacher') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 22 21">
@@ -24,8 +27,11 @@
                 </li>
                 @if (Auth::user()->role === 'Admin')
                     <li>
-                        <a href="{{ route('admin.exercises') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.exercises*')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                        <a href="{{ route('admin.exercises') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.exercises*')) bg-[#DBA159] buttonBorder
+                        @else
+                                    custom-gradient-lr
+                                @endif 
+                                dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.exercises*') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -37,8 +43,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.schools') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[ ] dark:hover:bg-gray-700 group">
+                        <a href="{{ route('admin.schools') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-[#DBA159] buttonBorder
+                        @else
+                                    custom-gradient-lr
+                                @endif 
+                                dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.schools') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -49,8 +58,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.users') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.users')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                        <a href="{{ route('admin.users') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.users')) bg-[#DBA159] buttonBorder 
+                        @else
+                                    custom-gradient-lr
+                                @endif 
+                                ark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.users') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -64,7 +76,7 @@
                 @if (Auth::user()->role === 'Teacher')
                     <li>
                         <a href="{{ route('students') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg {{ request()->routeIs('students') ? 'bg-[#DBA159] buttonBorder' : '' }} dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                            class="flex items-center p-2 text-gray-900 rounded-lg {{ request()->routeIs('students') ? 'bg-[#DBA159] buttonBorder' : 'custom-gradient-lr' }} dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('students') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -87,7 +99,7 @@
                     @endphp
                     <li>
                         <a href="{{ route('exercises.part', ['part' => 1]) }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive1 ? 'bg-[#DBA159] buttonBorder' : '' }} dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group {{ $setExercise == '1' ? 'animate-customPulseNav' : '' }}">
+                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive1 ? 'bg-[#DBA159] buttonBorder' : 'custom-gradient-lr' }} dark:text-white  dark:hover:bg-gray-700 group {{ $setExercise == '1' ? 'animate-customPulseNav' : '' }}">
                             <svg class="w-5 h-5 transition duration-75 {{ $isActive1 ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                                 <path fill="currentColor"
@@ -104,7 +116,7 @@
                     @endphp
                     <li>
                         <a href="{{ route('exercises.part', ['part' => 2]) }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive2 ? 'bg-[#DBA159] buttonBorder' : '' }} dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group {{ $setExercise == '2' ? 'animate-customPulseNav' : '' }}">
+                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive2 ? 'bg-[#DBA159] buttonBorder' : 'custom-gradient-lr' }} dark:text-white  dark:hover:bg-gray-700 group {{ $setExercise == '2' ? 'animate-customPulseNav' : '' }}">
                             <svg class="w-5 h-5 transition duration-75 {{ $isActive2 ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                                 <path fill="currentColor"
@@ -121,7 +133,7 @@
                     @endphp
                     <li>
                         <a href="{{ route('exercises.part', ['part' => 3]) }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive3 ? 'bg-[#DBA159] buttonBorder' : '' }} dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group {{ $setExercise == '3' ? 'animate-customPulseNav' : '' }}">
+                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive3 ? 'bg-[#DBA159] buttonBorder' : 'custom-gradient-lr' }} dark:text-white  dark:hover:bg-gray-700 group {{ $setExercise == '3' ? 'animate-customPulseNav' : '' }}">
                             <svg class="w-5 h-5 transition duration-75 {{ $isActive3 ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                                 <path fill="currentColor"
@@ -138,7 +150,7 @@
                     @endphp
                     <li>
                         <a href="{{ route('exercises.part', ['part' => 4]) }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive4 ? 'bg-[#DBA159] buttonBorder' : '' }} dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group {{ $setExercise == '4' ? 'animate-customPulseNav' : '' }}">
+                            class="flex items-center p-2 text-gray-900 rounded-lg {{ $isActive4 ? 'bg-[#DBA159] buttonBorder' : 'custom-gradient-lr' }} dark:text-white  dark:hover:bg-gray-700 group {{ $setExercise == '4' ? 'animate-customPulseNav' : '' }}">
                             <svg class="w-5 h-5 transition duration-75 {{ $isActive4 ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
                                 <path fill="currentColor"
@@ -148,8 +160,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('statistics') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('statistics')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                        <a href="{{ route('statistics') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('statistics')) bg-[#DBA159] buttonBorder 
+                        @else
+                                    custom-gradient-lr
+                                @endif
+                                 dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('statistics') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -163,8 +178,11 @@
                 @endif
                 @if (Auth::user()->role === 'Teacher')
                     <li>
-                        <a href="{{ route('school') }}"
-                            class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('school')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                        <a href="{{ route('school') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('school')) bg-[#DBA159] buttonBorder
+                        @else
+                                    custom-gradient-lr
+                                @endif
+                                 dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('school') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="currentColor"
@@ -175,8 +193,11 @@
                     </li>
                 @endif
                 <li>
-                    <a href="{{ route('profile') }}"
-                        class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('profile')) bg-[#DBA159] buttonBorder @endif dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                    <a href="{{ route('profile') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('profile')) bg-[#DBA159] buttonBorder 
+                    @else
+                            custom-gradient-lr 
+                        @endif 
+                         dark:text-white  dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('profile') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                             fill="currentColor">
@@ -188,11 +209,10 @@
                 </li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <li :href="route('logout')"
-                        onclick="event.preventDefault();
+                    <li :href="route('logout')" onclick="event.preventDefault();
                                 this.closest('form').submit();">
                         <a href="#"
-                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-[#DBA159] dark:hover:bg-gray-700 group">
+                            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white custom-gradient-lr dark:hover:bg-gray-700 group">
                             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
