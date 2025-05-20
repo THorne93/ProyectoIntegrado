@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::fallback(function () {
   return redirect()->route('dashboard')->with('msg', 'That page does not exist');
 });
+
 Route::view('/', 'welcome');
+
 Route::get('/dashboard', function () {
     if (auth()->user()->role === 'Teacher') {
         return redirect()->route('dashboard.teacher');
@@ -51,6 +53,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
     return redirect('dashboard');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
 Route::get('exercises/{part}', [ExerciseController::class, 'getIndex'])->name('exercises.part')->middleware(['auth']);
 Route::get('exercises/{part}/play/{id}', Play::class)->name('exercises.play')->middleware(['auth']);
 Route::post('exercises/finish', [ExerciseController::class, 'submit'])->name('finish')->middleware('auth');

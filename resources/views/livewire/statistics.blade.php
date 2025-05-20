@@ -1,4 +1,5 @@
 <div class="h-screen w-full p-6 pb-28 overflow-y-scroll scrollBarThin">
+    @if(count($stats) > 0)
     <div class="flex justify-center items-center gap-4 mb-3">
         @if (Auth::user()->role == 'Student')
             <h3 class="text-base lg:text-2xl font-bold tracking-tight dark:text-white text-center">
@@ -526,6 +527,15 @@
             </div>
         @endforeach
 
+    </div>
+@endif
+
+@else
+    <div class="flex flex-col items-center justify-center h-full">
+        <h3 class="text-base lg:text-2xl font-bold tracking-tight dark:text-white text-center">
+            No statistics available.
+        </h3>
+        <p class="text-sm text-gray-500">Please do some exercises and come back.</p>
     </div>
 @endif
 </div>
