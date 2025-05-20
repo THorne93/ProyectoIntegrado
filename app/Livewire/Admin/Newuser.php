@@ -70,7 +70,6 @@ class Newuser extends ModalComponent
         $data['password'] = Hash::make('1234');
 
         $user = User::create($data);
-
         Mail::to($user->email)->send(new LoginLinkEmail($user));
 
         $this->dispatch('success');

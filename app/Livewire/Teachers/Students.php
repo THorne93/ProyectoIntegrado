@@ -67,6 +67,7 @@ class Students extends Component
         if (!$this->filterTrashed) {
             $this->students = User::where('school_id', $this->school->id)
                 ->where('users.id', '!=', Auth::id())
+                ->where('role', '!=', 'Teacher')
                 ->leftJoin('user_records as ur', function ($join) {
                     $join->on('users.id', '=', 'ur.user_id')
                         ->whereRaw('ur.timestamp = (

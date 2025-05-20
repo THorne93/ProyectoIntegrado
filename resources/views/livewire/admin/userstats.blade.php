@@ -128,7 +128,7 @@
                     <p class="text-gray-700">Part 3: {{ $part3percent }}%</p>
                     <p class="text-gray-700">Part 4: {{ $part4percent }}%</p>
                 </div>
-                @if ($latestScores)
+                @if ($latestScores && !$latestScores->isEmpty())
                     <div class="my-2 text-center">Latest Results</div>
                     <div class="relative overflow-x-auto  sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -174,7 +174,8 @@
                             </tbody>
                         </table>
                     </div>
-
+               @else
+                    <div class="my-2 text-center">No results available</div>
                 @endif
             @endif
             <div class="flex justify-center gap-8 mt-2">

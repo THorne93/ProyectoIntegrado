@@ -34,7 +34,7 @@ $logo = file_exists($logopath) ? 'data:image/png;base64,' . base64_encode(file_g
 
             <p style="font-size: 16px; color: #4b5563; margin-bottom: 24px;">
                 @if($school)
-                    You have been successfully added to your class at {{ $school }}. Click below to access your account:
+                    You have been successfully added to your class at {{ is_string($school) ? $school : $school->name }}. Click below to access your account:
                 @else
                     You have been successfully added the platform. Click below to access your account:
                 @endif
