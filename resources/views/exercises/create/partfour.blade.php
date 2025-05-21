@@ -16,9 +16,13 @@
                             @enderror
                     </div>
                     <div class="mx-2">
-                        <p class="text-gray-600 mt-2 py-2" p>For multiple possible words use a "/" to separate them, eg.
-                            big/large/huge. Hints should be in uppercase eg. BIG. For multiple possible answers use the
-                            + button to add them, - to remove.</p>
+                        <div class="text-gray-600 mt-2 py-2">
+                            <p>For multiple possible words use a "/" to separate them, eg.
+                                big/large/huge. Hints should be in uppercase eg. BIG.</p>
+                            <p> For multiple possible answers use the
+                                +
+                                button to add them, - to remove.</p>
+                        </div>
                         @for ($index = 0; $index < 6; $index++)
                             <div class="py-4">
                                 <div class="my-1">
@@ -73,32 +77,32 @@
         document.addEventListener('DOMContentLoaded', () => {
             function addResizeListener(input) {
                 const resize = () => {
-                    input.style.width = 'auto' 
-                    input.style.width = input.scrollWidth + 'px' 
-                } 
-                input.addEventListener('input', resize) 
-                resize() 
+                    input.style.width = 'auto'
+                    input.style.width = input.scrollWidth + 'px'
+                }
+                input.addEventListener('input', resize)
+                resize()
             }
-            document.querySelectorAll('.auto-resize-input').forEach(addResizeListener) 
+            document.querySelectorAll('.auto-resize-input').forEach(addResizeListener)
             document.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-a1-a2')) {
-                    const pair = e.target.closest('.a1-a2-pair') 
+                    const pair = e.target.closest('.a1-a2-pair')
                     if (pair) {
-                        pair.remove() 
+                        pair.remove()
                     }
                 }
-            }) 
+            })
             document.querySelectorAll('.add-a1-a2').forEach(button => {
                 button.addEventListener('click', function () {
-                    const group = this.closest('.a1-a2-group') 
-                    if (!group) return 
-                    const index = this.dataset.index 
-                    const wrapper = group.querySelector('.a1-a2-wrapper') 
-                    if (!wrapper) return 
-                    const existingPairs = wrapper.querySelectorAll('.a1-a2-pair').length 
-                    const newIndex = existingPairs 
-                    const newRow = document.createElement('div') 
-                    newRow.className = 'a1-a2-pair w-full' 
+                    const group = this.closest('.a1-a2-group')
+                    if (!group) return
+                    const index = this.dataset.index
+                    const wrapper = group.querySelector('.a1-a2-wrapper')
+                    if (!wrapper) return
+                    const existingPairs = wrapper.querySelectorAll('.a1-a2-pair').length
+                    const newIndex = existingPairs
+                    const newRow = document.createElement('div')
+                    newRow.className = 'a1-a2-pair w-full'
                     newRow.innerHTML = `
                     <span class="text-s text-gray-600 align-top">a1</span>
                     <input type="text" required name="answers[${index}][option][${newIndex}][a1]"
@@ -109,12 +113,12 @@
                         class="w-12 auto-resize-input border border-black rounded px-2 py-1 bg-white text-black dark:bg-gray-800 dark:text-white">
 
                     <button type="button" class="text-black hover:bg-red-400 h-8 w-8 hover:border hover:border-black rounded-full remove-a1-a2">−</button>
-                ` 
-                    wrapper.appendChild(newRow) 
-                    newRow.querySelectorAll('.auto-resize-input').forEach(addResizeListener) 
-                    newRow.querySelector('.remove-a1-a2').addEventListener('click', () => newRow.remove()) 
-                }) 
-            }) 
+                `
+                    wrapper.appendChild(newRow)
+                    newRow.querySelectorAll('.auto-resize-input').forEach(addResizeListener)
+                    newRow.querySelector('.remove-a1-a2').addEventListener('click', () => newRow.remove())
+                })
+            })
         }) 
     </script>
 

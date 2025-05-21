@@ -17,10 +17,13 @@
                         @enderror
                     </div>
                     <div class="mx-2">
-                        <p class="text-gray-600 mt-2 py-2">For multiple possible words use a "/" to separate them, eg.
-                            big/large/huge. Hints should be in uppercase eg. BIG. For multiple possible answers use the
-                            +
-                            button to add them, - to remove.</p>
+                        <div class="text-gray-600 mt-2 py-2">
+                            <p>For multiple possible words use a "/" to separate them, eg.
+                                big/large/huge. Hints should be in uppercase eg. BIG.</p>
+                            <p> For multiple possible answers use the
+                                +
+                                button to add them, - to remove.</p>
+                        </div>
                         @foreach ($questions as $index => $question)
                             <div class=" py-4">
                                 <input type="hidden" name="answers[{{ $index }}][id]" value="{{ $question->id }}">
@@ -68,12 +71,12 @@
                                                         class="text-black hover:bg-green-400 h-8 w-8 hover:border hover:border-black rounded-full add-a1-a2"
                                                         data-index="{{ $index }}">+</button>
                                                 @endif
-                                                <input type="text" required name="answers[{{ $index }}][after]"
-                                                    class="after-input min-w-1/6 border border-black rounded px-2 py-1 bg-white text-black dark:bg-gray-800 dark:text-white"
-                                                    value="{{ old('answers.' . $index . '.after', $question->after_prompt) }}">
                                             </div>
                                         @endforeach
                                     </div>
+                                    <input type="text" required name="answers[{{ $index }}][after]"
+                                        class="after-input min-w-1/6 border auto-resize-input border-black rounded px-2 py-1 bg-white text-black dark:bg-gray-800 dark:text-white"
+                                        value="{{ old('answers.' . $index . '.after', $question->after_prompt) }}">
                                 </div>
                             </div>
                         @endforeach
