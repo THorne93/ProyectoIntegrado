@@ -183,7 +183,7 @@
             </thead>
             <tbody>
                 @foreach ($students as $student)
-                    <tr wire:click="$dispatch('openUserStats', { id: {{ $student->id }} })"
+                    <tr wire:click="$dispatch('openStats', { id: {{ $student->id }} })"
                         class="bg-white border text-gray-800 dark:bg-gray-800 dark:border-gray-700 cursor-pointer border-gray-400 hover:bg-[#FCFDAF] dark:hover:bg-gray-600">
 
                         <td class="px-6 py-4">
