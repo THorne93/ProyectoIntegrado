@@ -137,12 +137,12 @@
                 <p class="text-gray-700 dark:text-gray-300">Are you sure you want set this exercise?</p>
                 <div class="flex justify-end gap-4">
                     <button wire:click='triggerConfirm'
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md text-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+                        class="px-4 py-2 bg-white hover:bg-red-200 text-black rounded-md text-sm border border-black">
                         Cancel
                     </button>
                     <button wire:click='setExercise'
-                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm">
-                        Yes, Submit
+                        class="px-4 py-2 bg-white hover:bg-green-200 text-black rounded-md text-sm border border-black">
+                        Yes, Set exercise
                     </button>
                 </div>
             </div>

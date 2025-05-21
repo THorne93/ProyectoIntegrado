@@ -32,20 +32,26 @@ class ExerciseController extends Controller
             $exercises = DB::select($sql, [Auth::user()->id, Auth::user()->id, $part]);
         } else {
             $schoolId = Auth::user()->school_id;
+            $currentUserId = Auth::user()->id;
 
-            $exercises = DB::table('user_records as UR')
-                ->join('exercises as E', 'UR.exercise_id', '=', 'E.id')
-                ->join('users as U', 'UR.user_id', '=', 'U.id')
+            $exercises = DB::table('exercises as E')
+                ->leftJoin('user_records as UR', function ($join) use ($schoolId, $currentUserId) {
+                    $join->on('UR.exercise_id', '=', 'E.id')
+                        ->whereRaw('UR.timestamp = (
+                SELECT MAX(UR2.timestamp)
+                FROM user_records UR2
+                JOIN users U2 ON UR2.user_id = U2.id
+                WHERE UR2.exercise_id = UR.exercise_id
+                  AND U2.school_id = ?
+                  AND U2.id != ?
+            )', [$schoolId, $currentUserId]);
+                })
+                ->leftJoin('users as U', 'UR.user_id', '=', 'U.id')
                 ->where('E.part', $part)
-                ->where('U.id', '!=', Auth::user()->id)
-                ->where('U.school_id', $schoolId)
-                ->whereRaw('UR.timestamp = (
-        SELECT MAX(UR2.timestamp)
-        FROM user_records UR2
-        JOIN users U2 ON UR2.user_id = U2.id
-        WHERE UR2.exercise_id = UR.exercise_id
-          AND U2.school_id = ?
-    )', [$schoolId])
+                ->where(function ($query) use ($currentUserId) {
+                    $query->where('U.id', '!=', $currentUserId)
+                        ->orWhereNull('U.id'); // include exercises with no user records
+                })
                 ->select(
                     'E.id as id',
                     'E.title as title',

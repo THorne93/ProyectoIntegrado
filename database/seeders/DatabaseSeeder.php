@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        School::factory(6)->create();
-        User::factory(10)->create();
+        School::factory(5)->create();
+        User::factory(24)->create();
         $this->call([
             ExerciseSeeder::class,
             QuestionSeeder::class,
@@ -32,9 +32,37 @@ class DatabaseSeeder extends Seeder
                 'password' =>Hash::make('1234'),
                 'name' => 'Ad',
                 'surname' => 'min',
-                'email' => 'admin@admin.com',
+                'email' => 'admin@b2go.com',
                 'school_id' =>null,
                 'role' => 'Admin',
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+                'set_exercise' => null,
+                'created_at' => now(),
+            ]
+        ]);
+        DB::table('users')->insert([
+            [
+                'password' =>Hash::make('1234'),
+                'name' => 'Tee',
+                'surname' => 'Chér',
+                'email' => 'teacher@b2go.com',
+                'school_id' =>1,
+                'role' => 'Teacher',
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+                'set_exercise' => null,
+                'created_at' => now(),
+            ]
+        ]);
+        DB::table('users')->insert([
+            [
+                'password' =>Hash::make('1234'),
+                'name' => 'Stu',
+                'surname' => 'Dent',
+                'email' => 'student@b2go.com',
+                'school_id' =>1,
+                'role' => 'Student',
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
                 'set_exercise' => null,
