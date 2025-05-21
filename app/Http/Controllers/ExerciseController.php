@@ -153,7 +153,13 @@ class ExerciseController extends Controller
                     $question->after_prompt = $value['after'];
                     $answer = Answer::where('question_id', $question->id)->first();
                     $answer->hint = $value['hint'];
-                    $answer->value = implode('|', [$value['a1'], $value['a2']]);
+                    $formattedAnswers = array_values(
+                        collect($value['option'] ?? [])
+                            ->filter(fn($pair) => !empty($pair['a1']) && !empty($pair['a2']))
+                            ->map(fn($pair) => implode('|', [$pair['a1'], $pair['a2']]))
+                            ->toArray()
+                    );
+                    $answer->value = json_encode($formattedAnswers);
                     $answer->save();
                     $question->save();
                 }
@@ -233,7 +239,13 @@ class ExerciseController extends Controller
                     $answer = new Answer();
                     $answer->question_id = $question->id;
                     $answer->hint = $value['hint'];
-                    $answer->value = implode('|', [$value['a1'], $value['a2']]);
+                    $formattedAnswers = array_values(
+                        collect($value['option'] ?? [])
+                            ->filter(fn($pair) => !empty($pair['a1']) && !empty($pair['a2']))
+                            ->map(fn($pair) => implode('|', [$pair['a1'], $pair['a2']]))
+                            ->toArray()
+                    );
+                    $answer->value = json_encode($formattedAnswers);
                     $answer->save();
                 }
                 return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');

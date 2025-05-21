@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('question_id')->nullable();
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete();
             $table->string('hint')->nullable()->default(null);
-            $table->string('value');
+            $table->text('value');
             $table->timestamps();
         });
     }

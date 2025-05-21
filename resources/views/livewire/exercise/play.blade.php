@@ -95,7 +95,11 @@
                                                 <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
                                             @else
                                                 <span class="text-red-600 font-bold ml-2">✘ {{ $results[$index] }}/2</span>
-                                                <p class="font-bold">Answer: {{ $question->answers[0]->value }}</p>
+                                                <p class="font-bold">
+    Answer: {{
+        implode(' OR ', array_map(fn($ans) => "\"$ans\"", json_decode($question->answers[0]->value, true) ?? []))
+    }}
+</p>
                                             @endif
                                         @endif
                                     @endif

@@ -84,29 +84,47 @@ class Play extends Component
         }
         if ($this->exercise->part == 4) {
             foreach ($this->questions as $index => $question) {
-                $rawAnswer = strtolower($question->answers[0]->value);
-                $rawAnswer = preg_replace('/\((.*?)\)/', '', $rawAnswer); // Remove optional bracketed words
-                $parts = explode('|', $rawAnswer);
-                $score = 0;
+                $possibleAnswers = json_decode($question->answers[0]->value, true);
                 $userAnswer = strtolower(trim($this->userAnswers[$index] ?? ''));
+                $maxScore = 0;
 
-                foreach ($parts as $part) {
-                    if (strpos($part, '/') !== false) {
-                        $options = explode('/', $part); // Split by `/`
-                        foreach ($options as $option) {
-                            $option = trim($option);
-                            if (preg_match('/\b' . preg_quote($option, '/') . '\b/i', $userAnswer)) {
-                                $score++;
-                                break;
+                foreach ($possibleAnswers as $rawAnswer) {
+                    $rawAnswer = strtolower($rawAnswer);
+                    $rawAnswer = preg_replace('/\((.*?)\)/', '', $rawAnswer); // Remove optional bracketed words
+
+                    $parts = explode('|', $rawAnswer);
+                    $tempScore = 0;
+
+                    foreach ($parts as $part) {
+                        $part = trim($part);
+                        if (strpos($part, '/') !== false) {
+                            $options = explode('/', $part);
+                            $partMatched = false;
+                            foreach ($options as $option) {
+                                $option = trim($option);
+                                if (preg_match('/\b' . preg_quote($option, '/') . '\b/i', $userAnswer)) {
+                                    $partMatched = true;
+                                    break;
+                                }
+                            }
+                            if ($partMatched) {
+                                $tempScore++;
+                            }
+                        } else {
+                            if (preg_match('/\b' . preg_quote($part, '/') . '\b/i', $userAnswer)) {
+                                $tempScore++;
                             }
                         }
-                    } else {
-                        $part = trim($part);
-                        if (preg_match('/\b' . preg_quote($part, '/') . '\b/i', $userAnswer)) {
-                            $score++;
-                        }
+                    }
+
+                    // Keep highest score from all possible answers
+                    if ($tempScore > $maxScore) {
+                        $maxScore = $tempScore;
                     }
                 }
+
+                $score = $maxScore;
+
 
                 $this->results[$index] = $score;
             }
