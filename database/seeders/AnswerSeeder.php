@@ -150,9 +150,9 @@ class AnswerSeeder extends Seeder
             //ex 2
             ["question_id" => "22", "hint" => "FIRST", "value" => json_encode(["was|the first time (that)"]), "created_at" => now()],
             ["question_id" => "23", "hint" => "NOT", "value" => json_encode(["could not|have"]), "created_at" => now()],
-            ["question_id" => "24", "hint" => "INCREASE", "value" => json_encode(["has been|no increase"]), "created_at" => now()],
+            ["question_id" => "24", "hint" => "INCREASE", "value" => json_encode(["has been|no increase","has not been|any\/an increase","hasn't been|any\/an increase"]), "created_at" => now()],
             ["question_id" => "25", "hint" => "BIG", "value" => json_encode(["is not/isn't big|enough to"]), "created_at" => now()],
-            ["question_id" => "26", "hint" => "AVOID", "value" => json_encode(["(that) he would/could avoid|spilling"]), "created_at" => now()],
+            ["question_id" => "26", "hint" => "AVOID", "value" => json_encode(["(that) he would\/could avoid|spilling","as to avoid|spilling"]), "created_at" => now()],
             ["question_id" => "27", "hint" => "PREVENTED", "value" => json_encode(["prevented me (from) /my|getting"]), "created_at" => now()],
 
 

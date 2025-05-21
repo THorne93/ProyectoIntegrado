@@ -90,7 +90,7 @@ class Play extends Component
 
                 foreach ($possibleAnswers as $rawAnswer) {
                     $rawAnswer = strtolower($rawAnswer);
-                    $rawAnswer = preg_replace('/\((.*?)\)/', '', $rawAnswer); // Remove optional bracketed words
+                    $rawAnswer = preg_replace('/\((.*?)\)/', '', $rawAnswer);  
 
                     $parts = explode('|', $rawAnswer);
                     $tempScore = 0;
@@ -116,8 +116,6 @@ class Play extends Component
                             }
                         }
                     }
-
-                    // Keep highest score from all possible answers
                     if ($tempScore > $maxScore) {
                         $maxScore = $tempScore;
                     }
