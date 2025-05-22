@@ -26,6 +26,10 @@ class UserMail extends Component
     public $currentMail;
     public function mount()
     {
+        if (session('mail_id')) {
+            $this->recipient = User::find(session('mail_id'));
+            session()->forget('mail_id');
+        }
         $user = User::findOrFail(Auth::user()->id);
         $this->mails = Mail::where('to_user_id', $user->id)
             ->orderBy('created_at', 'desc')

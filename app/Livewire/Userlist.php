@@ -19,6 +19,12 @@ class Userlist extends ModalComponent
         $this->dispatch('lock-scroll');
     }
 
+        public function goToMail($id)
+    {
+        session(['mail_id' => $id]);
+        return redirect()->route('mail');
+    }
+
     public function close()
     {
         $this->isOpen = false;

@@ -46,7 +46,7 @@
                                                 <button  @if($user->id == Auth::id())
         disabled
     @else
-        onclick="window.location.href='{{ route('mail', ['id' => $user->id]) }}'"
+        wire:click="goToMail({{ $user->id }})"
     @endif>
                                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                                     class="
@@ -70,7 +70,7 @@
                                                 <button  @if($user->id == Auth::id())
         disabled
     @else
-        onclick="window.location.href='{{ route('mail', ['id' => $user->id]) }}'"
+         wire:click="goToMail({{ $user->id }})"
     @endif>
                                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                                     class="
