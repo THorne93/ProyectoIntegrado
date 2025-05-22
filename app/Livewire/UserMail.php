@@ -19,12 +19,13 @@ class UserMail extends Component
     public $recipient;
     public $sendError = false;
     public $content;
+    public $search;
+
     public $recipientID;
     public $subject;
     public $currentMail;
     public function mount()
     {
-        $this->allUsers = User::where('id', '!=', Auth::user()->id)->get();
         $user = User::findOrFail(Auth::user()->id);
         $this->mails = Mail::where('to_user_id', $user->id)
             ->orderBy('created_at', 'desc')
@@ -104,6 +105,10 @@ class UserMail extends Component
     }
     public function render()
     {
+        $this->allUsers = User::where('id', '!=', Auth::user()->id)
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orWhere('surname', 'like', '%' . $this->search . '%')
+            ->get();
         return view('livewire.usermail')->layout('layouts.app');
     }
 }
