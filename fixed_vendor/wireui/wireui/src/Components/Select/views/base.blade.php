@@ -31,7 +31,7 @@
     </div>
 
     @if ($label)
-        <x-slot:label class="cursor-pointer select-none flex !py-2 !my-0 leading-none label" x-on:click="toggle">
+        <x-slot:label class="cursor-pointer select-none my-auto flex flex-shrink items-center !py-2 !my-0 leading-none label" x-on:click="toggle">
             {{ $label }}
         </x-slot:label>
     @endif
@@ -58,7 +58,7 @@
                         }">
                         <template x-for="(option, index) in selectedOptions"
                             :key="`selected.${index}.${option.value}.${option.label}`">
-                            <div class="w-full">
+                            <div class="w-full my-auto">
                                 <span
                                     class="w-full inline-flex justify-between items-center py-0.5 px-2 rounded-full text-xs font-medium truncate
                                 bg-primary-100 text-primary-700 dark:bg-primary-700 dark:text-white shadow">

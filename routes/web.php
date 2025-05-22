@@ -5,6 +5,7 @@ use App\Http\Controllers\ImageTextController;
 use App\Http\Controllers\SchoolController;
 use App\Livewire\Admin\Exercises;
 use App\Livewire\Statistics;
+Use App\Livewire\UserMail;
 use App\Livewire\Admin\Schools;
 use App\Livewire\Admin\Users;
 use App\Livewire\Teachers\Students;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 Route::fallback(function () {
   return redirect()->route('dashboard')->with('msg', 'That page does not exist');
 });
+Route::get('/mail', UserMail::class)->name('mail');
 
 Route::view('/', 'welcome');
 

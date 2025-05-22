@@ -1,3 +1,33 @@
+<?php
+use App\Models\Mail;
+use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Route;
+
+
+new class extends Component {
+
+    public $currentRoute;
+    public $mailCount;
+
+    public function mount(): void
+    {
+        $this->mailCount = Mail::where('to_user_id', Auth::user()->id)->where('is_read', 0)->count();
+    }
+
+    #[On('openMail')]
+    public function openMail(): void
+    {
+        $this->mailCount = Mail::where('to_user_id', Auth::user()->id)->where('is_read', 0)->count();
+        $this->currentRoute = 'mail';
+
+    }
+
+
+
+}; ?>
+
 <aside id="logo-sidebar"
     class="w-72 h-screen border-r sidenavBorder dark:bg-gray-800 dark:border-gray-700 transform transition-transform duration-300"
     aria-label="Sidebar">
@@ -11,8 +41,8 @@
                 <li>
                     <a href="{{ route('dashboard') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('dashboard', 'dashboard.teacher')) bg-[#DBA159] buttonBorder
                     @else 
-                            custom-gradient-lr
-                        @endif
+                        custom-gradient-lr
+                    @endif
                              group">
                         <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('dashboard', 'dashboard.teacher') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -29,9 +59,9 @@
                     <li>
                         <a href="{{ route('admin.exercises') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.exercises*')) bg-[#DBA159] buttonBorder
                         @else
-                                    custom-gradient-lr
-                                @endif 
-                                dark:text-white  dark:hover:bg-gray-700 group">
+                                custom-gradient-lr
+                            @endif 
+                                                dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.exercises*') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -45,9 +75,9 @@
                     <li>
                         <a href="{{ route('admin.schools') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.schools')) bg-[#DBA159] buttonBorder
                         @else
-                                    custom-gradient-lr
-                                @endif 
-                                dark:text-white dark:hover:bg-gray-700 group">
+                                custom-gradient-lr
+                            @endif 
+                                                dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.schools') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -60,9 +90,9 @@
                     <li>
                         <a href="{{ route('admin.users') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('admin.users')) bg-[#DBA159] buttonBorder 
                         @else
-                                    custom-gradient-lr
-                                @endif 
-                                ark:text-white  dark:hover:bg-gray-700 group">
+                                custom-gradient-lr
+                            @endif 
+                                                ark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.users') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -162,9 +192,9 @@
                     <li>
                         <a href="{{ route('statistics') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('statistics')) bg-[#DBA159] buttonBorder 
                         @else
-                                    custom-gradient-lr
-                                @endif
-                                 dark:text-white dark:hover:bg-gray-700 group">
+                                custom-gradient-lr
+                            @endif
+                                                 dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('statistics') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -180,9 +210,9 @@
                     <li>
                         <a href="{{ route('school') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('school')) bg-[#DBA159] buttonBorder
                         @else
-                                    custom-gradient-lr
-                                @endif
-                                 dark:text-white  dark:hover:bg-gray-700 group">
+                                custom-gradient-lr
+                            @endif
+                                                 dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('school') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="currentColor"
@@ -195,8 +225,8 @@
                 <li>
                     <a href="{{ route('profile') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('profile')) bg-[#DBA159] buttonBorder 
                     @else
-                            custom-gradient-lr 
-                        @endif 
+                        custom-gradient-lr 
+                    @endif 
                          dark:text-white  dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('profile') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                             xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
@@ -205,6 +235,22 @@
                                 d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('mail') }}" class="flex items-center p-2 text-gray-900 rounded-lg @if (request()->routeIs('mail') || $currentRoute && $currentRoute == 'mail') bg-[#DBA159] buttonBorder 
+                    @else
+                        custom-gradient-lr 
+                    @endif 
+                         dark:text-white  dark:hover:bg-gray-700 group">
+                        <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('mail') || $currentRoute && $currentRoute == 'mail' ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
+                            xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
+                            fill="currentColor">
+                            <path fill="currentColor"
+                                d="M121 32C91.6 32 66 52 58.9 80.5L1.9 308.4C.6 313.5 0 318.7 0 323.9L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-92.1c0-5.2-.6-10.4-1.9-15.5l-57-227.9C446 52 420.4 32 391 32L121 32zm0 64l270 0 48 192-51.2 0c-12.1 0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7l-120.4 0c-12.1 0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7L73 288 121 96z" />
+                        </svg>
+                        <span class="badge">{{ $mailCount > 0 ? $mailCount : '' }}</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Mail</span>
                     </a>
                 </li>
                 <form method="POST" action="{{ route('logout') }}">
@@ -227,6 +273,7 @@
         </div>
         <div class="absolute bottom-4 left-4 right-4 text-xs text-gray-700">
             <p class="text-center">&copy; {{ date('Y') }} B2Go</p>
+            <p class="text-center">Version 1.0</p>
             <p class="text-center">
                 <a href="mailto:support@b2go.com" class="text-blue-700 hover:underline">Contact us</a>
             </p>

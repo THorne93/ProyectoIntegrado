@@ -1,13 +1,21 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use App\Models\User;
 use App\Models\School;
+use Carbon\Carbon;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    /**
-     * Log the current user out of the application.
-     */
+    public int $seshCount = 0;
+    public $users;
+    public function mount(): void
+    {
+        $sessions = DB::table('sessions')
+            ->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp);
+        $this->seshCount = $sessions->count();
+    }
+
     public function logout(Logout $logout): void
     {
         $logout();
@@ -17,18 +25,20 @@ new class extends Component {
 }; ?>
 
 <nav x-data="{ open: false }" class="w-full bg-white navbarBorder">
+    <livewire:userlist />
     <div class="">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 @if (Auth::user())
-                <button id="toggle-sidebar" class="border-y border-e border-gray-400 px-1">
-                    ←
-                </button>
+                    <button id="toggle-sidebar" class="border-y border-e border-gray-400 px-1">
+                        ←
+                    </button>
+                    <p class="text-l px-4 font-semibold sm:text-xl whitespace-nowrap">
+                        Users online: <a class="text-blue-600 cursor-pointer" wire:click="$dispatch('openUserList')">{{ $seshCount }}</a>
+                    </p>
                 @endif
             </div>
             @if (Auth::user())
-
-
 
                 <div class="flex items-end justify-end px-3 py-3 lg:px-5 lg:pl-3">
 

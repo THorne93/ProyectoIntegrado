@@ -30,7 +30,7 @@
 <body class="font-sans antialiased appbg overflow-hidden">
 
     <div class="min-h-screen flex md:flex-row flex-row">
-        <x-sidenav />
+        <livewire:layout.sidenav />
 
 
 
