@@ -273,7 +273,7 @@ new class extends Component {
         </div>
         <div class="absolute bottom-4 left-4 right-4 text-xs text-gray-700">
             <p class="text-center">&copy; {{ date('Y') }} B2Go</p>
-            <p class="text-center">Version 1.0</p>
+            <p class="text-center">Version 1.1</p>
             <p class="text-center">
                 <a href="mailto:support@b2go.com" class="text-blue-700 hover:underline">Contact us</a>
             </p>

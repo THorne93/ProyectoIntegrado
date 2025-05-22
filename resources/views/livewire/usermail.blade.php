@@ -29,9 +29,9 @@
     <p>
         @php
             $fromUser = \App\Models\User::find($mail->from_user_id);
-            $fromUserName = $fromUser ? $fromUser->name . ' ' . $fromUser->surname : 'Unknown';
+            $fromUser = $fromUser ? $fromUser->name . ' ' . $fromUser->surname : 'Unknown';
         @endphp
-        {{ $fromUserName }}
+        {{ $fromUser }}
     </p>
     <p>{{ $mail->subject }}</p>
 </div>

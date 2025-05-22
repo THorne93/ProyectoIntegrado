@@ -31,40 +31,13 @@ class ExerciseController extends Controller
 
             $exercises = DB::select($sql, [Auth::user()->id, Auth::user()->id, $part]);
         } else {
-            $schoolId = Auth::user()->school_id;
-            $currentUserId = Auth::user()->id;
-
-            $exercises = DB::table('exercises as E')
-                ->leftJoin('user_records as UR', function ($join) use ($schoolId, $currentUserId) {
-                    $join->on('UR.exercise_id', '=', 'E.id')
-                        ->whereRaw('UR.timestamp = (
-                SELECT MAX(UR2.timestamp)
-                FROM user_records UR2
-                JOIN users U2 ON UR2.user_id = U2.id
-                WHERE UR2.exercise_id = UR.exercise_id
-                  AND U2.school_id = ?
-                  AND U2.id != ?
-            )', [$schoolId, $currentUserId]);
-                })
-                ->leftJoin('users as U', 'UR.user_id', '=', 'U.id')
-                ->where('E.part', $part)
-                ->where(function ($query) use ($currentUserId) {
-                    $query->where('U.id', '!=', $currentUserId)
-                        ->orWhereNull('U.id'); // include exercises with no user records
-                })
-                ->select(
-                    'E.id as id',
-                    'E.title as title',
-                    'E.part',
-                    'UR.score as score',
-                    'UR.time_spent',
-                    'UR.timestamp',
-                    'U.name as student_name',
-                    'U.surname as student_surname'
-                )
-                ->orderBy('UR.timestamp', 'DESC')
-                ->get();
-
+            $sql = "SELECT e.*, u.name, u.surname, ur.score, ur.time_spent, ur.timestamp FROM exercises 
+            e LEFT JOIN ( SELECT ur.* FROM user_records ur JOIN users u ON ur.user_id = u.id WHERE u.role =
+             'Student' AND u.school_id = ? ) ur ON ur.exercise_id = e.id LEFT JOIN users u ON ur.user_id = 
+             u.id WHERE e.part = ? AND ur.timestamp = ( SELECT MAX(ur2.timestamp) FROM user_records ur2 JOIN
+              users u2 ON ur2.user_id = u2.id WHERE ur2.exercise_id = e.id AND u2.school_id = ? AND u2.role =
+               'Student' ) ORDER BY ur.timestamp DESC;";
+            $exercises = DB::select($sql, [Auth::user()->school_id, $part, Auth::user()->school_id]);
         }
         return view('exercises.exercises-users')->with('exercises', $exercises);
     }

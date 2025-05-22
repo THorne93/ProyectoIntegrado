@@ -3,6 +3,7 @@
 namespace App\Livewire\Exercise;
 use App\Models\Exercise;
 use App\Models\User;
+use App\Models\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,8 +29,19 @@ class Launcher extends Component
     {
         $students = User::where('school_id', Auth::user()->school_id)
             ->get();
+        $ex = Exercise::find($this->exerciseId);
         foreach ($students as $student) {
             $student->set_exercise = $this->exerciseId;
+
+            if ($student->id !== Auth::user()->id) {
+                $mail = new Mail();
+                $mail->from_user_id = Auth::user()->id;
+                $mail->to_user_id = $student->id;
+                $mail->subject = 'New exercise assigned';
+                $mail->body = 'You have a new exercise assigned. Please check part '.$ex->part.'.';
+                $mail->is_read = false;
+                $mail->save();
+            }
             $student->save();
         }
 
