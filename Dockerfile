@@ -27,8 +27,6 @@ RUN composer install --no-dev --optimize-autoloader
 # 9. Install Node dependencies and build assets
 RUN npm install && npm run build
 
-RUN php artisan migrate --force && php artisan db:seed --force
-
 # 10. Set correct permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
