@@ -51,20 +51,24 @@
                 <div class="flex flex-row w-full  border-b border-b-black ">
                     <!-- Create Button -->
                     <button wire:click="newMessage"
-                        class="hover:bg-blue-400 text-black  px-4 py-2  hover:bg-blue-600 transition duration-200 flex-shrink-0">
+                        class="hover:bg-[#FCFDAF] text-black  px-4 py-2  transition duration-200 flex-shrink-0">
                         Create
                     </button>
 
-                    <button wire:click="respond" @if (!$currentMail) disabled @endif class="px-4 py-2 flex-shrink-0
-        border-s border-s-black border-t-0 border-e-0 border-b-0
-        hover:bg-red-400 hover:bg-red-600 transition duration-200
+                   <button 
+    wire:click="respond" 
+    @if (!$currentMail) disabled @endif 
+    class="px-4 py-2 flex-shrink-0 border-s border-s-black border-t-0 border-e-0 border-b-0
         text-black
         @if (!$currentMail)
-            bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300 hover:bg-gray-300
+            bg-gray-300 text-gray-500 cursor-not-allowed
+        @else
+           hover:bg-[#FCFDAF] transition duration-200
         @endif
     ">
-                        Reply
-                    </button>
+    Reply
+</button>
+
 @if(!$confirmdelete)
 <button
     wire:click="deleteMail" @if (!$currentMail) disabled @endif
@@ -72,7 +76,7 @@
             @if (!$currentMail)
             bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300 hover:bg-gray-300
         @endif
-    hover:bg-red-400 text-black border-s border-s-black border-t-0 border-e border-e-black border-b-0 px-4 py-2 hover:bg-red-600 transition duration-200 flex-shrink-0">
+    hover:bg-red-300 text-black border-s border-s-black border-t-0 border-e border-e-black border-b-0 px-4 py-2 hover:bg-red-600 transition duration-200 flex-shrink-0">
     Delete
 </button>
 @else
@@ -87,7 +91,7 @@
 </button>
 @endif
                     <button wire:click="send"
-                        class="ml-auto border-s border-s-black border-e-0 border-t-0 border-b-0 hover:bg-green-400 text-black px-4 py-2 hover:bg-green-600 transition duration-200 flex-shrink-0">
+                        class="ml-auto border-s border-s-black border-e-0 border-t-0 border-b-0 hover:bg-green-300 text-black px-4 py-2 hover:bg-green-600 transition duration-200 flex-shrink-0">
                         Send
                     </button>
                 </div>
