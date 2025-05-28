@@ -27,41 +27,14 @@ class DatabaseSeeder extends Seeder
             AnswerSeeder::class,
             ChoiceSeeder::class
         ]);
+
         DB::table('users')->insert([
             [
-                'password' =>Hash::make('1234'),
-                'name' => 'Ad',
-                'surname' => 'min',
-                'email' => 'admin@b2go.com',
-                'school_id' =>null,
-                'role' => 'Admin',
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-                'set_exercise' => null,
-                'created_at' => now(),
-            ]
-        ]);
-        DB::table('users')->insert([
-            [
-                'password' =>Hash::make('1234'),
-                'name' => 'Tee',
-                'surname' => 'Chér',
-                'email' => 'teacher@b2go.com',
-                'school_id' =>1,
-                'role' => 'Teacher',
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-                'set_exercise' => null,
-                'created_at' => now(),
-            ]
-        ]);
-        DB::table('users')->insert([
-            [
-                'password' =>Hash::make('1234'),
+                'password' => Hash::make('1234'),
                 'name' => 'Stu',
                 'surname' => 'Dent',
                 'email' => 'student@b2go.com',
-                'school_id' =>1,
+                'school_id' => 1,
                 'role' => 'Student',
                 'email_verified_at' => now(),
                 'remember_token' => Str::random(10),
@@ -95,6 +68,35 @@ class DatabaseSeeder extends Seeder
                 ]
             ]);
 
+
         }
+        DB::table('users')->insert([
+            [
+                'password' => Hash::make('1234'),
+                'name' => 'Ad',
+                'surname' => 'min',
+                'email' => 'admin@b2go.com',
+                'school_id' => null,
+                'role' => 'Admin',
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+                'set_exercise' => null,
+                'created_at' => now(),
+            ]
+        ]);
+        DB::table('users')->insert([
+            [
+                'password' => Hash::make('1234'),
+                'name' => 'Tee',
+                'surname' => 'Chér',
+                'email' => 'teacher@b2go.com',
+                'school_id' => 1,
+                'role' => 'Teacher',
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+                'set_exercise' => null,
+                'created_at' => now(),
+            ]
+        ]);
     }
 }

@@ -72,6 +72,57 @@ class ChoiceSeeder extends Seeder
 
 
             //-----------------------------------------------//
+
+            //NEW CHOICES
+            ["question_id"=>"46","values"=>"reporting/quoting/according/informing","is_correct"=>"according","created_at"=> now()],
+            ["question_id"=>"46","values"=>"taken/carried/studied/worked","is_correct"=>"carried","created_at"=> now()],
+            ["question_id"=>"46","values"=>"near/just/close/next","is_correct"=>"close","created_at"=> now()],
+            ["question_id"=>"46","values"=>"average/medium/common/standard","is_correct"=>"average","created_at"=> now()],
+            ["question_id"=>"46","values"=>"although/despite/however/nevertheless","is_correct"=>"although","created_at"=> now()],
+            ["question_id"=>"46","values"=>"belief/information/familiarity/awareness","is_correct"=>"awareness","created_at"=> now()],
+            ["question_id"=>"46","values"=>"way/rule/line/case","is_correct"=>"line","created_at"=> now()],
+            ["question_id"=>"46","values"=>"tend/lean/head/aim","is_correct"=>"tend","created_at"=> now()],
+            ["question_id"=>"46","values"=>"pace/rate/speed/step","is_correct"=>"rate","created_at"=> now()],
+            
+            ["question_id"=>"47","values"=>"common/frequent/general/routine","is_correct"=>"common","created_at"=> now()],
+            ["question_id"=>"47","values"=>"clear/evident/plain/obvious","is_correct"=>"obvious","created_at"=> now()],
+            ["question_id"=>"47","values"=>"realised/imagined/invented/dreamt","is_correct"=>"invented","created_at"=> now()],
+            ["question_id"=>"47","values"=>"up/over/in/forward","is_correct"=>"up","created_at"=> now()],
+            ["question_id"=>"47","values"=>"did/had/made/took","is_correct"=>"had","created_at"=> now()],
+            ["question_id"=>"47","values"=>"creation/formation/production/construction","is_correct"=>"production","created_at"=> now()],
+            ["question_id"=>"47","values"=>"after/to/since/on","is_correct"=>"on","created_at"=> now()],
+            ["question_id"=>"47","values"=>"model/original/sample/standard","is_correct"=>"original","created_at"=> now()],
+            ["question_id"=>"47","values"=>"available/achievable/accessible/attainable","is_correct"=>"available","created_at"=> now()],
+            
+            ["question_id"=>"48","values"=>"far/then/back/past","is_correct"=>"back","created_at"=> now()],
+            ["question_id"=>"48","values"=>"close/nearby/near/next","is_correct"=>"nearby","created_at"=> now()],
+            ["question_id"=>"48","values"=>"spot/point/tip/dot","is_correct"=>"spot","created_at"=> now()],
+            ["question_id"=>"48","values"=>"outer/outdoor/outward/outgoing","is_correct"=>"outdoor","created_at"=> now()],
+            ["question_id"=>"48","values"=>"view/regard/thought/belief","is_correct"=>"view","created_at"=> now()],
+            ["question_id"=>"48","values"=>"decide/determine/fix/arrange","is_correct"=>"decide","created_at"=> now()],
+            ["question_id"=>"48","values"=>"unless/so/if/though","is_correct"=>"so","created_at"=> now()],
+            ["question_id"=>"48","values"=>"arrive/get/achieve/reach","is_correct"=>"reach","created_at"=> now()],
+            ["question_id"=>"48","values"=>"remarkably/absolutely/extremely/highly","is_correct"=>"absolutely","created_at"=> now()],
+
+            ["question_id"=>"49","values"=>"noticed/solved/found/saw","is_correct"=>"found","created_at"=> now()],
+            ["question_id"=>"49","values"=>"crew/staff/team/band","is_correct"=>"staff","created_at"=> now()],
+            ["question_id"=>"49","values"=>"delaying/opposing/preventing/according","is_correct"=>"preventing","created_at"=> now()],
+            ["question_id"=>"49","values"=>"agreeing/relating/depending/according","is_correct"=>"according","created_at"=> now()],
+            ["question_id"=>"49","values"=>"see/do/make/go","is_correct"=>"do","created_at"=> now()],
+            ["question_id"=>"49","values"=>"results/leads/causes/creates","is_correct"=>"leads","created_at"=> now()],
+            ["question_id"=>"49","values"=>"case/event/time/fact","is_correct"=>"case","created_at"=> now()],
+            ["question_id"=>"49","values"=>"few/many/little/much","is_correct"=>"little","created_at"=> now()],
+            ["question_id"=>"49","values"=>"feel/take/think/regard","is_correct"=>"take","created_at"=> now()],
+
+            ["question_id"=>"50","values"=>"stands/goes/stays/lies","is_correct"=>"lies","created_at"=> now()],
+            ["question_id"=>"50","values"=>"views/scenes/looks/sights","is_correct"=>"views","created_at"=> now()],
+            ["question_id"=>"50","values"=>"either/all/both/each","is_correct"=>"both","created_at"=> now()],
+            ["question_id"=>"50","values"=>"around/while/throughout/over","is_correct"=>"throughout","created_at"=> now()],
+            ["question_id"=>"50","values"=>"past/over/through/beyond","is_correct"=>"over","created_at"=> now()],
+            ["question_id"=>"50","values"=>"liked/favourite/enjoyed/popular","is_correct"=>"popular","created_at"=> now()],
+            ["question_id"=>"50","values"=>"Since/Although/Despite/However","is_correct"=>"Despite","created_at"=> now()],
+            ["question_id"=>"50","values"=>"nearly/hardly/almost/just","is_correct"=>"hardly","created_at"=> now()],
+            ["question_id"=>"50","values"=>"want/have/get/need","is_correct"=>"get","created_at"=> now()],
         ]);
     }
 }
