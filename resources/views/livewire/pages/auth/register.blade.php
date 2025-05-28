@@ -23,8 +23,8 @@ new #[Layout('layouts.guest')] class extends Component {
     public string $address = '';
     public string $school_email = '';
     public string $school_phone = '';
-    public string $school_password = ''; // for joining
-    public string $new_school_password = ''; // for creating
+    public string $school_password = ''; 
+    public string $new_school_password = ''; 
     public string $new_school_password_confirmation = '';
     public $school_select;
 
@@ -112,7 +112,6 @@ new #[Layout('layouts.guest')] class extends Component {
 
 <div>
     <form wire:submit.prevent="register">
-        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('First name')" />
             <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required
@@ -120,7 +119,6 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Surname -->
         <div class="mt-4">
             <x-input-label for="surname" :value="__('Last name(s)')" />
             <x-text-input wire:model="surname" id="surname" class="block mt-1 w-full" type="text" name="surname"
@@ -128,7 +126,6 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('surname')" class="mt-2" />
         </div>
 
-        <!-- Email -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required
@@ -136,7 +133,6 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
             <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password"
@@ -144,7 +140,6 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
             <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
@@ -152,7 +147,6 @@ new #[Layout('layouts.guest')] class extends Component {
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <!-- Teacher and School Options -->
         <div class="mt-4">
             <input type="checkbox" wire:model.live="school" />
             <x-input-label class="inline mr-10" :value="__('I am a teacher')" />
@@ -182,7 +176,6 @@ new #[Layout('layouts.guest')] class extends Component {
                 </div>
             </div>
         @endif
-        <!-- School Logic -->
         @if ($school)
             @if (!$newSchool)
                 <div class="mt-4">
@@ -242,7 +235,6 @@ new #[Layout('layouts.guest')] class extends Component {
             @endif
         @endif
 
-        <!-- Footer -->
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 href="{{ route('login') }}" wire:navigate>

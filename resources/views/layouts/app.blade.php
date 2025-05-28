@@ -32,10 +32,6 @@
     <div class="min-h-screen flex md:flex-row flex-row">
         <livewire:layout.sidenav />
 
-
-
-        <!-- Page Content -->
-
         <main class="flex w-full flex-col">
             <livewire:layout.navigation />
             {{ $slot }}

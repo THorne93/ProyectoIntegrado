@@ -12,30 +12,21 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
 <body class="font-sans appbg min-h-screen flex flex-col justify-between">
     <livewire:layout.navigation />
-    <!-- Main Content Area -->
     <div class="flex-grow flex items-center justify-center">
         <div class="flex flex-row  w-4/5 max-w-7xl   items-center justify-center">
-
-            <!-- Left Panel -->
             <div class="flex w-full  rounded overflow-hidden">
-
-                <!-- Column 1: Image -->
                 <div class="w-4/6  m-4 h-full">
                     <img src="/storage/img/welcome.png" class="rounded-lg" alt="">
                 </div>
-
-                <!-- Column 2: Text -->
                 <div
                     class="w-2/6 m-4 border border-black rounded-lg bg-white flex flex-col items-center justify-center p-6">
                     <a href="{{ url('/') }}">
@@ -54,8 +45,6 @@
 
         </div>
     </div>
-
-    <!-- Footer -->
     <footer class="py-6 text-center text-sm text-black dark:text-white/70">
         B2 Exam Lab &copy; {{ date('Y') }}. All rights reserved.
     </footer>

@@ -49,7 +49,6 @@
         <div class="w-5/6 flex flex-grow min-h-[70vh] ">
             <div class="flex flex-col w-full h-full ">
                 <div class="flex flex-row w-full  border-b border-b-black ">
-                    <!-- Create Button -->
                     <button wire:click="newMessage"
                         class="hover:bg-[#FCFDAF] text-black  px-4 py-2  transition duration-200 flex-shrink-0">
                         Create
@@ -134,7 +133,6 @@
                                 To:
                             </div>
 <div class="w-full ps-10 relative" x-data="{ open: false }">
-    <!-- Dropdown Toggle Button -->
     <button 
         @click="open = !open" 
         type="button"
@@ -146,8 +144,6 @@
                 stroke-width="2" d="m1 1 4 4 4-4" />
         </svg>
     </button>
-
-    <!-- Dropdown Search -->
     <div 
         x-show="open"
         @click.outside="open = false"
@@ -220,11 +216,8 @@
         <script>
             document.querySelectorAll('input[name="user_select"]').forEach(radio => {
                 radio.addEventListener('change', () => {
-                    // Hide the dropdown by adding the 'hidden' class
                     const dropdown = document.getElementById('dropdownSearch');
                     dropdown.classList.add('hidden');
-
-                    // Optionally update the button text to the selected user's name
                     const button = document.getElementById('dropdownSearchButton');
                     const selectedLabel = document.querySelector(`label[for="${radio.id}"]`);
                     if (selectedLabel) {

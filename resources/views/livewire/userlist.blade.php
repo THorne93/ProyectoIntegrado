@@ -14,7 +14,6 @@
                 </svg>
             </button>
             <div class="flex flex-col items-center justify-center">
-                <!-- Button Toggle Row -->
                 <div class="flex flex-row w-4/5  border border-black mb-2 rounded-lg">
                     <button class="w-1/2 rounded-s-lg
                     @if($view == 'offline') bg-white hover:bg-[#FCFDAF]
@@ -28,7 +27,6 @@
                         wire:click="toggleOffline">Offline</button>
                 </div>
 
-                <!-- Search Bar -->
                 <div class="w-4/5 mb-3">
                     <input type="text" wire:model.live="search" placeholder="Search users..."
                         class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
