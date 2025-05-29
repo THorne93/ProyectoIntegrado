@@ -12,7 +12,6 @@ $logo = file_exists($logopath) ? 'data:image/png;base64,' . base64_encode(file_g
         body {
             font-family: DejaVu Sans, sans-serif;
             font-size: 10px;
-            /* smaller base font */
             color: #333;
             margin: 20px;
         }
@@ -25,27 +24,22 @@ $logo = file_exists($logopath) ? 'data:image/png;base64,' . base64_encode(file_g
         h2 {
             background-color: #f2f2f2;
             padding: 4px 8px;
-            /* reduced padding */
             margin-bottom: 6px;
             font-size: 12px;
-            /* smaller heading */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 15px;
-            /* tighter spacing between tables */
         }
 
         th,
         td {
             border: 1px solid #ccc;
             padding: 3px 6px;
-            /* tighter padding */
             text-align: left;
             font-size: 9px;
-            /* smaller cell text */
         }
 
         thead {
