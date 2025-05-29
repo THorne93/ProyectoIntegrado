@@ -5,7 +5,6 @@ use App\Models\School;
 use App\Models\User;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Attributes\On;
 

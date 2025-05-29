@@ -4,7 +4,6 @@ namespace App\Livewire\Teachers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Livewire\Attributes\On;
-use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 use DB;
 

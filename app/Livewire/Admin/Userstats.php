@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\School;
 use Livewire\Attributes\On;
-use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 use DB;
 class Userstats extends ModalComponent

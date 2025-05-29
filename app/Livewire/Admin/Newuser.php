@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Livewire\Admin;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\School;
 use Livewire\Attributes\On;
-use Livewire\Component;
-use Illuminate\Auth\Events\Registered;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\LoginLinkEmail;

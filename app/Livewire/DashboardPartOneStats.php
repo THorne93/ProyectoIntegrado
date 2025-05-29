@@ -3,7 +3,6 @@
 namespace App\Livewire;
 use DB;
 use Illuminate\Database\Query\JoinClause;
-use App\Models\Exercise;
 use Livewire\Component;
 
 class DashboardPartOneStats extends Component

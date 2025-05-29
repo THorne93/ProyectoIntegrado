@@ -1,14 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-use Carbon\Traits\Timestamp;
-use DateTime;
 use App\Models\Exercise;
 use App\Models\User;
 use App\Models\School;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Database\Factories\UserRecordsFactory;
 use DB;
 use Illuminate\Database\Seeder;
 

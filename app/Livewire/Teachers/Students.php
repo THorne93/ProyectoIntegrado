@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Livewire\Teachers;
-use DB;
 use Livewire\Attributes\On;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 class Students extends Component
 {
 

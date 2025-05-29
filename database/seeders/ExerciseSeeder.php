@@ -1,9 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
-use Database\Factories\ExerciseFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Exercise;
 
