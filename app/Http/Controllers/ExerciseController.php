@@ -31,12 +31,7 @@ class ExerciseController extends Controller
 
             $exercises = DB::select($sql, [Auth::user()->id, Auth::user()->id, $part]);
         } else {
-            $sql = "SELECT e.*, u.name, u.surname, ur.score, ur.time_spent, ur.timestamp FROM exercises 
-            e LEFT JOIN ( SELECT ur.* FROM user_records ur JOIN users u ON ur.user_id = u.id WHERE u.role =
-             'Student' AND u.school_id = ? ) ur ON ur.exercise_id = e.id LEFT JOIN users u ON ur.user_id = 
-             u.id WHERE e.part = ? AND ur.timestamp = ( SELECT MAX(ur2.timestamp) FROM user_records ur2 JOIN
-              users u2 ON ur2.user_id = u2.id WHERE ur2.exercise_id = e.id AND u2.school_id = ? AND u2.role =
-               'Student' ) ORDER BY ur.timestamp DESC;";
+            $sql = "SELECT e.*, u.name, u.surname, ur.score, ur.time_spent, ur.timestamp FROM exercises e LEFT JOIN ( SELECT ur.* FROM user_records ur JOIN users u ON ur.user_id = u.id WHERE u.role = 'Student' AND u.school_id = ? ) ur ON ur.exercise_id = e.id LEFT JOIN users u ON ur.user_id = u.id WHERE e.part = ? AND ( ur.timestamp = ( SELECT MAX(ur2.timestamp) FROM user_records ur2 JOIN users u2 ON ur2.user_id = u2.id WHERE ur2.exercise_id = e.id AND u2.school_id = ? AND u2.role = 'Student' ) OR ur.timestamp IS NULL ) ORDER BY ur.timestamp DESC";
             $exercises = DB::select($sql, [Auth::user()->school_id, $part, Auth::user()->school_id]);
         }
         return view('exercises.exercises-users')->with('exercises', $exercises);
@@ -138,7 +133,7 @@ class ExerciseController extends Controller
                             ->map(fn($pair) => implode('|', [$pair['a1'], $pair['a2']]))
                             ->toArray()
                     );
-                    $answer->value = json_encode($formattedAnswers);
+                    $answer->value = json_encode($formattedAnswers, JSON_UNESCAPED_SLASHES);
                     $answer->save();
                     $question->save();
                 }
@@ -224,7 +219,7 @@ class ExerciseController extends Controller
                             ->map(fn($pair) => implode('|', [$pair['a1'], $pair['a2']]))
                             ->toArray()
                     );
-                    $answer->value = json_encode($formattedAnswers);
+                    $answer->value = json_encode($formattedAnswers, JSON_UNESCAPED_SLASHES);
                     $answer->save();
                 }
                 return redirect()->route('admin.exercises')->with('success', 'Exercise created successfully.');

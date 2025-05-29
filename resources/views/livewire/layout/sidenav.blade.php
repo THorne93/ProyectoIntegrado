@@ -21,11 +21,7 @@ new class extends Component {
     {
         $this->mailCount = Mail::where('to_user_id', Auth::user()->id)->where('is_read', 0)->count();
         $this->currentRoute = 'mail';
-
     }
-
-
-
 }; ?>
 
 <aside id="logo-sidebar"
@@ -61,7 +57,7 @@ new class extends Component {
                         @else
                                 custom-gradient-lr
                             @endif 
-                                                dark:text-white  dark:hover:bg-gray-700 group">
+                                                    dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.exercises*') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -77,7 +73,7 @@ new class extends Component {
                         @else
                                 custom-gradient-lr
                             @endif 
-                                                dark:text-white dark:hover:bg-gray-700 group">
+                                                    dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.schools') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -92,7 +88,7 @@ new class extends Component {
                         @else
                                 custom-gradient-lr
                             @endif 
-                                                ark:text-white  dark:hover:bg-gray-700 group">
+                                                    ark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('admin.users') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -194,7 +190,7 @@ new class extends Component {
                         @else
                                 custom-gradient-lr
                             @endif
-                                                 dark:text-white dark:hover:bg-gray-700 group">
+                                                     dark:text-white dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('statistics') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" viewBox="0 0 576 512"
                                 fill="currentColor">
@@ -212,7 +208,7 @@ new class extends Component {
                         @else
                                 custom-gradient-lr
                             @endif
-                                                 dark:text-white  dark:hover:bg-gray-700 group">
+                                                     dark:text-white  dark:hover:bg-gray-700 group">
                             <svg class="w-5 h-5 transition duration-75 {{ request()->routeIs('school') ? 'text-black' : 'group-hover:text-gray-900 text-gray-500' }}"
                                 viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="currentColor"
@@ -273,7 +269,7 @@ new class extends Component {
         </div>
         <div class="absolute bottom-4 left-4 right-4 text-xs text-gray-700">
             <p class="text-center">&copy; {{ date('Y') }} B2Go</p>
-            <p class="text-center">Version 1.1.1</p>
+            <p class="text-center">Version 1.1.2</p>
             <p class="text-center">
                 <a href="mailto:support@b2go.com" class="text-blue-700 hover:underline">Contact us</a>
             </p>
