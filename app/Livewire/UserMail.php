@@ -109,10 +109,25 @@ class UserMail extends Component
     }
     public function render()
     {
-        $this->allUsers = User::where('id', '!=', Auth::user()->id)
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('surname', 'like', '%' . $this->search . '%')
-            ->get();
+        $query = User::where('id', '!=', Auth::user()->id);
+
+        if (Auth::user()->role !== 'Admin') {
+            // Limit to same school or admins
+            $query->where(function ($q) {
+                $q->where('school_id', Auth::user()->school_id)
+                    ->orWhere('role', 'Admin');
+            });
+        }
+
+        // Apply search to name and surname
+        $query->where(function ($q) {
+            $q->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('surname', 'like', '%' . $this->search . '%');
+        });
+
+        $this->allUsers = $query->get();
+
         return view('livewire.usermail')->layout('layouts.app');
     }
+
 }

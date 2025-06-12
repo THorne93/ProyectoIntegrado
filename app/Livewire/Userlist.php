@@ -19,7 +19,7 @@ class Userlist extends ModalComponent
         $this->dispatch('lock-scroll');
     }
 
-        public function goToMail($id)
+    public function goToMail($id)
     {
         session(['mail_id' => $id]);
         return redirect()->route('mail');
@@ -50,22 +50,39 @@ class Userlist extends ModalComponent
     }
     public function render()
     {
-        $current = DB::table('sessions')
-            ->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp);
-        $this->online = User::whereIn('id', $current->pluck('user_id'))
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('surname', 'like', '%' . $this->search . '%');
-            })
-            ->get();
-        $this->offline = User::whereNotIn('id', $current->pluck('user_id'))
-            ->where(function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('surname', 'like', '%' . $this->search . '%');
-            })
+        $activeUserIds = DB::table('sessions')
+            ->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp)
+            ->pluck('user_id')
+            ->unique();
+
+        // If the current user is an admin, don't restrict by school
+        if (auth()->user()->role === 'Admin') {
+            $baseQuery = User::query();
+        } else {
+            // For students and teachers: same school or Admins
+            $baseQuery = User::where(function ($q) {
+                $q->where('school_id', auth()->user()->school_id)
+                    ->orWhere('role', 'Admin');
+            });
+        }
+
+        // Apply search to both name and surname
+        $baseQuery = $baseQuery->where(function ($q) {
+            $q->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('surname', 'like', '%' . $this->search . '%');
+        });
+
+        $this->online = (clone $baseQuery)
+            ->whereIn('id', $activeUserIds)
             ->get();
 
+        $this->offline = (clone $baseQuery)
+            ->whereNotIn('id', $activeUserIds)
+            ->get();
 
         return view('livewire.userlist');
     }
+
+
+
 }

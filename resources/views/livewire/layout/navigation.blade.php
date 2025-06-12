@@ -11,9 +11,17 @@ new class extends Component {
     public $users;
     public function mount(): void
     {
-        $sessions = DB::table('sessions')
-            ->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp);
-        $this->seshCount = $sessions->count();
+        if (Auth::user()) {
+            if (Auth::user()->role == 'Admin') {
+                $sessions = DB::table('sessions')->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp);
+                $this->seshCount = $sessions->count();
+            } else {
+                $sessions = DB::table('sessions')->where('last_activity', '>=', Carbon::now()->subMinutes(30)->timestamp);
+                $schoolId = Auth::user()->school_id;
+                $userIds = User::where('school_id', $schoolId)->pluck('id')->toArray();
+                $this->seshCount = $sessions->whereIn('user_id', $userIds)->count();
+            }
+        }
     }
 
     public function logout(Logout $logout): void
@@ -34,7 +42,8 @@ new class extends Component {
                         ←
                     </button>
                     <p class="text-l px-4 font-semibold sm:text-xl whitespace-nowrap">
-                        Users online: <a class="text-blue-600 cursor-pointer" wire:click="$dispatch('openUserList')">{{ $seshCount }}</a>
+                        Users online: <a class="text-blue-600 cursor-pointer"
+                            wire:click="$dispatch('openUserList')">{{ $seshCount }}</a>
                     </p>
                 @endif
             </div>
@@ -52,7 +61,19 @@ new class extends Component {
                         @endif
                         {{ Auth::user()->name . ' ' . Auth::user()->surname }}
                         @if (Auth::user()->school_id != null)
-                            - <span class="text-blue-800">{{ School::findOrFail(Auth::user()->school_id)->name }}</span>
+                            - <span class="text-blue-800 relative group">
+                                {{ School::findOrFail(Auth::user()->school_id)->name }}
+                                <div
+                                    class="absolute hidden group-hover:block bg-white border border-gray-200 rounded-md p-2 shadow-lg z-10 -left-2 top-full min-w-[200px]">
+                                    @php
+                                        $teachername = User::where('school_id', Auth::user()->school_id)
+                                            ->where('role', 'Teacher')
+                                            ->first();
+                                    @endphp
+                                    <p class="text-sm text-gray-600">Your teacher:
+                                        {{ $teachername->name . ' ' . $teachername->surname }}</p>
+                                </div>
+                            </span>
                         @endif
                     </span>
                 </div>
