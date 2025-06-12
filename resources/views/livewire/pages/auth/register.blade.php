@@ -23,8 +23,8 @@ new #[Layout('layouts.guest')] class extends Component {
     public string $address = '';
     public string $school_email = '';
     public string $school_phone = '';
-    public string $school_password = ''; 
-    public string $new_school_password = ''; 
+    public string $school_password = '';
+    public string $new_school_password = '';
     public string $new_school_password_confirmation = '';
     public $school_select;
 
@@ -128,8 +128,8 @@ new #[Layout('layouts.guest')] class extends Component {
 
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required
-                autocomplete="username" />
+            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email"
+                required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -150,13 +150,9 @@ new #[Layout('layouts.guest')] class extends Component {
         <div class="mt-4">
             <input type="checkbox" wire:model.live="school" />
             <x-input-label class="inline mr-10" :value="__('I am a teacher')" />
-            @if ($school)
-                <input type="checkbox" class="ml-10" wire:model.live="newSchool" />
-                <x-input-label class="inline" :value="__('New school')" />
-            @else
+
                 <input type="checkbox" class="ml-10" wire:model.live="hasSchool" />
                 <x-input-label class="inline mr-10" :value="__('Join school')" />
-            @endif
         </div>
         @if ($hasSchool && !$school)
             <div class="mt-4">
@@ -177,62 +173,24 @@ new #[Layout('layouts.guest')] class extends Component {
             </div>
         @endif
         @if ($school)
-            @if (!$newSchool)
-                <div class="mt-4">
-                    <x-input-label for="school_select" :value="__('Choose your school')" />
-                    <select class="rounded w-full" wire:model="school_select" id="school_select">
-                        <option value="">-- Select a school --</option>
-                        @foreach ($schools as $value)
-                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                        @endforeach
-                    </select>
-                    <x-input-error :messages="$errors->get('school_select')" class="mt-2" />
-                </div>
+            <div class="mt-4">
+                <x-input-label for="school_select" :value="__('Choose your school')" />
+                <select class="rounded w-full" wire:model="school_select" id="school_select">
+                    <option value="">-- Select a school --</option>
+                    @foreach ($schools as $value)
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('school_select')" class="mt-2" />
+            </div>
 
-                <div class="mt-4">
-                    <x-input-label for="school_password" :value="__('Enter your school\'s code')" />
-                    <x-text-input wire:model="school_password" id="school_password" class="block w-full" type="password"
-                        name="school_password" required />
-                    <x-input-error :messages="$errors->get('school_password')" class="mt-2" />
-                </div>
-            @else
-                <div class="mt-4">
-                    <x-input-label for="school_name" :value="__('School name')" />
-                    <x-text-input wire:model="school_name" id="school_name" class="block mt-1 w-full" type="text" required />
-                    <x-input-error :messages="$errors->get('school_name')" class="mt-2" />
-                </div>
+            <div class="mt-4">
+                <x-input-label for="school_password" :value="__('Enter your school\'s code')" />
+                <x-text-input wire:model="school_password" id="school_password" class="block w-full" type="password"
+                    name="school_password" required />
+                <x-input-error :messages="$errors->get('school_password')" class="mt-2" />
+            </div>
 
-                <div class="mt-4">
-                    <x-input-label for="address" :value="__('Address')" />
-                    <x-text-input wire:model="address" id="address" class="block mt-1 w-full" type="text" required />
-                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="school_email" :value="__('School contact email')" />
-                    <x-text-input wire:model="school_email" id="school_email" class="block mt-1 w-full" type="email" required />
-                    <x-input-error :messages="$errors->get('school_email')" class="mt-2" />
-                </div>
-                <div class="mt-4">
-                    <x-input-label for="school_phone" :value="__('School contact telephone')" />
-                    <x-text-input wire:model="school_phone" id="school_phone" class="block mt-1 w-full" type="text" required />
-                    <x-input-error :messages="$errors->get('school_phone')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="new_school_password" :value="__('Enter your school\'s code')" />
-                    <x-text-input wire:model="new_school_password" id="new_school_password" class="block w-full" type="password"
-                        required />
-                    <x-input-error :messages="$errors->get('new_school_password')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="new_school_password_confirmation" :value="__('Confirm your school\'s code')" />
-                    <x-text-input wire:model="new_school_password_confirmation" id="new_school_password_confirmation"
-                        class="block w-full" type="password" required />
-                    <x-input-error :messages="$errors->get('new_school_password_confirmation')" class="mt-2" />
-                </div>
-            @endif
         @endif
 
         <div class="flex items-center justify-end mt-4">
@@ -242,7 +200,8 @@ new #[Layout('layouts.guest')] class extends Component {
             </a>
             <div wire:loading>
                 <div style="display: inline-flex; align-items: center; gap: 5px;">
-                    <img width="16" height="16" src="https://media.tenor.com/G7LfW0O5qb8AAAAi/loading-gif.gif" alt="">
+                    <img width="16" height="16" src="https://media.tenor.com/G7LfW0O5qb8AAAAi/loading-gif.gif"
+                        alt="">
                 </div>
             </div>
             <x-primary-button class="ms-4">

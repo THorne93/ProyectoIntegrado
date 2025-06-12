@@ -3,6 +3,7 @@
 namespace App\Livewire\Exercise;
 
 use App\Models\Exercise;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -139,6 +140,16 @@ class Play extends Component
             $student = Auth::user();
             $student->set_exercise = null;
             $student->save();
+            $count = User::where('role', 'Student')
+            ->where('school_id', $student->school_id)
+            ->whereNotNull('set_exercise')->count();
+            if ($count == 0) {
+                $teachers = User::where('role', 'Teacher')->get();
+                foreach ($teachers as $teacher) {
+                    $teacher->set_exercise = null;
+                    $teacher->save();
+                }
+            }
         }
     }
 
